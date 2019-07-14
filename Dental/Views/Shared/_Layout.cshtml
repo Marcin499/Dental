@@ -3,36 +3,52 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title — moja aplikacja platformy ASP.NET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+<style>
+    .naglowek{
+        background-color:darkgreen;
+        padding-top: 0px;
+    }    
+    #strona{        
+        position: relative;               
+        vertical-align:bottom;
+        padding-top: 25px;
+        padding-left: 20px;
+        font-size: 20px;
+        color: white;
+    }
+    #image{        
+        float:left;
+        bottom: 2px;
+        padding-right: 20px;
+    }
+    footer{
+        text-align:center;
+    }
+    #body{
+        padding-left:15px;
+    }
+</style>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="naglowek">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nazwa aplikacji", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Informacje", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-                </ul>
+            <div id="image">
+                <img src="/Image/Zab.png" alt="Dental">                                        
+            </div>                       
+            <div id="strona">
+                @ViewBag.Strona           
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div id="body">
         @RenderBody()
-        <hr />
+    </div>
+    <div id="footer">
         <footer>
-            <p>&copy; @DateTime.Now.Year — moja aplikacja platformy ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year Chorzów - projekt inżynierski</p>
         </footer>
     </div>
 
@@ -41,3 +57,4 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+

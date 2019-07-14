@@ -1,47 +1,52 @@
-﻿using System;
+﻿using DAL.Model;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 
 namespace WcfDental
 {
-    // UWAGA: możesz użyć polecenia „Zmień nazwę” w menu „Refaktoryzuj”, aby zmienić nazwę interfejsu „IService1” w kodzie i pliku konfiguracji.
     [ServiceContract]
-    public interface IService1
+    public interface IService
     {
 
         [OperationContract]
-        string GetData(int value);
+        List<Pacjent> GetPacjentList();
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        Pacjent GetPacjentByID(int id);
 
-        // TODO: dodaj tutaj operacje usługi
+        [OperationContract]
+        void PacjentInsert(Pacjent pacjent);
+
+        [OperationContract]
+        void PacjentUpdate(Pacjent pacjent);
+
+        [OperationContract]
+        void PacjentDelete(int id);
+
+
     }
 
-
-    // Użyj kontraktu danych, jak pokazano w poniższym przykładzie, aby dodać typy złożone do operacji usługi.
     [DataContract]
-    public class CompositeType
+    public class Contract
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
         [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
+        public int PacjentID { get; set; }
         [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
+        public string Imie { get; set; }
+        [DataMember]
+        public string Nazwisko { get; set; }
+        [DataMember]
+        public string PESEL { get; set; }
+        [DataMember]
+        public int Telefon { get; set; }
+        [DataMember]
+        public string Email { get; set; }
+        [DataMember]
+        public string Typ { get; set; } = null;
+        [DataMember]
+        public string Haslo { get; set; }
+        [DataMember]
+        public string PowtorzHaslo { get; set; }
     }
 }

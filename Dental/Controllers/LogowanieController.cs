@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Dental.ServiceReference;
 using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
-    public class HomeController : Controller
+    public class LogowanieController : Controller
     {
-        public ActionResult Index()
+        ServiceClient client = new ServiceClient();
+        public ActionResult Login()
         {
+            ViewBag.Strona = "Strona głowna";
+            
             return View();
         }
 

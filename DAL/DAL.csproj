@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>751f0a65-bcf1-4843-9e82-c7940839e175</ProjectGuid>
+    <ProjectGuid>{751F0A65-BCF1-4843-9E82-C7940839E175}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL</RootNamespace>
@@ -31,24 +31,76 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="Migrations\201907131508244_Pacjent.cs" />
+    <Compile Include="Migrations\201907131508244_Pacjent.Designer.cs">
+      <DependentUpon>201907131508244_Pacjent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907141353268_Adres.cs" />
+    <Compile Include="Migrations\201907141353268_Adres.Designer.cs">
+      <DependentUpon>201907141353268_Adres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907141558579_Adres2.cs" />
+    <Compile Include="Migrations\201907141558579_Adres2.Designer.cs">
+      <DependentUpon>201907141558579_Adres2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907141607518_Adres3.cs" />
+    <Compile Include="Migrations\201907141607518_Adres3.Designer.cs">
+      <DependentUpon>201907141607518_Adres3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907141631288_Adres4.cs" />
+    <Compile Include="Migrations\201907141631288_Adres4.Designer.cs">
+      <DependentUpon>201907141631288_Adres4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907141808279_Adres5.cs" />
+    <Compile Include="Migrations\201907141808279_Adres5.Designer.cs">
+      <DependentUpon>201907141808279_Adres5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Adres.cs" />
+    <Compile Include="Model\Pacjent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201907131508244_Pacjent.resx">
+      <DependentUpon>201907131508244_Pacjent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907141353268_Adres.resx">
+      <DependentUpon>201907141353268_Adres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907141558579_Adres2.resx">
+      <DependentUpon>201907141558579_Adres2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907141607518_Adres3.resx">
+      <DependentUpon>201907141607518_Adres3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907141631288_Adres4.resx">
+      <DependentUpon>201907141631288_Adres4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907141808279_Adres5.resx">
+      <DependentUpon>201907141808279_Adres5.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>

@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfDental", "WcfDental\WcfDental.csproj", "{EEF16073-68D4-4610-98EF-682E98C633DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dental", "Dental\Dental.csproj", "{1EEDFF9C-514E-49EB-A7DD-003811EF8621}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EEF16073-68D4-4610-98EF-682E98C633DD} = {EEF16073-68D4-4610-98EF-682E98C633DD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
