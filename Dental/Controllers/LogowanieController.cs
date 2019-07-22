@@ -1,23 +1,38 @@
-﻿using Dental.ServiceReference;
+﻿
+
+using DAL.Model;
+using Dental.Models;
 using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
     public class LogowanieController : Controller
     {
-        ServiceClient client = new ServiceClient();
+        readonly DentalReference.DentalServiceClient client = new DentalReference.DentalServiceClient();
         public ActionResult Login()
         {
-            ViewBag.Strona = "Strona głowna";
-            
-            return View();
+            ViewBag.Strona = "Dental - Logowanie";
+            Pacjent model = new Pacjent();
+            return View(model);
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult Login(Pacjent pac)
         {
-            ViewBag.Message = "Your application description page.";
+            if (ModelState.IsValid)
+            {
+                ViewBag.Strona = "Dental - Rejestracja";
 
-            return View();
+                RejestracjaModel model = new RejestracjaModel
+                {
+                    Email = pac.Email,
+                    Hasło = pac.Haslo,
+                    PowtorzHaslo = pac.PowtorzHaslo
+                };
+                return View(model);
+            }
+            return View(pac);
+
         }
 
         public ActionResult Contact()

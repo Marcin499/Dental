@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DentalService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:50846/DentalService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:50846/DentalService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:50846/DentalService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DAL.Model" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDentalService_GetPacjentList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPacjentList" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetPacjentList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPacjentListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetPacjentByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPacjentByID" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetPacjentByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPacjentByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_PacjentInsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:PacjentInsert" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_PacjentInsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PacjentInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_PacjentUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:PacjentUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_PacjentUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PacjentUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_PacjentDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:PacjentDelete" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_PacjentDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PacjentDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetAdresList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdresList" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetAdresList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdresListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetAdresByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdresByID" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_GetAdresByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAdresByIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_AdresInsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:AdresInsert" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_AdresInsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AdresInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_AdresUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AdresUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_AdresUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AdresUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_AdresDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:AdresDelete" />
+  </wsdl:message>
+  <wsdl:message name="IDentalService_AdresDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AdresDeleteResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IDentalService">
+    <wsdl:operation name="GetPacjentList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/GetPacjentList" message="tns:IDentalService_GetPacjentList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/GetPacjentListResponse" message="tns:IDentalService_GetPacjentList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPacjentByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/GetPacjentByID" message="tns:IDentalService_GetPacjentByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/GetPacjentByIDResponse" message="tns:IDentalService_GetPacjentByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PacjentInsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/PacjentInsert" message="tns:IDentalService_PacjentInsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/PacjentInsertResponse" message="tns:IDentalService_PacjentInsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PacjentUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/PacjentUpdate" message="tns:IDentalService_PacjentUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/PacjentUpdateResponse" message="tns:IDentalService_PacjentUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PacjentDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/PacjentDelete" message="tns:IDentalService_PacjentDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/PacjentDeleteResponse" message="tns:IDentalService_PacjentDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdresList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/GetAdresList" message="tns:IDentalService_GetAdresList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/GetAdresListResponse" message="tns:IDentalService_GetAdresList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAdresByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/GetAdresByID" message="tns:IDentalService_GetAdresByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/GetAdresByIDResponse" message="tns:IDentalService_GetAdresByID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AdresInsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/AdresInsert" message="tns:IDentalService_AdresInsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/AdresInsertResponse" message="tns:IDentalService_AdresInsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AdresUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/AdresUpdate" message="tns:IDentalService_AdresUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/AdresUpdateResponse" message="tns:IDentalService_AdresUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AdresDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDentalService/AdresDelete" message="tns:IDentalService_AdresDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDentalService/AdresDeleteResponse" message="tns:IDentalService_AdresDelete_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IDentalService" type="tns:IDentalService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPacjentList">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/GetPacjentList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPacjentByID">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/GetPacjentByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PacjentInsert">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/PacjentInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PacjentUpdate">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/PacjentUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PacjentDelete">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/PacjentDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdresList">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/GetAdresList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAdresByID">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/GetAdresByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdresInsert">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/AdresInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdresUpdate">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/AdresUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdresDelete">
+      <soap:operation soapAction="http://tempuri.org/IDentalService/AdresDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DentalService">
+    <wsdl:port name="BasicHttpBinding_IDentalService" binding="tns:BasicHttpBinding_IDentalService">
+      <soap:address location="http://localhost:50846/DentalService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

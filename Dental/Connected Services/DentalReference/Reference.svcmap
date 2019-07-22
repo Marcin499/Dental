@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a6c54a08-86cf-4ff5-8bbe-b60a9c518b08" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50846/DentalService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DentalService.wsdl" MetadataType="Wsdl" ID="c0f0b3ea-cf05-4469-af28-d392f26fa460" SourceId="1" SourceUrl="http://localhost:50846/DentalService.svc?wsdl" />
+    <MetadataFile FileName="DentalService.xsd" MetadataType="Schema" ID="2c303f9c-dae7-495b-a6bd-e814f258c78d" SourceId="1" SourceUrl="http://localhost:50846/DentalService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DentalService1.xsd" MetadataType="Schema" ID="00e02246-fe4b-4c15-a60b-2bc39dcfd58c" SourceId="1" SourceUrl="http://localhost:50846/DentalService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DentalService2.xsd" MetadataType="Schema" ID="76be4cd4-0fe0-4d9e-be73-112c48911b56" SourceId="1" SourceUrl="http://localhost:50846/DentalService.svc?xsd=xsd2" />
+    <MetadataFile FileName="DentalService.disco" MetadataType="Disco" ID="97f48dcc-ffb3-4b46-bbb4-599a56889198" SourceId="1" SourceUrl="http://localhost:50846/DentalService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

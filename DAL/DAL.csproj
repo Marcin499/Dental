@@ -49,29 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="Migrations\201907131508244_Pacjent.cs" />
-    <Compile Include="Migrations\201907131508244_Pacjent.Designer.cs">
-      <DependentUpon>201907131508244_Pacjent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907141353268_Adres.cs" />
-    <Compile Include="Migrations\201907141353268_Adres.Designer.cs">
-      <DependentUpon>201907141353268_Adres.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907141558579_Adres2.cs" />
-    <Compile Include="Migrations\201907141558579_Adres2.Designer.cs">
-      <DependentUpon>201907141558579_Adres2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907141607518_Adres3.cs" />
-    <Compile Include="Migrations\201907141607518_Adres3.Designer.cs">
-      <DependentUpon>201907141607518_Adres3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907141631288_Adres4.cs" />
-    <Compile Include="Migrations\201907141631288_Adres4.Designer.cs">
-      <DependentUpon>201907141631288_Adres4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907141808279_Adres5.cs" />
-    <Compile Include="Migrations\201907141808279_Adres5.Designer.cs">
-      <DependentUpon>201907141808279_Adres5.cs</DependentUpon>
+    <Compile Include="Migrations\201907151848308_1.cs" />
+    <Compile Include="Migrations\201907151848308_1.Designer.cs">
+      <DependentUpon>201907151848308_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Adres.cs" />
@@ -83,23 +63,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907131508244_Pacjent.resx">
-      <DependentUpon>201907131508244_Pacjent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907141353268_Adres.resx">
-      <DependentUpon>201907141353268_Adres.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907141558579_Adres2.resx">
-      <DependentUpon>201907141558579_Adres2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907141607518_Adres3.resx">
-      <DependentUpon>201907141607518_Adres3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907141631288_Adres4.resx">
-      <DependentUpon>201907141631288_Adres4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907141808279_Adres5.resx">
-      <DependentUpon>201907141808279_Adres5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907151848308_1.resx">
+      <DependentUpon>201907151848308_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

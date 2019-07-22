@@ -21,7 +21,7 @@ namespace DAL.Model
         [Display(Name = "Adres e-mail")]
         [Required(ErrorMessage = "Proszę podać adres e-mail!")]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail jest niepoprawny")]
-        public string Email { get; set; }        
+        public string Email { get; set; }
         public string Typ { get; set; } = null;
 
         [Display(Name = "Hasło")]
@@ -30,6 +30,10 @@ namespace DAL.Model
         [Display(Name = "Powtórz hasło")]
         [Required(ErrorMessage = "Hasło niezgadza sie z powyższym!")]
         public string PowtorzHaslo { get; set; }
+
+        [NotMapped]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Zaznacz checkbox!")]
+        public bool Check { get; set; }
 
         public virtual Adres PacjentAdres { get; set; }
     }
