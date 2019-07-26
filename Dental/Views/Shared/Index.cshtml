@@ -5,63 +5,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>    
 </head>
 <style>
-    .naglowek{
-        background-color:darkgreen;
-        padding-top: 0px;
-        height: 76px;
-    }    
-    #strona{        
-        position: relative;               
-        vertical-align:bottom;
-        padding-top: 25px;
-        padding-left: 20px;
-        font-size: 20px;
-        color: white;
-    }
-    #image{ 
-        position:inherit;
-        float:left;
-        bottom: 2px;
-        padding-right: 20px;
-    }
-    #footer{
-        text-align:center;
-        background-color:darkgreen;
-        color: white;        
-    }
-    #body{        
-        padding-left:15px;
-        background-color: beige;
-    }
-     #body2{
-         height:100%;
-         padding-left:15px;
-        background-color: beige;
+    a:hover, a:visited, a:link, a:active, #witaj{
+         text-decoration: none;
+         color: white;         
      }
+    .modal-body{
+        padding-top:5px;
+        
+    }
 </style>
 <body>
     <div class="naglowek">
-        <div class="container">
-            <div id="image">
+        <div class="modal-body row" style="width:100%;">
+            <div id="image" class="col-sm-auto" style="padding-bottom:30px;">
                 <img src="/Image/Zab.png" alt="Dental">                                        
             </div>                       
-            <div id="strona">
+            <div id="strona" class="col-sm-2" style="width:700px; color:white; padding-top:30px; font-size:large">
                 @ViewBag.Strona           
+            </div>
+            <div id="witaj" class="col-sm-8">
+                <div style="float:right; padding-top:30px; font-size:large">                    
+               <a href="@Url.Action("Login", "Logowanie")">Zaloguj</a>
+                </div>
+                
             </div>
         </div>
     </div>
     <div id="body">
         @RenderBody()
-    </div>
-    <div id="body2">
-
-    </div>
-    <div id="footer">
+    </div>    
+    <div id="footer" style="height:100px">
         <footer>
             <p>&copy; @DateTime.Now.Year Chorzów - projekt inżynierski</p>
         </footer>
@@ -75,4 +53,5 @@
     
 </body>
 </html>
+
 

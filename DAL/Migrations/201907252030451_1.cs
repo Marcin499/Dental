@@ -11,8 +11,7 @@ namespace DAL.Migrations
                 "dbo.Adres",
                 c => new
                     {
-                        AdresID = c.Int(nullable: false, identity: true),
-                        PacjentId = c.Int(nullable: false),
+                        AdresID = c.Int(nullable: false),
                         Miasto = c.String(nullable: false),
                         Wojewodztwo = c.String(nullable: false),
                         Ulica = c.String(nullable: false),

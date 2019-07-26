@@ -2,119 +2,204 @@
 
 @{
     ViewBag.Title = "Rejestracja";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/Index.cshtml";
 }
+<style>
+    #ex1 a:link{
+        color:blue;
+    }
+</style>
 
-<h2>Rejestracja</h2>
-
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("SaveRejestracja", "Logowanie", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>RejestracjaModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Imie, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Imie, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Imie, "", new { @class = "text-danger" })
-            </div>
+
+    <div class="modal-body row" style="padding-left: 450px; margin-right:100px; padding-bottom: 100px; padding-top:50px">
+        
+        <div class="col-md-4">            
+            <div id="part1">
+            @Html.Label("Imię:")<br />            
+                @Html.TextBoxFor(model => model.Imie, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Imie)<br />
+
+        
+            @Html.Label("Nazwisko:")<br />             
+                @Html.TextBoxFor(model => model.Nazwisko, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nazwisko)<br />
+        
+            @Html.Label("PESEL:")<br />             
+                @Html.TextBoxFor(model => model.PESEL, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PESEL)<br />
+
+        
+            @Html.Label("Telefon:")<br />             
+                @Html.TextBoxFor(model => model.Telefon, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Telefon)<br />
+                
+                 @Html.Label("Email:")<br />             
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)<br />
+                
+                 @Html.Label("Hasło:")<br />             
+                @Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type="password" })
+                @Html.ValidationMessageFor(model => model.Haslo)<br />
+                
+                  <input type="submit" class="button" value="Zapisz"/><br />
+                </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nazwisko, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nazwisko, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nazwisko, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="col-md-4">
+            <div id="part2">
+                 @Html.Label("Powtórz hasło:")<br />             
+                @Html.TextBoxFor(model => model.PowtorzHaslo, new { @class = "form-control", @type="password" })
+                @Html.ValidationMessageFor(model => model.PowtorzHaslo)<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PESEL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PESEL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PESEL, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                  @Html.Label("Województwo:")<br />             
+                @Html.EnumDropDownListFor(model => model.Wojewodztwo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Wojewodztwo)<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Telefon, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.Label("Miasto:")<br />             
+                @Html.TextBoxFor(model => model.Miasto, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Miasto)<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
+            @Html.Label("Ulica:")<br />             
+                @Html.TextBoxFor(model => model.Ulica, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Ulica)<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Hasło, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Hasło, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Hasło, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
+            @Html.Label("Numer:")<br />             
+                @Html.TextBoxFor(model => model.Numer, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Numer)<br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PowtorzHaslo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PowtorzHaslo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PowtorzHaslo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
+            @Html.Label("Kod:")<br />             
+                @Html.TextBoxFor(model => model.Kod, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Kod)<br />
+                
+                 @Html.Label("Informacja o przetwarzaniu danych osobowych:")<br />             
+                @Html.CheckBoxFor(model => model.Check)
+                @Html.ValidationMessageFor(model => model.Check, "")
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Miasto, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Miasto, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Miasto, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @*@Html.HiddenFor(model => model.True)*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ulica, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ulica, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ulica, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Numer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Numer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Numer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Kod, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Kod, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kod, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        </div>        
     </div>
 }
+    <div id="ex1" class="modal">
+  <p>RODO informacja dla Klientów
+zarejestrowanych<br />
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+W związku z wejściem życie w dniu 25 maja 2018
+r. Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia
+27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z
+przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich
+danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o
+ochronie danych) (,,RODO? lub ?Rozporządzenie?), chcielibyśmy
+poinformować Panią/Pana, na jakich zasadach przetwarzane są dane osobowe
+oraz zapewnić, że dochowujemy wszelkich starań by dbać o ich
+bezpieczeństwo.
+
+Spełniając wynikający z przepisów RODO obowiązek
+informacyjny, chcielibyśmy poinformować Panią/Pana, że:
+
+
+Administratorem Pani/Pana danych osobowych jest Dental z
+ograniczoną odpowiedzialnością z siedzibą w Chorzowie. Kontakt z
+Administratorem jest możliwy pod numerem telefonu: XXX, lub
+za pomocą poczty elektronicznej: info@dental.pl;
+
+
+Pani/Pana dane osobowe przetwarzane będą na podstawie art. 6 ust. 1 lit.
+b) RODO, w celu wykonywania zawartej z Panią/Panem umowy, w tym w
+szczególności na potrzeby: (I) umożliwienia świadczenia usług drogą
+elektroniczną, w tym przeprowadzania transakcji, (II) obsługi
+zgłaszanych przez Panią/Pana reklamacji lub innych zgłoszeń i
+oświadczeń, (III) kontaktowania się z Panią/Panem w celach związanych ze
+świadczoną usługą, (IV) obsługi technicznej Pani/Pana konta w serwisie
+Dental;
+
+W opisanym
+powyżej celu Dental może przetwarzać w szczególności następujące
+kategorie Pani/Pana danych osobowych: (I) imię i nazwisko, (II) adres
+zamieszkania, (III) inny adres do korespondencji, (IV) numer telefonu,
+oraz (V) adres e-mail.
+        
+
+Dodatkowo, obowiązujące przepisy prawa wymagają
+od nas przetwarzania Twoich danych dla celów podatkowych i rachunkowych
+(art. 6 ust. 1 lit. c) RODO).
+
+Pani/Pana osobowe będą
+przechowywane przez okres obowiązywania zawartej z Panią/Panem umowy,
+tj. do momentu wyrejestrowania Pani/Pana konta z Serwisu lub do momentu
+złożenia przez Panią/Pana sprzeciwu wobec przetwarzania danych
+osobowych. Okres przetwarzania danych osobowych może zostać przedłużony
+o okres przedawnienia roszczeń, jeżeli przetwarzanie danych osobowych
+będzie niezbędne dla dochodzenia ewentualnych roszczeń lub obrony przed
+takimi roszczeniami;
+
+W celu zapewnienia najwyższej jakości
+usług Pani/Paba dane osobowe mogą być przekazywane podmiotom
+wspierającym nas w świadczeniu usług drogą elektroniczną, w tym przede
+wszystkim dostawcom usług informatycznych oraz podmiotom zapewniającym
+wsparcie oraz działanie narzędzi i systemów informatycznych
+Administratora, podmiotom zapewniającym obsługę płatniczą transakcji,
+usługi dostarczania zakupionych przez Panią/Pana towarów, a także
+podmiotom współpracującym przy prowadzeniu akcji marketingowych.
+Ponadto, możemy przekazać Pani/Pana dane osobowe organom publicznym
+walczącym z oszustwami i nadużyciami;
+
+Przysługuje Pani/Panu
+prawo żądania dostępu do Pani/Pana danych osobowych oraz ich
+sprostowania, usunięcia (w przypadkach przewidzianych przepisami RODO),
+ograniczenia przetwarzania, jak również prawo do przenoszenia Pani/Pana
+danych osobowych. Ponadto przysługuje Pani/Panu prawo wniesienia
+sprzeciwu względem przetwarzania Pani/Pana danych osobowych, w
+szczególności względem przetwarzania danych osobowych w celach
+marketingowych, w tym profilowania (o ile jest ono stosowane);
+
+
+Przysługuje Pani/Panu także prawo wniesienia skargi do organu
+nadzorczego zajmującego się ochroną danych osobowych (od dnia 25 maja
+2018 r. do Prezesa Urzędu Ochrony Danych Osobowych), w sytuacji gdy uzna
+Pani/Pan, że przetwarzanie Pani/Pana danych osobowych narusza przepisy
+prawa ochrony danych osobowych, w szczególności przepisy Rozporządzenia;
+
+
+Pani/Pana dane osobowe
+zostają przekazane nam dobrowolnie, przy czym zgromadzenie przez nas
+tych danych osobowych jest niezbędne do zawarcia z Panią/Panem umowy
+oraz jej wykonywania przez Dental. Brak podania tych danych osobowych
+może skutkować tym, że nie będziemy mogli zawrzeć z Panią/Panem umowy, a
+w konsekwencji nie będzie Pani/Pan mogła/mógł korzystać z usług
+świadczonych przez Dental.
+
+Jednocześnie, pragniemy zapewnić
+Panią/Pana, że wejście w życie przepisów RODO nie spowoduje zasadniczych
+zmian w warunkach korzystania z serisu Dental.
+Również z dniem 25 maja 2018 r. zaktualizujemy Regulamin sklepu
+internetowego gandalf.com.pl. Wprowadzone zostaną głównie zmiany
+dotyczące ochrony i przetwarzania danych osobowych.
+
+Dziękujemy i
+pozdrawiamy,
+
+Zespół Dental</p>
+  <a href="#" rel="modal:close">OK</a>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {        
+		$('input[type="checkbox"]').change(function () {			
+			if ($(this).prop('checked')) {
+                $('#ex1').modal("show");
+                $('.close-modal').hide();
+			}			
+		});
+    });    
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

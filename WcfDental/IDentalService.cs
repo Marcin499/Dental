@@ -1,5 +1,4 @@
-﻿using DAL.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
@@ -11,7 +10,7 @@ namespace WcfDental
     {
         #region Pacjent
         [OperationContract]
-        List<Pacjent> GetPacjentList();
+        List<PacjentWCF> GetPacjentList();
 
         [OperationContract]
         Pacjent GetPacjentByID(int id);
@@ -41,8 +40,9 @@ namespace WcfDental
 
     }
 
+
     [DataContract]
-    public class Contract
+    public class PacjentWCF
     {
         #region Pacjent
         [DataMember]
@@ -58,18 +58,19 @@ namespace WcfDental
         [DataMember]
         public string Email { get; set; }
         [DataMember]
-        public string Typ { get; set; } = null;
+        public string Typ { get; set; }
         [DataMember]
         public string Haslo { get; set; }
         [DataMember]
         public string PowtorzHaslo { get; set; }
         #endregion
+    }
+    public class Adres
+    {
 
         #region Adres
         [DataMember]
         public int AdresID { get; set; }
-        [DataMember]
-        public int PacjentId { get; set; }
         [DataMember]
         public string Miasto { get; set; }
         [DataMember]

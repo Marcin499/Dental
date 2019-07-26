@@ -28,7 +28,6 @@
       <xs:element minOccurs="0" name="Kod" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Miasto" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Numer" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PacjentId" type="xs:int" />
       <xs:element minOccurs="0" name="Ulica" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Wojewodztwo" nillable="true" type="xs:string" />
     </xs:sequence>

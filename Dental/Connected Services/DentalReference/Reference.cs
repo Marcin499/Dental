@@ -9,383 +9,35 @@
 //------------------------------------------------------------------------------
 
 namespace Dental.DentalReference {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Pacjent", Namespace="http://schemas.datacontract.org/2004/07/DAL.Model")]
-    [System.SerializableAttribute()]
-    public partial class Pacjent : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HasloField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ImieField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NazwiskoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PESELField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Dental.DentalReference.Adres PacjentAdresField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int PacjentIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PowtorzHasloField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TelefonField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TypField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Haslo {
-            get {
-                return this.HasloField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HasloField, value) != true)) {
-                    this.HasloField = value;
-                    this.RaisePropertyChanged("Haslo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Imie {
-            get {
-                return this.ImieField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ImieField, value) != true)) {
-                    this.ImieField = value;
-                    this.RaisePropertyChanged("Imie");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nazwisko {
-            get {
-                return this.NazwiskoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NazwiskoField, value) != true)) {
-                    this.NazwiskoField = value;
-                    this.RaisePropertyChanged("Nazwisko");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PESEL {
-            get {
-                return this.PESELField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PESELField, value) != true)) {
-                    this.PESELField = value;
-                    this.RaisePropertyChanged("PESEL");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Dental.DentalReference.Adres PacjentAdres {
-            get {
-                return this.PacjentAdresField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PacjentAdresField, value) != true)) {
-                    this.PacjentAdresField = value;
-                    this.RaisePropertyChanged("PacjentAdres");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int PacjentID {
-            get {
-                return this.PacjentIDField;
-            }
-            set {
-                if ((this.PacjentIDField.Equals(value) != true)) {
-                    this.PacjentIDField = value;
-                    this.RaisePropertyChanged("PacjentID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PowtorzHaslo {
-            get {
-                return this.PowtorzHasloField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PowtorzHasloField, value) != true)) {
-                    this.PowtorzHasloField = value;
-                    this.RaisePropertyChanged("PowtorzHaslo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Telefon {
-            get {
-                return this.TelefonField;
-            }
-            set {
-                if ((this.TelefonField.Equals(value) != true)) {
-                    this.TelefonField = value;
-                    this.RaisePropertyChanged("Telefon");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Typ {
-            get {
-                return this.TypField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TypField, value) != true)) {
-                    this.TypField = value;
-                    this.RaisePropertyChanged("Typ");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Adres", Namespace="http://schemas.datacontract.org/2004/07/DAL.Model")]
-    [System.SerializableAttribute()]
-    public partial class Adres : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int AdresIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Dental.DentalReference.Pacjent AdresPacjentField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string KodField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MiastoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NumerField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int PacjentIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UlicaField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string WojewodztwoField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int AdresID {
-            get {
-                return this.AdresIDField;
-            }
-            set {
-                if ((this.AdresIDField.Equals(value) != true)) {
-                    this.AdresIDField = value;
-                    this.RaisePropertyChanged("AdresID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Dental.DentalReference.Pacjent AdresPacjent {
-            get {
-                return this.AdresPacjentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AdresPacjentField, value) != true)) {
-                    this.AdresPacjentField = value;
-                    this.RaisePropertyChanged("AdresPacjent");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Kod {
-            get {
-                return this.KodField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.KodField, value) != true)) {
-                    this.KodField = value;
-                    this.RaisePropertyChanged("Kod");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Miasto {
-            get {
-                return this.MiastoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MiastoField, value) != true)) {
-                    this.MiastoField = value;
-                    this.RaisePropertyChanged("Miasto");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Numer {
-            get {
-                return this.NumerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NumerField, value) != true)) {
-                    this.NumerField = value;
-                    this.RaisePropertyChanged("Numer");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int PacjentId {
-            get {
-                return this.PacjentIdField;
-            }
-            set {
-                if ((this.PacjentIdField.Equals(value) != true)) {
-                    this.PacjentIdField = value;
-                    this.RaisePropertyChanged("PacjentId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Ulica {
-            get {
-                return this.UlicaField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UlicaField, value) != true)) {
-                    this.UlicaField = value;
-                    this.RaisePropertyChanged("Ulica");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Wojewodztwo {
-            get {
-                return this.WojewodztwoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WojewodztwoField, value) != true)) {
-                    this.WojewodztwoField = value;
-                    this.RaisePropertyChanged("Wojewodztwo");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DentalReference.IDentalService")]
     public interface IDentalService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetPacjentList", ReplyAction="http://tempuri.org/IDentalService/GetPacjentListResponse")]
-        Dental.DentalReference.Pacjent[] GetPacjentList();
+        DAL.Model.Pacjent[] GetPacjentList();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetPacjentList", ReplyAction="http://tempuri.org/IDentalService/GetPacjentListResponse")]
-        System.Threading.Tasks.Task<Dental.DentalReference.Pacjent[]> GetPacjentListAsync();
+        System.Threading.Tasks.Task<DAL.Model.Pacjent[]> GetPacjentListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetPacjentByID", ReplyAction="http://tempuri.org/IDentalService/GetPacjentByIDResponse")]
-        Dental.DentalReference.Pacjent GetPacjentByID(int id);
+        DAL.Model.Pacjent GetPacjentByID(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetPacjentByID", ReplyAction="http://tempuri.org/IDentalService/GetPacjentByIDResponse")]
-        System.Threading.Tasks.Task<Dental.DentalReference.Pacjent> GetPacjentByIDAsync(int id);
+        System.Threading.Tasks.Task<DAL.Model.Pacjent> GetPacjentByIDAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/PacjentInsert", ReplyAction="http://tempuri.org/IDentalService/PacjentInsertResponse")]
-        bool PacjentInsert(Dental.DentalReference.Pacjent pacjent);
+        bool PacjentInsert(DAL.Model.Pacjent pacjent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/PacjentInsert", ReplyAction="http://tempuri.org/IDentalService/PacjentInsertResponse")]
-        System.Threading.Tasks.Task<bool> PacjentInsertAsync(Dental.DentalReference.Pacjent pacjent);
+        System.Threading.Tasks.Task<bool> PacjentInsertAsync(DAL.Model.Pacjent pacjent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/PacjentUpdate", ReplyAction="http://tempuri.org/IDentalService/PacjentUpdateResponse")]
-        bool PacjentUpdate(Dental.DentalReference.Pacjent pacjent);
+        bool PacjentUpdate(DAL.Model.Pacjent pacjent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/PacjentUpdate", ReplyAction="http://tempuri.org/IDentalService/PacjentUpdateResponse")]
-        System.Threading.Tasks.Task<bool> PacjentUpdateAsync(Dental.DentalReference.Pacjent pacjent);
+        System.Threading.Tasks.Task<bool> PacjentUpdateAsync(DAL.Model.Pacjent pacjent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/PacjentDelete", ReplyAction="http://tempuri.org/IDentalService/PacjentDeleteResponse")]
         bool PacjentDelete(int id);
@@ -394,28 +46,28 @@ namespace Dental.DentalReference {
         System.Threading.Tasks.Task<bool> PacjentDeleteAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetAdresList", ReplyAction="http://tempuri.org/IDentalService/GetAdresListResponse")]
-        Dental.DentalReference.Adres[] GetAdresList();
+        DAL.Model.Adres[] GetAdresList();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetAdresList", ReplyAction="http://tempuri.org/IDentalService/GetAdresListResponse")]
-        System.Threading.Tasks.Task<Dental.DentalReference.Adres[]> GetAdresListAsync();
+        System.Threading.Tasks.Task<DAL.Model.Adres[]> GetAdresListAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetAdresByID", ReplyAction="http://tempuri.org/IDentalService/GetAdresByIDResponse")]
-        Dental.DentalReference.Adres GetAdresByID(int id);
+        DAL.Model.Adres GetAdresByID(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/GetAdresByID", ReplyAction="http://tempuri.org/IDentalService/GetAdresByIDResponse")]
-        System.Threading.Tasks.Task<Dental.DentalReference.Adres> GetAdresByIDAsync(int id);
+        System.Threading.Tasks.Task<DAL.Model.Adres> GetAdresByIDAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/AdresInsert", ReplyAction="http://tempuri.org/IDentalService/AdresInsertResponse")]
-        bool AdresInsert(Dental.DentalReference.Adres adres);
+        bool AdresInsert(DAL.Model.Adres adres);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/AdresInsert", ReplyAction="http://tempuri.org/IDentalService/AdresInsertResponse")]
-        System.Threading.Tasks.Task<bool> AdresInsertAsync(Dental.DentalReference.Adres adres);
+        System.Threading.Tasks.Task<bool> AdresInsertAsync(DAL.Model.Adres adres);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/AdresUpdate", ReplyAction="http://tempuri.org/IDentalService/AdresUpdateResponse")]
-        bool AdresUpdate(Dental.DentalReference.Adres adres);
+        bool AdresUpdate(DAL.Model.Adres adres);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/AdresUpdate", ReplyAction="http://tempuri.org/IDentalService/AdresUpdateResponse")]
-        System.Threading.Tasks.Task<bool> AdresUpdateAsync(Dental.DentalReference.Adres adres);
+        System.Threading.Tasks.Task<bool> AdresUpdateAsync(DAL.Model.Adres adres);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/AdresDelete", ReplyAction="http://tempuri.org/IDentalService/AdresDeleteResponse")]
         bool AdresDelete(int id);
@@ -451,35 +103,35 @@ namespace Dental.DentalReference {
                 base(binding, remoteAddress) {
         }
         
-        public Dental.DentalReference.Pacjent[] GetPacjentList() {
+        public DAL.Model.Pacjent[] GetPacjentList() {
             return base.Channel.GetPacjentList();
         }
         
-        public System.Threading.Tasks.Task<Dental.DentalReference.Pacjent[]> GetPacjentListAsync() {
+        public System.Threading.Tasks.Task<DAL.Model.Pacjent[]> GetPacjentListAsync() {
             return base.Channel.GetPacjentListAsync();
         }
         
-        public Dental.DentalReference.Pacjent GetPacjentByID(int id) {
+        public DAL.Model.Pacjent GetPacjentByID(int id) {
             return base.Channel.GetPacjentByID(id);
         }
         
-        public System.Threading.Tasks.Task<Dental.DentalReference.Pacjent> GetPacjentByIDAsync(int id) {
+        public System.Threading.Tasks.Task<DAL.Model.Pacjent> GetPacjentByIDAsync(int id) {
             return base.Channel.GetPacjentByIDAsync(id);
         }
         
-        public bool PacjentInsert(Dental.DentalReference.Pacjent pacjent) {
+        public bool PacjentInsert(DAL.Model.Pacjent pacjent) {
             return base.Channel.PacjentInsert(pacjent);
         }
         
-        public System.Threading.Tasks.Task<bool> PacjentInsertAsync(Dental.DentalReference.Pacjent pacjent) {
+        public System.Threading.Tasks.Task<bool> PacjentInsertAsync(DAL.Model.Pacjent pacjent) {
             return base.Channel.PacjentInsertAsync(pacjent);
         }
         
-        public bool PacjentUpdate(Dental.DentalReference.Pacjent pacjent) {
+        public bool PacjentUpdate(DAL.Model.Pacjent pacjent) {
             return base.Channel.PacjentUpdate(pacjent);
         }
         
-        public System.Threading.Tasks.Task<bool> PacjentUpdateAsync(Dental.DentalReference.Pacjent pacjent) {
+        public System.Threading.Tasks.Task<bool> PacjentUpdateAsync(DAL.Model.Pacjent pacjent) {
             return base.Channel.PacjentUpdateAsync(pacjent);
         }
         
@@ -491,35 +143,35 @@ namespace Dental.DentalReference {
             return base.Channel.PacjentDeleteAsync(id);
         }
         
-        public Dental.DentalReference.Adres[] GetAdresList() {
+        public DAL.Model.Adres[] GetAdresList() {
             return base.Channel.GetAdresList();
         }
         
-        public System.Threading.Tasks.Task<Dental.DentalReference.Adres[]> GetAdresListAsync() {
+        public System.Threading.Tasks.Task<DAL.Model.Adres[]> GetAdresListAsync() {
             return base.Channel.GetAdresListAsync();
         }
         
-        public Dental.DentalReference.Adres GetAdresByID(int id) {
+        public DAL.Model.Adres GetAdresByID(int id) {
             return base.Channel.GetAdresByID(id);
         }
         
-        public System.Threading.Tasks.Task<Dental.DentalReference.Adres> GetAdresByIDAsync(int id) {
+        public System.Threading.Tasks.Task<DAL.Model.Adres> GetAdresByIDAsync(int id) {
             return base.Channel.GetAdresByIDAsync(id);
         }
         
-        public bool AdresInsert(Dental.DentalReference.Adres adres) {
+        public bool AdresInsert(DAL.Model.Adres adres) {
             return base.Channel.AdresInsert(adres);
         }
         
-        public System.Threading.Tasks.Task<bool> AdresInsertAsync(Dental.DentalReference.Adres adres) {
+        public System.Threading.Tasks.Task<bool> AdresInsertAsync(DAL.Model.Adres adres) {
             return base.Channel.AdresInsertAsync(adres);
         }
         
-        public bool AdresUpdate(Dental.DentalReference.Adres adres) {
+        public bool AdresUpdate(DAL.Model.Adres adres) {
             return base.Channel.AdresUpdate(adres);
         }
         
-        public System.Threading.Tasks.Task<bool> AdresUpdateAsync(Dental.DentalReference.Adres adres) {
+        public System.Threading.Tasks.Task<bool> AdresUpdateAsync(DAL.Model.Adres adres) {
             return base.Channel.AdresUpdateAsync(adres);
         }
         

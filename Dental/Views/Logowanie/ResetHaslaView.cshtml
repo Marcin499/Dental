@@ -1,0 +1,33 @@
+﻿@model Dental.Models.ResetHaslaLogowanieModel
+
+<div class="row" style=" padding-left: 550px; margin-right:100px; padding-bottom: 150px; padding-top:100px">
+	<div class="col-md-4" style="-webkit-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
+        -moz-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
+        box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47); border-radius: 25px 25px 25px 25px;
+        -moz-border-radius: 25px 25px 25px 25px;
+        -webkit-border-radius: 25px 25px 25px 25px;
+        border: 0px solid #000000;">
+		<h3>Resetuj hasło</h3><br />
+	    <div id="logowanie">
+            @using (Html.BeginForm("ResetHasla", "Logowanie", FormMethod.Post))
+            {
+		    @Html.Label("Wpisz adres email:")
+		    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)<br />
+
+	    	@Html.Label("Podaj hasło:")
+	    	@Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type = "password" })
+            @Html.ValidationMessageFor(model => model.Haslo)<br />
+
+            @Html.Label("Potwierdź hasło:")
+	    	@Html.TextBoxFor(model => model.PowtorzHaslo, new { @class = "form-control", @type = "password" })
+            @Html.ValidationMessageFor(model => model.PowtorzHaslo)<br />
+		        <input type="submit"  class="button" value="Zapisz" /><br />                
+            }
+            <div class="text-danger">
+                @ViewBag.Message
+            </div>
+            
+        </div>
+    </div>
+</div>

@@ -1,241 +1,51 @@
-﻿@model DAL.Model.Pacjent
-<style>
-.button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
-  margin-left: 10px;
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  border-radius: 8px;
-}
+﻿@model Dental.Models.LogowanieModel
 
-.button:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-
-.field-validation-error {
-color: #ff0000;
-display: block;
-}
-.modal{
-    overflow-y: initial !important;
-        height: 600px;
-    overflow-y: auto;
-}
-
-		
-</style>
-<div class="row" style=" padding-left: 300px; margin-right:100px; padding-bottom: 100px; padding-top:50px">
+<div class="row" style=" padding-left: 350px; margin-right:100px; padding-bottom: 150px; padding-top:100px">
 	<div class="col-md-4" style="-webkit-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
--moz-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47); border-radius: 25px 25px 25px 25px;
--moz-border-radius: 25px 25px 25px 25px;
--webkit-border-radius: 25px 25px 25px 25px;
-border: 0px solid #000000;">
-		<h3>Zaloguj sie do systemu</h3><br />
-		<div id="logowanie">
-		@Html.Label("Wpisz adres email:")
-		@Html.TextBoxFor(model => model.Email, new { @class = "form-control" })<br />
-		
-		@Html.Label("Podaj hasło:")
-		@Html.TextBoxFor(model => model.Haslo,  new { @class = "form-control", @type = "password" })<br/>
-					   
-		<input type="button" class="button" value="Zaloguj"/>
-		<input type="button" class="button" value="Nie pamiętam hasła" />
-		</div>
-	</div>
-	<div class="col-md-5" style="-webkit-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
+        -moz-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
+        box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47); border-radius: 25px 25px 25px 25px;
+        -moz-border-radius: 25px 25px 25px 25px;
+        -webkit-border-radius: 25px 25px 25px 25px;
+        border: 0px solid #000000;">        
+        
+		<h3>Zaloguj się do systemu.</h3><br />
+	    <div id="logowanie">
+            @using (Html.BeginForm("Logowanie", "Logowanie", FormMethod.Post))
+            {
+		    @Html.Label("Email:")
+		    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)<br />
+
+	    	@Html.Label("Hasło:")
+	    	@Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type = "password" })
+            @Html.ValidationMessageFor(model => model.Haslo)<br />
+		        <input type="submit"  class="button" value="Zaloguj" />                
+            }
+            <input type="button" class="button" value="Nie pamiętam hasła" onclick="location.href='@Url.Action("ResetHaslaView", "Logowanie")'"/><br />
+            <div class="text-danger">
+                @ViewBag.Message
+            </div>
+            <div style="color:forestgreen">
+            @TempData["PoprawnyReset"]
+        </div>
+	    </div>
+    </div>
+
+<div class="col-md-5" style="-webkit-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
 -moz-box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47);
 box-shadow: 6px -5px 18px -4px rgba(0,0,0,0.47); margin-left: 100px; border-radius: 25px 25px 25px 25px;
 -moz-border-radius: 25px 25px 25px 25px;
 -webkit-border-radius: 25px 25px 25px 25px;
 border: 0px solid #000000;">
-		<div id="rejestracja" style="display:inline">        
-		<h3>Rejestracja nowego klienta</h3><br />
-	   @using (Html.BeginForm("Login", "Logowanie", FormMethod.Post))
-	   {
-		   @Html.Label("Wpisz adres email:")
-		@Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "Emaill" })<br />
-
-		@Html.Label("Podaj hasło:")
-		@Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @id = "Hasloo", @type = "password" })<br/>
-
-		@Html.Label("Powtórz hasło")
-		@Html.TextBoxFor(model => model.PowtorzHaslo, new { @class = "form-control", @type = "password" })<br />
-
-			@Html.Label("Zaakceptuj informację o przetwarzaniu danych osobowych")
-			@Html.CheckBoxFor(p => p.Check)<br /> 
-			@Html.ValidationMessageFor(p => p.Check, "",  new { @class = "text-danger" })
-
-		   <input type="submit" class="button" value="Załóż konto"/><br />
-	
-	   }      
-
-			<div id="ex1" class="modal">
-  <p>RODO informacja dla Klientów
-zarejestrowanych<br />
-
-W związku z wejściem życie w dniu 25 maja 2018
-r. Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia
-27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z
-przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich
-danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o
-ochronie danych) (,,RODO? lub ?Rozporządzenie?), chcielibyśmy
-poinformować Panią/Pana, na jakich zasadach przetwarzane są dane osobowe
-oraz zapewnić, że dochowujemy wszelkich starań by dbać o ich
-bezpieczeństwo.
-
-Spełniając wynikający z przepisów RODO obowiązek
-informacyjny, chcielibyśmy poinformować Panią/Pana, że:
-
-
-Administratorem Pani/Pana danych osobowych jest Gandalf Spółka z
-ograniczoną odpowiedzialnością z siedzibą w Łodzi przy ul. Beskidzkiej
-37, 91-612 Łódź ("Gandalf", "Administrator" lub "my"). Kontakt z
-Administratorem jest możliwy pod numerem telefonu: +48 42 252 39 23, lub
-za pomocą poczty elektronicznej: info@gandalf.com.pl;
-
-
-Pani/Pana dane osobowe przetwarzane będą na podstawie art. 6 ust. 1 lit.
-b) RODO, w celu wykonywania zawartej z Panią/Panem umowy, w tym w
-szczególności na potrzeby: (I) umożliwienia świadczenia usług drogą
-elektroniczną, w tym przeprowadzania transakcji, (II) obsługi
-zgłaszanych przez Panią/Pana reklamacji lub innych zgłoszeń i
-oświadczeń, (III) kontaktowania się z Panią/Panem w celach związanych ze
-świadczoną usługą, (IV) obsługi technicznej Pani/Pana konta w serwisie
-Księgarni Internetowej Gandalf ("Serwis");
-
-W opisanym
-powyżej celu Gandalf może przetwarzać w szczególności następujące
-kategorie Pani/Pana danych osobowych: (I) imię i nazwisko, (II) adres
-zamieszkania, (III) inny adres do korespondencji, (IV) numer telefonu,
-oraz (V) adres e-mail.
-
-Ponadto, w przypadku zamówienia przez
-Panią/Pana - podczas rejestracji w Serwisie lub w późniejszym momencie
-korzystania z Serwisu - usługi newslettera, polegającej na przesyłaniu
-na podany przez Panią/Pana adres e-mail newslettera z ofertami
-handlowymi, promocjami oraz innymi informacjami dotyczącymi m.in.
-nowości wydawniczych (?usługa Newsletter?), podany przez Panią/Pana
-adres e-mail przetwarzany będzie na podstawie art. 6 ust. 1 lit. b)
-RODO, w celu wykonywania umowy o świadczenie przez Gandalf usługi
-Newsletter;
-
-Dodatkowo, obowiązujące przepisy prawa wymagają
-od nas przetwarzania Twoich danych dla celów podatkowych i rachunkowych
-(art. 6 ust. 1 lit. c) RODO).
-
-Pani/Pana osobowe będą
-przechowywane przez okres obowiązywania zawartej z Panią/Panem umowy,
-tj. do momentu wyrejestrowania Pani/Pana konta z Serwisu lub do momentu
-złożenia przez Panią/Pana sprzeciwu wobec przetwarzania danych
-osobowych. Okres przetwarzania danych osobowych może zostać przedłużony
-o okres przedawnienia roszczeń, jeżeli przetwarzanie danych osobowych
-będzie niezbędne dla dochodzenia ewentualnych roszczeń lub obrony przed
-takimi roszczeniami;
-
-W celu zapewnienia najwyższej jakości
-usług Pani/Paba dane osobowe mogą być przekazywane podmiotom
-wspierającym nas w świadczeniu usług drogą elektroniczną, w tym przede
-wszystkim dostawcom usług informatycznych oraz podmiotom zapewniającym
-wsparcie oraz działanie narzędzi i systemów informatycznych
-Administratora, podmiotom zapewniającym obsługę płatniczą transakcji,
-usługi dostarczania zakupionych przez Panią/Pana towarów, a także
-podmiotom współpracującym przy prowadzeniu akcji marketingowych.
-Ponadto, możemy przekazać Pani/Pana dane osobowe organom publicznym
-walczącym z oszustwami i nadużyciami;
-
-Przysługuje Pani/Panu
-prawo żądania dostępu do Pani/Pana danych osobowych oraz ich
-sprostowania, usunięcia (w przypadkach przewidzianych przepisami RODO),
-ograniczenia przetwarzania, jak również prawo do przenoszenia Pani/Pana
-danych osobowych. Ponadto przysługuje Pani/Panu prawo wniesienia
-sprzeciwu względem przetwarzania Pani/Pana danych osobowych, w
-szczególności względem przetwarzania danych osobowych w celach
-marketingowych, w tym profilowania (o ile jest ono stosowane);
-
-
-Przysługuje Pani/Panu także prawo wniesienia skargi do organu
-nadzorczego zajmującego się ochroną danych osobowych (od dnia 25 maja
-2018 r. do Prezesa Urzędu Ochrony Danych Osobowych), w sytuacji gdy uzna
-Pani/Pan, że przetwarzanie Pani/Pana danych osobowych narusza przepisy
-prawa ochrony danych osobowych, w szczególności przepisy Rozporządzenia;
-
-
-W celu efektywniejszego promowania oferty i dopasowania jej
-do Pani/Pana potrzeb, wyłącznie w przypadku zamówienia przez Panią/Pana
-spersonalizowanej usługi Newsletter, Pani/Pana dane osobowe mogą
-podlegać zautomatyzowanemu przetwarzaniu (w tym profilowaniu) poprzez
-użycie ich do oceny niektórych informacji na Pani/Pana temat, w
-szczególności do przeprowadzenia analizy lub prognozy Pani/Pana
-preferencji zakupowych. Takie zautomatyzowane przetwarzanie Pani/Pana
-danych jest niezbędne do wykonywania przez nas umowy o świadczenie
-spersonalizowanej usługi Newsletter;
-
-Pani/Pana dane osobowe
-zostają przekazane nam dobrowolnie, przy czym zgromadzenie przez nas
-tych danych osobowych jest niezbędne do zawarcia z Panią/Panem umowy
-oraz jej wykonywania przez Gandalf. Brak podania tych danych osobowych
-może skutkować tym, że nie będziemy mogli zawrzeć z Panią/Panem umowy, a
-w konsekwencji nie będzie Pani/Pan mogła/mógł korzystać z usług
-świadczonych przez Gandalf.
-
-Jednocześnie, pragniemy zapewnić
-Panią/Pana, że wejście w życie przepisów RODO nie spowoduje zasadniczych
-zmian w warunkach korzystania z usług Księgarni Internetowej Gandalf.
-Również z dniem 25 maja 2018 r. zaktualizujemy Regulamin sklepu
-internetowego gandalf.com.pl. Wprowadzone zostaną głównie zmiany
-dotyczące ochrony i przetwarzania danych osobowych.
-
-Dziękujemy i
-pozdrawiamy,
-
-Zespół Dental</p>
-  <a href="#" rel="modal:close">OK</a>
-</div>
-                   			
-			
-		</div>
+		<div id="rejestracja" >        
+		<h3>Niemasz jeszcze konta w naszym serwisie?</h3><br />
+            <h4>Zarejestruj się teraz!</h4>
+            <div id="rejestracjaTeraz" style="padding-left:120px; padding-top:40px;" >            
+		   <input type="submit" class="button" style="width:150px;" value="Załóż konto"  onclick="location.href='@Url.Action("Rejestracja", "Logowanie")'"/><br />
+		   </div>
+          </div>
 	</div>
 </div>
-	  
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('input[type="checkbox"]').change(function () {
-			debugger;
-			if ($(this).prop('checked')) {
-				$('#ex1').modal("show");
-			}
-			else {
 
-			}
-		});
-	});
-
-	this.blur(); // Manually remove focus from clicked link.
-
-	function Rejestracja() {
-		debugger;        
-		if ($('input[type="checkbox"]').click)
-			{
-				alert('Akceptuj RODO');
-			}
-			else
-			{
-				var email = $('form').serialize();
-					'@Url.Action("Rejestracja", "Logowanie")';
-					
-			}
 			
-	} 
 
-</script>

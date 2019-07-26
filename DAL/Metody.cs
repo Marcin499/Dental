@@ -1,34 +1,25 @@
-﻿using DAL;
-using DAL.Model;
+﻿using DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using AutoMapper;
 
-
-namespace WcfDental
+namespace DAL
 {
-    // UWAGA: możesz użyć polecenia „Zmień nazwę” w menu „Refaktoryzuj”, aby zmienić nazwę klasy „DentalService” w kodzie, usłudze i pliku konfiguracji.
-    // UWAGA: aby uruchomić klienta testowego WCF w celu przetestowania tej usługi, wybierz plik DentalService.svc lub DentalService.svc.cs w eksploratorze rozwiązań i rozpocznij debugowanie.
-    public class DentalService : IDentalService
+    public class Metody
     {
-        public DentalService()
-        {
-           Mapper.Map
-        }
         Context context = new Context();
-
         #region Adres
         public bool AdresDelete(int id)
         {
-            using (var dbContextTransaction = context.Database.BeginTransaction())
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
                     var wynik = context.Adress.Where(a => a.AdresID == id).First();
                     context.Adress.Remove(wynik);
                     context.SaveChanges();
+                    dbContextTransaction.Commit();
                     return true;
                 }
                 catch (Exception)
@@ -42,7 +33,7 @@ namespace WcfDental
 
         public bool AdresInsert(Adres adres)
         {
-            using (var dbContextTransaction = context.Database.BeginTransaction())
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
@@ -63,7 +54,7 @@ namespace WcfDental
 
         public bool AdresUpdate(Adres adres)
         {
-            using (var dbContextTransaction = context.Database.BeginTransaction())
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
@@ -105,23 +96,26 @@ namespace WcfDental
             return context.Pacjents.Where(a => a.PacjentID == id).FirstOrDefault();
         }
 
+        public Pacjent GetPacjentEmail(string email)
+        {
+            return context.Pacjents.Where(a => a.Email == email).FirstOrDefault();
+        }
+
         public List<Pacjent> GetPacjentList()
         {
-            L
             return context.Pacjents.ToList();
-            
-               
         }
 
         public bool PacjentDelete(int id)
         {
-            using (var dbContextTransaction = context.Database.BeginTransaction())
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
                     var wynik = context.Pacjents.Where(a => a.PacjentID == id).First();
                     context.Pacjents.Remove(wynik);
                     context.SaveChanges();
+                    dbContextTransaction.Commit();
                     return true;
                 }
                 catch (Exception)
@@ -156,7 +150,7 @@ namespace WcfDental
 
         public bool PacjentUpdate(Pacjent pacjent)
         {
-            using (var dbContextTransaction = context.Database.BeginTransaction())
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
