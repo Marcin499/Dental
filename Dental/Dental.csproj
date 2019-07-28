@@ -127,11 +127,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\LekarzController.cs" />
     <Compile Include="Controllers\LogowanieController.cs" />
     <Compile Include="Controllers\PacjentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Help.cs" />
     <Compile Include="Models\RejestracjaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -208,7 +211,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -231,8 +236,17 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Logowanie\Rejestracja.cshtml" />
     <Content Include="Views\Shared\MenuPacjent.cshtml" />
-    <Content Include="Views\Pacjent\MenuPacjentView.cshtml" />
+    <Content Include="Views\Pacjent\MenuPacjent.cshtml" />
     <Content Include="Views\Logowanie\ResetHaslaView.cshtml" />
+    <Content Include="Views\Pacjent\Wizyta.cshtml" />
+    <Content Include="Views\Pacjent\Historia.cshtml" />
+    <Content Include="Views\Pacjent\Cennik.cshtml" />
+    <Content Include="Views\Pacjent\Kontakt.cshtml" />
+    <Content Include="Views\Pacjent\Profil.cshtml" />
+    <Content Include="Views\Shared\MenuAdmin.cshtml" />
+    <Content Include="Views\Shared\MenuLekarz.cshtml" />
+    <Content Include="Views\Lekarz\MenuLekarz.cshtml" />
+    <Content Include="Views\Admin\MenuAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

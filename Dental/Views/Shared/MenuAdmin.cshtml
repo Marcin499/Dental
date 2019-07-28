@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>    
+</head>
+<style>
+    a:hover, a:visited, a:link, a:active, #witaj{
+         text-decoration: none;
+         color: white;         
+     }
+    .modal-body{
+        padding-top:5px;
+        
+    }
+
+    .modal-body.row{
+        height:80px;
+        
+    }
+    .col-1{
+        height:50px;
+    }
+    
+.menu{margin:0; padding:0; width:300px; list-style:none;background:rgb(255,255,255);}
+.menu li{padding:0; margin:0 0 1px 0; height:40px; display:block; }
+.menu li a{text-align:left;height:40px; padding:0px 25px; font:16px Verdana, Arial, Helvetica, sans-serif; color:rgb(255,255,255); display:block; background:url('../Image/ver.png') 0px 0px no-repeat; text-decoration:none; outline:none;}
+.menu li a:hover{background:url('../Image/ver.png') 0px -40px no-repeat; color:rgb(255,255,255);}
+.menu li a.active, .menu li a.active:hover{background:url('../Image/ver.png') 0px -80px no-repeat; color:rgb(255,255,255);}
+.menu li a span{line-height:40px;}
+
+
+  
+</style>
+<body>
+    <div class="naglowek">
+        <div class="modal-body row" style="width:100%;">
+            <div id="image" class="col-1" style="padding-bottom:30px;">
+                <img src="/Image/Zab.png" alt="Dental">                                        
+            </div>                       
+            <div id="strona" class="col-sm-2" style="width:700px; color:white; padding-top:30px; font-size:large">
+                @ViewBag.Strona           
+            </div>
+            <div id="witaj" class="col-sm-9">
+                <div style="float:right; padding-top:30px; font-size:large">
+                  
+               <a href="@Url.Action("Login", "Logowanie") ">Wyloguj</a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+ <div id="body" style="display:flex; height:600px; ">        
+  <ul class="menu" style="background-color:beige">
+  <li class="klasa"><a href="@Url.Action("MenuPacjent", "Pacjent")"><span>Promocje</span></a></li>
+  <li class="klasa"><a href="@Url.Action("Wizyta", "Pacjent")" ><span>Wizyta</span></a></li>
+  <li  class="klasa"><a href="@Url.Action("Historia", "Pacjent")"><span>Personel</span></a></li>
+  <li class="klasa"><a href="@Url.Action("Cennik", "Pacjent")"><span>Cennik</span></a></li>
+  <li  class="klasa"><a href="@Url.Action("Kontakt", "Pacjent")"><span>Administracja</span></a></li>
+  <li  class="klasa"><a href="@Url.Action("Profil", "Pacjent")"><span>Zabiegi</span></a></li>
+</ul>
+        
+        <div class="col-md-10" >
+            @RenderBody()
+        </div>
+        
+    </div>    
+    <div id="footer" style="height:100px">
+        <footer>
+            <p>&copy; @DateTime.Now.Year Chorzów - projekt inżynierski</p>
+        </footer>
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        debugger;  
+    });
+              
+
+</script>
+

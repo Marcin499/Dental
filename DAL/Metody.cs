@@ -113,6 +113,7 @@ namespace DAL
                 try
                 {
                     var wynik = context.Pacjents.Where(a => a.PacjentID == id).First();
+                    var suma = 
                     context.Pacjents.Remove(wynik);
                     context.SaveChanges();
                     dbContextTransaction.Commit();
