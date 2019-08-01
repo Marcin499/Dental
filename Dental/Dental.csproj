@@ -152,6 +152,24 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flexigrid\flexigrid.css" />
+    <Content Include="Content\flexigrid\images\bg.gif" />
+    <Content Include="Content\flexigrid\images\btn-sprite.gif" />
+    <Content Include="Content\flexigrid\images\ddn.png" />
+    <Content Include="Content\flexigrid\images\dn.png" />
+    <Content Include="Content\flexigrid\images\fhbg.gif" />
+    <Content Include="Content\flexigrid\images\first.gif" />
+    <Content Include="Content\flexigrid\images\hl.png" />
+    <Content Include="Content\flexigrid\images\last.gif" />
+    <Content Include="Content\flexigrid\images\line.gif" />
+    <Content Include="Content\flexigrid\images\load.gif" />
+    <Content Include="Content\flexigrid\images\load.png" />
+    <Content Include="Content\flexigrid\images\magnifier.png" />
+    <Content Include="Content\flexigrid\images\next.gif" />
+    <Content Include="Content\flexigrid\images\prev.gif" />
+    <Content Include="Content\flexigrid\images\up.png" />
+    <Content Include="Content\flexigrid\images\uup.png" />
+    <Content Include="Content\flexigrid\images\wbg.gif" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -191,6 +209,7 @@
     <Content Include="Properties\DataSources\DAL.Model.Adres.datasource" />
     <Content Include="Properties\DataSources\DAL.Model.Pacjent.datasource" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\flexigrid.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -247,6 +266,13 @@
     <Content Include="Views\Shared\MenuLekarz.cshtml" />
     <Content Include="Views\Lekarz\MenuLekarz.cshtml" />
     <Content Include="Views\Admin\MenuAdmin.cshtml" />
+    <Content Include="Views\Admin\Wizyta.cshtml" />
+    <Content Include="Views\Admin\Personel.cshtml" />
+    <Content Include="Views\Admin\Cennik.cshtml" />
+    <Content Include="Views\Admin\Administracja.cshtml" />
+    <Content Include="Views\Admin\Zabiegi.cshtml" />
+    <Content Include="Views\Admin\ListaPlacowki.cshtml" />
+    <Content Include="Views\Admin\DodajPlacowke.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -261,16 +287,16 @@
     <WCFMetadataStorage Include="Connected Services\DentalReference\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{751f0a65-bcf1-4843-9e82-c7940839e175}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{751F0A65-BCF1-4843-9E82-C7940839E175}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

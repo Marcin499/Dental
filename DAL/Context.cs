@@ -18,10 +18,23 @@ namespace DAL
             modelBuilder.Entity<Pacjent>()
                 .HasRequired(s => s.PacjentAdres)
                 .WithRequiredPrincipal(s => s.AdresPacjent);
+            //Połaczenie 1-1 Personel -> AdresPersonel
+            modelBuilder.Entity<Personel>()
+                .HasRequired(s => s.PersonelAdres)
+                .WithRequiredPrincipal(s => s.AdresPesonel);
+            //Polaczenie 1-1 Placowka -> Adres
+            modelBuilder.Entity<Placowka>()
+                .HasRequired(s => s.PlacowkaAdresPlacowka)
+                .WithRequiredPrincipal(s => s.AdresPlacowkaAdres);
+
 
         }
 
         public DbSet<Pacjent> Pacjents { get; set; }
         public DbSet<Adres> Adress { get; set; }
+        public DbSet<AdresPersonel> AdresPersonels { get; set; }
+        public DbSet<AdresPlacowka> AdresPlacowkas { get; set; }
+        public DbSet<Personel> Pesonels { get; set; }
+        public DbSet<Placowka> Placowkas { get; set; }
     }
 }

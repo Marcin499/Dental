@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Dental.Models.ListaPlacowkiModel>
+
+
+
+<table class="blueTable">
+<thead>
+<tr>
+<th></th>
+<th>Nazwa</th>
+<th>Telefon</th>
+<th>Email</th>
+<th>Województwo</th>
+<th>Miasto</th>
+<th>Ulica</th>
+<th>Numer</th>
+<th>Akcja</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td colspan="9">
+<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
+</td>
+</tr>
+</tfoot>
+<tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.HiddenFor(modelItem => item.PlacowkaID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nazwa)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wojewodztwo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Miasto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ulica)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numer)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "EditPlacowka", new { PlacowkaID = item.PlacowkaID}, new { @style="color:blue"})             
+            @Html.ActionLink("Usuń", "DeletePlacowka", new { item.PlacowkaID }, new { @style="color:red"})
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+
+
+
+

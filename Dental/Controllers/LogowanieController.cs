@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿
+using DAL;
 using DAL.Model;
 using Dental.Models;
 using System.Linq;
@@ -28,15 +29,15 @@ namespace Dental.Controllers
                 var wynikTyp = client.GetPacjentEmail(model.Email).Typ;
                 if (wynikEmail.Count() == 1 && wynikHasło.Count() == 1 && wynikTyp == null)
                 {
-                    var imie = modelBaza.FirstOrDefault().Imie;
+                    var imie = wynikEmail.FirstOrDefault().Imie;
                     var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
                     Session["ID"] = wynikID;
                     Session["Sesja"] = true;
                     return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
                 }
                 else if (wynikEmail.Count() == 1 && wynikHasło.Count() == 1 && wynikTyp == "Admin")
-                {
-                    var imie = modelBaza.FirstOrDefault().Imie;
+                {                    
+                    var imie = wynikEmail.FirstOrDefault().Imie;
                     var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
                     Session["ID"] = wynikID;
                     Session["Sesja"] = true;
@@ -45,7 +46,7 @@ namespace Dental.Controllers
                 }
                 else if (wynikEmail.Count() == 1 && wynikHasło.Count() == 1 && wynikTyp == "Lekarz")
                 {
-                    var imie = modelBaza.FirstOrDefault().Imie;
+                    var imie = wynikEmail.FirstOrDefault().Imie;
                     var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
                     Session["ID"] = wynikID;
                     Session["Sesja"] = true;

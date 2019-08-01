@@ -7,7 +7,10 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>    
+    <link rel="stylesheet" type="text/css" href="/flexigrid/flexigrid.pack.css" />  
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    
+  
 </head>
 <style>
     a:hover, a:visited, a:link, a:active, #witaj{
@@ -97,7 +100,9 @@
 
         $("#Dolnośląskie").click(function () {
             $("#Wojewodztwo").val("Dolnośląskie");
-            $('#mod').hide();
+            
+            $("#Dolnośląskie2").attr('rel', 'modal:close');
+            
         });
 
          $("#Kujawsko_Pomorskie").click(function () {
@@ -122,7 +127,7 @@
 
          $("#Małopolskie").click(function () {
             $("#Wojewodztwo").val("Małopolskie");
-            $('#mod').hide();
+           $('#mod').hide();
         });
 
          $("#Mazowieckie").click(function () {
@@ -167,7 +172,7 @@
 
          $("#Wielkopolskie").click(function () {
             $("#Wojewodztwo").val("Wielkopolskie");
-            $('#mod').hide();
+           $('#mod').hide();
         });
 
          $("#Zachodniopomorskie").click(function () {
@@ -196,7 +201,7 @@
             });
         }
 
-    }   
+    };   
 
 </script>
 

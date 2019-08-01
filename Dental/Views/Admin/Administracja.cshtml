@@ -1,0 +1,21 @@
+﻿@model IEnumerable<DAL.Model.Placowka>
+
+@{
+    
+    Layout = "~/Views/Shared/MenuAdmin.cshtml";
+}
+
+<div id="container">
+    <div class="text-danger">
+         @TempData["Zapisano"]
+    </div>   
+    <div id="header" >
+        <input type="button" class="button" value="Dodaj nowy gabinet" onclick="location.href='@Url.Action("DodajPlacowke", "Admin")'"/><br />
+    </div>
+
+    <div id="list">        
+        @Html.Action("ListaPlacowki")
+    </div>
+</div>
+<script>   
+</script>

@@ -2,6 +2,7 @@
 
 namespace Dental.Models
 {
+    #region RejestracjaModel
     public class RejestracjaModel
     {
         [Required(ErrorMessage = "Proszę podać imię!")]
@@ -46,8 +47,9 @@ namespace Dental.Models
             this.True = true;
         }
     }
+    #endregion
 
-
+    #region Województwa
     public enum Wojewodztwa
     {
         Dolnośląskie,
@@ -66,9 +68,10 @@ namespace Dental.Models
         Warmińsko_Mazurskie,
         Wielkopolskie,
         Zachodniopomorskie
-
     }
+    #endregion
 
+    #region LogowanieModel
     public class LogowanieModel
     {
         [Display(Name = "Adres e-mail")]
@@ -78,9 +81,10 @@ namespace Dental.Models
         [Display(Name = "Hasło")]
         [Required(ErrorMessage = "Proszę podać hasło!")]
         public string Haslo { get; set; }
-
     }
+    #endregion
 
+    #region ResetHaslaLogowanieModel
     public class ResetHaslaLogowanieModel
     {
         [Display(Name = "Adres e-mail")]
@@ -92,9 +96,10 @@ namespace Dental.Models
         public string Haslo { get; set; }
         [System.ComponentModel.DataAnnotations.Compare("Haslo", ErrorMessage = "Hasła nie są zgodne!")]
         public string PowtorzHaslo { get; set; }
-
     }
+    #endregion
 
+    #region EditPacjentModel
     public class EditPacjentModel
     {
         public int PacjentID { get; set; }
@@ -131,6 +136,48 @@ namespace Dental.Models
         [Display(Name = "Kod pocztowy")]
         [Required(ErrorMessage = "Prosze podać kod pocztowy")]
         public string Kod { get; set; }
-
     }
+    #endregion
+
+    #region ListaPlacowkiModel
+    public class ListaPlacowkiModel
+    {
+        public int PlacowkaID { get; set; }
+
+        public string Nazwa { get; set; }
+
+        public int Telefon { get; set; }
+
+        public string Email { get; set; }
+
+        public string Miasto { get; set; }
+
+        public string Wojewodztwo { get; set; }
+
+        public string Ulica { get; set; }
+
+        public string Numer { get; set; }
+    }
+    #endregion
+
+    #region DodajPlacowkeModel
+    public class DodajPlacowkeModel
+    {
+        public int PlacowkaID { get; set; }
+
+        public string Nazwa { get; set; }
+
+        public int Telefon { get; set; }
+
+        public string Email { get; set; }
+
+        public string Miasto { get; set; }
+
+        public Wojewodztwa Wojewodztwo { get; set; }
+
+        public string Ulica { get; set; }
+
+        public string Numer { get; set; }
+    }
+    #endregion
 }
