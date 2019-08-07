@@ -7,7 +7,10 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>    
+    @Styles.Render("~/Content/Gridmbv.css")
+    @Scripts.Render("~/Scripts/gridmvc.js")
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    
 </head>
 <style>
     a:hover, a:visited, a:link, a:active, #witaj{
@@ -43,10 +46,10 @@
             <div id="image" class="col-1" style="padding-bottom:30px;">
                 <img src="/Image/Zab.png" alt="Dental">                                        
             </div>                       
-            <div id="strona" class="col-sm-2" style="width:700px; color:white; padding-top:30px; font-size:large">
+            <div id="strona" class="col-sm-3" style="width:700px; color:white; padding-top:30px; font-size:large">
                 @ViewBag.Strona           
             </div>
-            <div id="witaj" class="col-sm-9">
+            <div id="witaj" class="col-sm-8">
                 <div style="float:right; padding-top:30px; font-size:large">
                   
                <a href="@Url.Action("Login", "Logowanie") ">Wyloguj</a>
@@ -56,9 +59,9 @@
         </div>
     </div>
  <div id="body" style="display:flex; height:600px; ">        
-  <ul class="menu" style="background-color:beige">
+  <ul class="menu" style="background-color:lightgray">
   <li class="klasa"><a href="@Url.Action("Promocje", "Admin")"><span>Promocje</span></a></li>
-  <li class="klasa"><a href="@Url.Action("Wizyta", "Admin")" ><span>Wizyta</span></a></li>
+  <li class="klasa"><a href="@Url.Action("Wizyta", "Admin")" ><span>Wizyty</span></a></li>
   <li  class="klasa"><a href="@Url.Action("Personel", "Admin")"><span>Personel</span></a></li>
   <li class="klasa"><a href="@Url.Action("Cennik", "Admin")"><span>Cennik</span></a></li>
   <li  class="klasa"><a href="@Url.Action("Administracja", "Admin")"><span>Administracja</span></a></li>
@@ -87,8 +90,9 @@
 <script>
     $(document).ready(function () {
         
-    });
-              
-
+        $("#Wojewodztwo").click(function () {
+            $('#mod').modal("show");
+            $('.close-modal').hide();
+        });       
 </script>
 

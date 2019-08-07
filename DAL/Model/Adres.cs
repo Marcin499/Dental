@@ -2,7 +2,6 @@
 {
     public class Adres
     {
-
         public int AdresID { get; set; }        
 
         public string Miasto { get; set; }

@@ -24,39 +24,50 @@ namespace Dental.Controllers
             if (ModelState.IsValid)
             {
                 var modelBaza = client.GetPacjentList();
-                var wynikEmail = modelBaza.Where(p => p.Email == model.Email);
-                var wynikHasło = modelBaza.Where(p => p.Haslo == model.Haslo);
-                var wynikTyp = client.GetPacjentEmail(model.Email).Typ;
-                if (wynikEmail.Count() == 1 && wynikHasło.Count() == 1 && wynikTyp == null)
-                {
-                    var imie = wynikEmail.FirstOrDefault().Imie;
-                    var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
-                    Session["ID"] = wynikID;
-                    Session["Sesja"] = true;
-                    return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
-                }
-                else if (wynikEmail.Count() == 1 && wynikHasło.Count() == 1 && wynikTyp == "Admin")
-                {                    
-                    var imie = wynikEmail.FirstOrDefault().Imie;
-                    var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
-                    Session["ID"] = wynikID;
-                    Session["Sesja"] = true;
-                    return RedirectToAction("MenuAdmin", "Admin", new { imie });
+                var modelBazaPersonel = client.GetPesonelList();
 
-                }
-                else if (wynikEmail.Count() == 1 && wynikHasło.Count() == 1 && wynikTyp == "Lekarz")
+                var wynikEmail = modelBaza.Where(p => p.Email == model.Email).FirstOrDefault();
+                var wynikEmail2 = modelBazaPersonel.Where(p => p.Email == model.Email).FirstOrDefault();
+
+                var wynikHasło = modelBaza.Where(p => p.Haslo == model.Haslo).FirstOrDefault();
+                var wynikHasło2 = modelBazaPersonel.Where(p => p.Haslo == model.Haslo).FirstOrDefault();
+
+                var wynikTyp = client.GetPacjentEmail(model.Email);
+                if (wynikTyp != null)
                 {
-                    var imie = wynikEmail.FirstOrDefault().Imie;
-                    var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
-                    Session["ID"] = wynikID;
-                    Session["Sesja"] = true;
-                    return RedirectToAction("MenuLekarz", "Lekarz", new { imie });
+                    if (wynikEmail != null && wynikHasło != null && wynikTyp.Typ == null)
+                    {
+                        var imie = wynikEmail.Imie;
+                        var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
+                        Session["ID"] = wynikID;
+                        Session["Sesja"] = true;
+                        return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
+                    }
                 }
                 else
                 {
-                    ViewBag.Message = "Błędne hasło lub email!";
-                    return View("Login", model);
+                    var wynikTyp2 = client.GetPersonelEmail(model.Email).Typ;
+
+                    if (wynikEmail2 != null && wynikHasło2 != null && wynikTyp2 == "Administrator")
+                    {
+                        var imie = wynikEmail2.Imie;
+                        var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
+                        Session["ID"] = wynikID;
+                        Session["Sesja"] = true;
+                        return RedirectToAction("MenuAdmin", "Admin", new { imie });
+
+                    }
+                    else if (wynikEmail2 != null && wynikHasło2 != null && wynikTyp2 == "Personel")
+                    {
+                        var imie = wynikEmail2.Imie;
+                        var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
+                        Session["ID"] = wynikID;
+                        Session["Sesja"] = true;
+                        return RedirectToAction("MenuLekarz", "Lekarz", new { imie });
+                    }
                 }
+                ViewBag.Message = "Błędne hasło lub email!";
+                return View("Login", model);
             }
             return View("Login", model);
         }
@@ -85,8 +96,10 @@ namespace Dental.Controllers
                         Haslo = model.Haslo,
                         PowtorzHaslo = model.PowtorzHaslo,
                         Telefon = pobierz.Telefon
-
                     };
+
+                    Adres modelAdres = new Adres();
+
 
                     bool isOk = client.PacjentUpdate(modelToInsert);
                     if (isOk == true)
@@ -120,6 +133,7 @@ namespace Dental.Controllers
             if (ModelState.IsValid)
             {
                 var emailWynik = client.GetPacjentList().Where(a => a.Email == model.Email);
+
                 if (emailWynik.Count() == 0 || emailWynik == null)
                 {
                     Adres modelAdres = new Adres()

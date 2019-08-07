@@ -16,9 +16,9 @@ namespace DAL
             {
                 try
                 {
-                    var wynik = context.Adress.Where(a => a.AdresID == id).First();
+                    var wynik = context.Adres.Where(a => a.AdresID == id).First();
 
-                    context.Adress.Remove(wynik);
+                    context.Adres.Remove(wynik);
                     context.SaveChanges();
                     dbContextTransaction.Commit();
                     return true;
@@ -37,7 +37,7 @@ namespace DAL
             {
                 try
                 {
-                    context.Adress.Add(adres);
+                    context.Adres.Add(adres);
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -59,7 +59,7 @@ namespace DAL
             {
                 try
                 {
-                    var wynik = context.Adress.Where(a => a.AdresID == adres.AdresID).FirstOrDefault();
+                    var wynik = context.Adres.Where(a => a.AdresID == adres.AdresID).FirstOrDefault();
                     wynik.AdresID = adres.AdresID;
                     wynik.Miasto = adres.Miasto;
                     wynik.Ulica = adres.Ulica;
@@ -83,29 +83,29 @@ namespace DAL
 
         public Adres GetAdresByID(int id)
         {
-            return context.Adress.Where(a => a.AdresID == id).FirstOrDefault();
+            return context.Adres.Where(a => a.AdresID == id).FirstOrDefault();
         }
 
         public List<Adres> GetAdresList()
         {
-            return context.Adress.ToList();
+            return context.Adres.ToList();
         }
         #endregion
 
         #region Pacjent
         public Pacjent GetPacjentByID(int id)
         {
-            return context.Pacjents.Where(a => a.PacjentID == id).FirstOrDefault();
+            return context.Pacjent.Where(a => a.PacjentID == id).FirstOrDefault();
         }
 
         public Pacjent GetPacjentEmail(string email)
         {
-            return context.Pacjents.Where(a => a.Email == email).FirstOrDefault();
+            return context.Pacjent.Where(a => a.Email == email).FirstOrDefault();
         }
 
         public List<Pacjent> GetPacjentList()
         {
-            return context.Pacjents.ToList();
+            return context.Pacjent.ToList();
         }
 
         public bool PacjentDelete(int id)
@@ -114,9 +114,9 @@ namespace DAL
             {
                 try
                 {
-                    var wynik = context.Pacjents.Where(a => a.PacjentID == id).First();
+                    var wynik = context.Pacjent.Where(a => a.PacjentID == id).First();
 
-                    context.Pacjents.Remove(wynik);
+                    context.Pacjent.Remove(wynik);
                     context.SaveChanges();
                     dbContextTransaction.Commit();
                     return true;
@@ -137,7 +137,7 @@ namespace DAL
             {
                 try
                 {
-                    context.Pacjents.Add(pacjent);
+                    context.Pacjent.Add(pacjent);
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -158,7 +158,7 @@ namespace DAL
             {
                 try
                 {
-                    var wynik = context.Pacjents.Where(a => a.PacjentID == pacjent.PacjentID).FirstOrDefault();
+                    var wynik = context.Pacjent.Where(a => a.PacjentID == pacjent.PacjentID).FirstOrDefault();
                     wynik.PacjentID = pacjent.PacjentID;
                     wynik.Imie = pacjent.Imie;
                     wynik.Nazwisko = pacjent.Nazwisko;
@@ -167,7 +167,7 @@ namespace DAL
                     wynik.Typ = pacjent.Typ;
                     wynik.Email = pacjent.Email;
                     wynik.Haslo = pacjent.Haslo;
-                    wynik.PowtorzHaslo = pacjent.PowtorzHaslo;
+
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -186,13 +186,17 @@ namespace DAL
         #region Placowka
         public Placowka GetPlacowkaByID(int id)
         {
-            return context.Placowkas.Where(a => a.PlacowkaID == id).FirstOrDefault();
+            return context.Placowka.Where(a => a.PlacowkaID == id).FirstOrDefault();
         }
 
+        public Placowka GetPlacowkaByName(string nazwa)
+        {
+            return context.Placowka.Where(a => a.Nazwa == nazwa).FirstOrDefault();
+        }
 
         public List<Placowka> GetPlacowkaList()
         {
-            return context.Placowkas.ToList();
+            return context.Placowka.ToList();
         }
 
         public bool PlacowkaDelete(int id)
@@ -201,9 +205,10 @@ namespace DAL
             {
                 try
                 {
-                    var wynik = context.AdresPlacowkas.Where(a => a.AdresID == id).First();
-
-                    context.AdresPlacowkas.Remove(wynik);
+                    var wynik = context.AdresPlacowka.Where(a => a.AdresID == id).First();
+                    var wynik2 = context.Placowka.Where(a => a.PlacowkaID == id).First();
+                    context.AdresPlacowka.Remove(wynik);
+                    context.Placowka.Remove(wynik2);
                     context.SaveChanges();
                     dbContextTransaction.Commit();
                     return true;
@@ -223,7 +228,7 @@ namespace DAL
             {
                 try
                 {
-                    context.Placowkas.Add(placowka);
+                    context.Placowka.Add(placowka);
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -237,16 +242,25 @@ namespace DAL
             }
         }
 
-        public bool PlacowkaUpdate(Placowka placowka)
+        public bool PlacowkaUpdate(Placowka placowka, AdresPlacowka adres)
         {
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    var wynik = context.Placowkas.Where(a => a.PlacowkaID == placowka.PlacowkaID).FirstOrDefault();
+                    var wynik = context.Placowka.Where(a => a.PlacowkaID == placowka.PlacowkaID).FirstOrDefault();
                     wynik.PlacowkaID = placowka.PlacowkaID;
                     wynik.Nazwa = placowka.Nazwa;
                     wynik.Telefon = placowka.Telefon;
+                    wynik.Email = placowka.Email;
+                    wynik.GodzOd = placowka.GodzOd;
+                    wynik.GodzDo = placowka.GodzDo;
+
+                    var wynik2 = context.AdresPlacowka.Where(a => a.AdresID == placowka.PlacowkaID).FirstOrDefault();
+                    wynik2.Wojewodztwo = adres.Wojewodztwo;
+                    wynik2.Miasto = adres.Miasto;
+                    wynik2.Ulica = adres.Ulica;
+                    wynik2.Numer = adres.Numer;
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -264,24 +278,29 @@ namespace DAL
         #region Personel
         public Personel GetPersonelByID(int id)
         {
-            return context.Pesonels.Where(a => a.PersonelID == id).FirstOrDefault();
+            return context.Personel.Where(a => a.PersonelID == id).FirstOrDefault();
         }
 
 
         public List<Personel> GetPesonelList()
         {
-            return context.Pesonels.ToList();
+            return context.Personel.ToList();
         }
 
+        public Personel GetPersonelEmail(string email)
+        {
+            return context.Personel.Where(a => a.Email == email).FirstOrDefault();
+        }
         public bool PersonelDelete(int id)
         {
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    var wynik = context.Pesonels.Where(a => a.PersonelID == id).First();
-
-                    context.Pesonels.Remove(wynik);
+                    var wynik = context.AdresPersonel.Where(a => a.AdresID == id).First();
+                    var wynik2 = context.Personel.Where(a => a.PersonelID == id).First();
+                    context.AdresPersonel.Remove(wynik);
+                    context.Personel.Remove(wynik2);
                     context.SaveChanges();
                     dbContextTransaction.Commit();
                     return true;
@@ -294,14 +313,14 @@ namespace DAL
             }
         }
 
-        public bool PesonelInsert(Personel personel)
+        public bool PersonelInsert(Personel personel)
         {
 
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    context.Pesonels.Add(personel);
+                    context.Personel.Add(personel);
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -315,23 +334,31 @@ namespace DAL
             }
         }
 
-        public bool PersonelUpdate(Personel personel)
+        public bool PersonelUpdate(Personel personel, AdresPersonel adres)
         {
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    var wynik = context.Pesonels.Where(a => a.PersonelID == personel.PersonelID).FirstOrDefault();
+                    var wynik = context.Personel.Where(a => a.PersonelID == personel.PersonelID).FirstOrDefault();
                     wynik.PersonelID = personel.PersonelID;
                     wynik.Imie = personel.Imie;
                     wynik.Nazwisko = personel.Nazwisko;
-                    wynik.PlacowkaID = personel.PlacowkaID;
+                    wynik.Placowka = personel.Placowka;
                     wynik.Telefon = personel.Telefon;
                     wynik.Typ = personel.Typ;
                     wynik.Email = personel.Email;
                     wynik.Haslo = personel.Haslo;
                     wynik.PowtorzHaslo = personel.PowtorzHaslo;
                     wynik.Specjalizacja = personel.Specjalizacja;
+
+                    var wynik2 = context.AdresPersonel.Where(a => a.AdresID == adres.AdresID).FirstOrDefault();
+                    wynik2.AdresID = adres.AdresID;
+                    wynik2.Wojewodztwo = adres.Wojewodztwo;
+                    wynik2.Miasto = adres.Miasto;
+                    wynik2.Ulica = adres.Ulica;
+                    wynik2.Numer = adres.Numer;
+                    wynik2.Kod = adres.Kod;
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -349,13 +376,194 @@ namespace DAL
         #region AdresPlacowka
         public AdresPlacowka GetAdresPlacowkaByID(int id)
         {
-            return context.AdresPlacowkas.Where(a => a.AdresID == id).FirstOrDefault();
+            return context.AdresPlacowka.Where(a => a.AdresID == id).FirstOrDefault();
         }
 
 
         public List<AdresPlacowka> GetAdresPlacowkaList()
         {
-            return context.AdresPlacowkas.ToList();
+            return context.AdresPlacowka.ToList();
+        }
+        #endregion
+
+        #region AdresPersonel
+        public AdresPersonel GetAdresPersonelByID(int id)
+        {
+            return context.AdresPersonel.Where(a => a.AdresID == id).FirstOrDefault();
+        }
+
+
+        public List<AdresPersonel> GetAdresPersonelList()
+        {
+            return context.AdresPersonel.ToList();
+        }
+        #endregion
+
+        #region Cennik
+        public Cennik GetCennikByID(int id)
+        {
+            return context.Cennik.Where(a => a.ZabiegID == id).FirstOrDefault();
+        }
+
+
+        public List<Cennik> GetCennikList()
+        {
+            return context.Cennik.ToList();
+        }
+
+        public bool CennikDelete(int id)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Cennik.Where(a => a.ZabiegID == id).First();
+                    context.Cennik.Remove(wynik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool CennikInsert(Cennik cennik)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Cennik.Add(cennik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool CennikUpdate(Cennik cennik)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Cennik.Where(a => a.ZabiegID == cennik.ZabiegID).FirstOrDefault();
+                    wynik.Zabieg = cennik.Zabieg;
+                    wynik.Kategoria = cennik.Kategoria;
+                    wynik.Cena = cennik.Cena;
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region Wizyta
+        public Wizyta GetWizytaByID(int id)
+        {
+            return context.Wizyta.Where(a => a.WizytaID == id).FirstOrDefault();
+        }
+
+
+        public List<Wizyta> GetWizytaList()
+        {
+            return context.Wizyta.ToList();
+        }
+
+        public bool WizytaDelete(int id)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Wizyta.Where(a => a.WizytaID == id).First();
+                    context.Wizyta.Remove(wynik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool WizytaInsert(Wizyta wizyta)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Wizyta.Add(wizyta);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool WizytaUpdate(Wizyta wizyta)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Wizyta.Where(a => a.WizytaID == wizyta.WizytaID).FirstOrDefault();
+                    wynik.LekarzID = wizyta.LekarzID;
+                    wynik.GabinetID = wizyta.GabinetID;
+                    wynik.Data = wizyta.Data;
+                    wynik.Godzina = wizyta.Godzina;
+                    wynik.Stan = wizyta.Stan;
+                    wynik.Typ = wizyta.Typ;
+                    wynik.Rodzaj = wizyta.Rodzaj;
+
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public List<Wizyta> GetWizytaByDateAndDoctor(DateTime date, int lekarz)
+        {
+            var wynik = context.Wizyta.Where(a => a.Data == date && a.LekarzID == lekarz).ToList();
+
+            return wynik;
         }
         #endregion
     }

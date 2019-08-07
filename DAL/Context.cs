@@ -30,11 +30,13 @@ namespace DAL
 
         }
 
-        public DbSet<Pacjent> Pacjents { get; set; }
-        public DbSet<Adres> Adress { get; set; }
-        public DbSet<AdresPersonel> AdresPersonels { get; set; }
-        public DbSet<AdresPlacowka> AdresPlacowkas { get; set; }
-        public DbSet<Personel> Pesonels { get; set; }
-        public DbSet<Placowka> Placowkas { get; set; }
+        public DbSet<Pacjent> Pacjent { get; set; }
+        public DbSet<Adres> Adres { get; set; }
+        public DbSet<AdresPersonel> AdresPersonel { get; set; }
+        public DbSet<AdresPlacowka> AdresPlacowka { get; set; }
+        public DbSet<Personel> Personel { get; set; }
+        public DbSet<Placowka> Placowka { get; set; }
+        public DbSet<Cennik> Cennik { get; set; }
+        public DbSet<Wizyta> Wizyta { get; set; }
     }
 }

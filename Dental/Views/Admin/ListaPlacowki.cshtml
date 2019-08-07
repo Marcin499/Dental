@@ -1,64 +1,23 @@
 ﻿@model IEnumerable<Dental.Models.ListaPlacowkiModel>
 
+@using GridMvc.Html
 
 
-<table class="blueTable">
-<thead>
-<tr>
-<th></th>
-<th>Nazwa</th>
-<th>Telefon</th>
-<th>Email</th>
-<th>Województwo</th>
-<th>Miasto</th>
-<th>Ulica</th>
-<th>Numer</th>
-<th>Akcja</th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-<td colspan="9">
-<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
-</td>
-</tr>
-</tfoot>
-<tbody>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.HiddenFor(modelItem => item.PlacowkaID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nazwa)
-        </td>        
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Wojewodztwo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Miasto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ulica)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Numer)
-        </td>
-        <td>
-            @Html.ActionLink("Edytuj", "EditPlacowka", new { PlacowkaID = item.PlacowkaID}, new { @style="color:blue"})             
-            @Html.ActionLink("Usuń", "DeletePlacowka", new { item.PlacowkaID }, new { @style="color:red"})
-        </td>
-    </tr>
-}
-</tbody>
-</table>
-
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(a => a.Nazwa).Titled("Imię");    
+    columns.Add(a => a.Telefon).Titled("Telefon");
+    columns.Add(a => a.Email).Titled("Email");
+    columns.Add(a => a.GodzOd).Titled("Godzina otwarcia");
+    columns.Add(a => a.GodzDo).Titled("Godzina zamknięcia");
+    columns.Add(a => a.Wojewodztwo).Titled("Województwo");
+    columns.Add(a => a.Miasto).Titled("Miasto");
+    columns.Add(a => a.Ulica).Titled("Ulica");
+    columns.Add(a => a.Numer).Titled("Numer");
+   
+    columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Edytuj", "EditPlacowka", new { a.PlacowkaID }, new { @style = "color:blue" })).Titled("Edytuj");;
+    columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Usuń", "DeletePlacowka", new { a.PlacowkaID }, new { @style = "color:red" })).Titled("Usuń");
+}).WithPaging(20).Sortable(true).Filterable(true)
 
 
 

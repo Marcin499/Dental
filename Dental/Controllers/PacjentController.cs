@@ -33,12 +33,58 @@ namespace Dental.Controllers
             {
                 ViewBag.Strona = "Dental - Wizyta";
                 TempData.Keep();
-                return View();
+                DodajWizyteModel model = new DodajWizyteModel();
+                return View(model);
             }
             else
             {
                 return RedirectToAction("Login", "Logowanie");
             }
+        }
+
+        public ActionResult WizytaGabinet(string miasto)
+        {
+            DodajWizyteModel model = new DodajWizyteModel(miasto);
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult WizytaGabinet2(string miasto)
+        {
+            DodajWizyteModel model = new DodajWizyteModel(miasto);
+
+            return PartialView(model);
+        }
+
+        public ActionResult WizytaLekarz(string gabinet)
+        {
+            LekarzeModel model = new LekarzeModel(gabinet);
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult WizytaLekarz2(string gabinet)
+        {
+            LekarzeModel model = new LekarzeModel(gabinet);
+
+            return PartialView(model);
+        }
+
+        public ActionResult WizytaGodzina(string lekarz)
+        {
+            LekarzeModel model = new LekarzeModel(lekarz);
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult WizytaGodzina2(string lekarz)
+        {
+            LekarzeModel model = new LekarzeModel(lekarz);
+
+            return PartialView(model);
         }
 
         public ActionResult Historia()
@@ -94,7 +140,7 @@ namespace Dental.Controllers
                 TempData.Keep();
 
 
-                EditPacjentModel editPacjentModel = new EditPacjentModel()
+                EditPacjentModel editPacjentModel = new EditPacjentModel(wynikAdresID.Wojewodztwo)
                 {
                     PacjentID = wynikPacjentID.PacjentID,
                     Imie = wynikPacjentID.Imie,

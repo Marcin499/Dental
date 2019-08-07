@@ -4,7 +4,7 @@
     {
         public int PersonelID { get; set; }
 
-        public int PlacowkaID { get; set; }
+        public string Placowka { get; set; }
 
         public string Imie { get; set; }
 

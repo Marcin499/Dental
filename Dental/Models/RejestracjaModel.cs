@@ -1,4 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DAL;
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Dental.Models
 {
@@ -29,7 +35,8 @@ namespace Dental.Models
         public string Miasto { get; set; }
         [Display(Name = "Województwo")]
         [Required(ErrorMessage = "Proszę wybrac województwo!")]
-        public Wojewodztwa Wojewodztwo { get; set; }
+        public string Wojewodztwo { get; set; }
+        public List<SelectListItem> ListaWojewodztwa { get; set; }
         [Required(ErrorMessage = "Proszę podać ulicę!")]
         public string Ulica { get; set; }
         [Display(Name = "Numer domu lub mieszkania")]
@@ -45,29 +52,32 @@ namespace Dental.Models
         public RejestracjaModel()
         {
             this.True = true;
+            this.ListaWojewodztwa = InitWojewodztwa();
         }
-    }
-    #endregion
 
-    #region Województwa
-    public enum Wojewodztwa
-    {
-        Dolnośląskie,
-        Kujawsko_Pomorskie,
-        Lubelskie,
-        Lubuskie,
-        Łódzkie,
-        Małopolskie,
-        Mazowieckie,
-        Opolskie,
-        Podkarpackie,
-        Podlaskie,
-        Pomorskiem,
-        Śląskie,
-        Świetokrzyskie,
-        Warmińsko_Mazurskie,
-        Wielkopolskie,
-        Zachodniopomorskie
+        private List<SelectListItem> InitWojewodztwa()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Dolnośląskie", Text = "Dolnośląskie" },
+                new SelectListItem() { Value = "Kujawsko-Pomorskie", Text = "Kujawsko-Pomorskie" },
+                new SelectListItem() { Value = "Lubelskie", Text = "Lubelskie" },
+                new SelectListItem() { Value = "Lubuskie", Text = "Lubuskie" },
+                new SelectListItem() { Value = "Łódzkie", Text = "Łódzkie" },
+                new SelectListItem() { Value = "Małopolskie", Text = "Małopolskie" },
+                new SelectListItem() { Value = "Mazowieckie", Text = "Mazowieckie" },
+                new SelectListItem() { Value = "Opolskie", Text = "Opolskie" },
+                new SelectListItem() { Value = "Podkarpackie", Text = "Podkarpackie" },
+                new SelectListItem() { Value = "Podlaskie", Text = "Podlaskie" },
+                new SelectListItem() { Value = "Pomorskiem", Text = "Pomorskiem" },
+                new SelectListItem() { Value = "Śląskie", Text = "Śląskie" },
+                new SelectListItem() { Value = "Świętokrzyskie", Text = "Świętokrzyskie" },
+                new SelectListItem() { Value = "Warmińsko-Mazurskie", Text = "Warmińsko-Mazurskie" },
+                new SelectListItem() { Value = "Wielkopolskie", Text = "Wielkopolskie" },
+                new SelectListItem() { Value = "Zachodniopomorskie", Text = "Zachodniopomorskie" }
+            };
+            return lista;
+        }
     }
     #endregion
 
@@ -128,6 +138,7 @@ namespace Dental.Models
         [Display(Name = "Województwo")]
         [Required(ErrorMessage = "Proszę wybrac województwo!")]
         public string Wojewodztwo { get; set; }
+        public List<SelectListItem> ListaWojewodztwa { get; set; }
         [Required(ErrorMessage = "Proszę podać ulicę!")]
         public string Ulica { get; set; }
         [Display(Name = "Numer domu lub mieszkania")]
@@ -136,6 +147,41 @@ namespace Dental.Models
         [Display(Name = "Kod pocztowy")]
         [Required(ErrorMessage = "Prosze podać kod pocztowy")]
         public string Kod { get; set; }
+
+        public EditPacjentModel(string wojewodztwo)
+        {
+            this.ListaWojewodztwa = InitWojewodztwa(wojewodztwo);
+        }
+
+        private List<SelectListItem> InitWojewodztwa(string wojewodztwo)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Dolnośląskie", Text = "Dolnośląskie" },
+                new SelectListItem() { Value = "Kujawsko-Pomorskie", Text = "Kujawsko-Pomorskie" },
+                new SelectListItem() { Value = "Lubelskie", Text = "Lubelskie" },
+                new SelectListItem() { Value = "Lubuskie", Text = "Lubuskie" },
+                new SelectListItem() { Value = "Łódzkie", Text = "Łódzkie" },
+                new SelectListItem() { Value = "Małopolskie", Text = "Małopolskie" },
+                new SelectListItem() { Value = "Mazowieckie", Text = "Mazowieckie" },
+                new SelectListItem() { Value = "Opolskie", Text = "Opolskie" },
+                new SelectListItem() { Value = "Podkarpackie", Text = "Podkarpackie" },
+                new SelectListItem() { Value = "Podlaskie", Text = "Podlaskie" },
+                new SelectListItem() { Value = "Pomorskiem", Text = "Pomorskiem" },
+                new SelectListItem() { Value = "Śląskie", Text = "Śląskie" },
+                new SelectListItem() { Value = "Świętokrzyskie", Text = "Świętokrzyskie" },
+                new SelectListItem() { Value = "Warmińsko-Mazurskie", Text = "Warmińsko-Mazurskie" },
+                new SelectListItem() { Value = "Wielkopolskie", Text = "Wielkopolskie" },
+                new SelectListItem() { Value = "Zachodniopomorskie", Text = "Zachodniopomorskie" }
+            };
+
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == wojewodztwo });
+            }
+            return nowa;
+        }
     }
     #endregion
 
@@ -150,6 +196,10 @@ namespace Dental.Models
 
         public string Email { get; set; }
 
+        public string GodzOd { get; set; }
+
+        public string GodzDo { get; set; }
+
         public string Miasto { get; set; }
 
         public string Wojewodztwo { get; set; }
@@ -157,27 +207,812 @@ namespace Dental.Models
         public string Ulica { get; set; }
 
         public string Numer { get; set; }
+
     }
     #endregion
 
     #region DodajPlacowkeModel
     public class DodajPlacowkeModel
     {
-        public int PlacowkaID { get; set; }
 
+        [Required(ErrorMessage = "Proszę podać nazwę!")]
         public string Nazwa { get; set; }
+        [Required(ErrorMessage = "Proszę podać numer telefonu!")]
+        public int Telefon { get; set; }
+        [Required(ErrorMessage = "Proszę podać adres e-mail!")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail jest niepoprawny")]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Ustaw godzinę otwarcia!")]
+        public string GodzOd { get; set; }
+        public List<SelectListItem> ListaGodz { get; set; }
+        [Required(ErrorMessage = "Ustaw godzinę zamknięcia!")]
+        public string GodzDo { get; set; }
+        [Required(ErrorMessage = "Proszę podać miasto!")]
+        public string Miasto { get; set; }
+        [Required(ErrorMessage = "Proszę wybrac województwo!")]
+        public string Wojewodztwo { get; set; }
+        public List<SelectListItem> ListaWojewodztwa { get; set; }
+        [Required(ErrorMessage = "Proszę podać ulicę!")]
+        public string Ulica { get; set; }
+        [Required(ErrorMessage = "Prosze podać numer domu badź mieszkania!")]
+        public string Numer { get; set; }
+
+        public DodajPlacowkeModel()
+        {
+            this.ListaWojewodztwa = InitWojewodztwa();
+            this.ListaGodz = InitGodziny();
+        }
+
+        private List<SelectListItem> InitGodziny()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+           {
+               new SelectListItem(){Value = "6.00", Text = "6.00"},
+               new SelectListItem(){Value = "7.00", Text = "7.00"},
+               new SelectListItem(){Value = "8.00", Text = "8.00"},
+               new SelectListItem(){Value = "9.00", Text = "9.00"},
+               new SelectListItem(){Value = "10.00", Text = "10.00"},
+               new SelectListItem(){Value = "11.00", Text = "11.00"},
+               new SelectListItem(){Value = "12.00", Text = "12.00"},
+               new SelectListItem(){Value = "13.00", Text = "13.00"},
+               new SelectListItem(){Value = "14.00", Text = "14.00"},
+               new SelectListItem(){Value = "15.00", Text = "15.00"},
+               new SelectListItem(){Value = "16.00", Text = "16.00"},
+               new SelectListItem(){Value = "17.00", Text = "17.00"},
+               new SelectListItem(){Value = "18.00", Text = "18.00"},
+               new SelectListItem(){Value = "19.00", Text = "19.00"},
+               new SelectListItem(){Value = "20.00", Text = "20.00"},
+               new SelectListItem(){Value = "21.00", Text = "21.00"},
+               new SelectListItem(){Value = "22.00", Text = "22.00"},
+               new SelectListItem(){Value = "23.00", Text = "23.00"},
+           };
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitWojewodztwa()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Dolnośląskie", Text = "Dolnośląskie" },
+                new SelectListItem() { Value = "Kujawsko-Pomorskie", Text = "Kujawsko-Pomorskie" },
+                new SelectListItem() { Value = "Lubelskie", Text = "Lubelskie" },
+                new SelectListItem() { Value = "Lubuskie", Text = "Lubuskie" },
+                new SelectListItem() { Value = "Łódzkie", Text = "Łódzkie" },
+                new SelectListItem() { Value = "Małopolskie", Text = "Małopolskie" },
+                new SelectListItem() { Value = "Mazowieckie", Text = "Mazowieckie" },
+                new SelectListItem() { Value = "Opolskie", Text = "Opolskie" },
+                new SelectListItem() { Value = "Podkarpackie", Text = "Podkarpackie" },
+                new SelectListItem() { Value = "Podlaskie", Text = "Podlaskie" },
+                new SelectListItem() { Value = "Pomorskiem", Text = "Pomorskiem" },
+                new SelectListItem() { Value = "Śląskie", Text = "Śląskie" },
+                new SelectListItem() { Value = "Świętokrzyskie", Text = "Świętokrzyskie" },
+                new SelectListItem() { Value = "Warmińsko-Mazurskie", Text = "Warmińsko-Mazurskie" },
+                new SelectListItem() { Value = "Wielkopolskie", Text = "Wielkopolskie" },
+                new SelectListItem() { Value = "Zachodniopomorskie", Text = "Zachodniopomorskie" }
+            };
+            return lista;
+        }
+    }
+    #endregion
+
+    #region ListaPersonelModel
+    public class ListaPersonelModel
+    {
+        public int PersonelID { get; set; }
+
+        public string Placowka { get; set; }
+
+        public string Imie { get; set; }
+
+        public string Nazwisko { get; set; }
 
         public int Telefon { get; set; }
 
         public string Email { get; set; }
 
+        public string Typ { get; set; }
+
+        public string Specjalizacja { get; set; }
+
+        public string Haslo { get; set; }
+
         public string Miasto { get; set; }
 
-        public Wojewodztwa Wojewodztwo { get; set; }
+        public string Wojewodztwo { get; set; }
 
         public string Ulica { get; set; }
 
         public string Numer { get; set; }
+
+        public string Kod { get; set; }
+    }
+    #endregion
+
+    #region DodajPersonelModel
+    public class DodajPersonelModel
+    {
+        public List<SelectListItem> PlacowkaList { get; set; }
+        [Required(ErrorMessage = "Proszę wybrać gabinet!")]
+        public string Placowka { get; set; }
+        [Required(ErrorMessage = "Proszę podać imię!")]
+        public string Imie { get; set; }
+        [Required(ErrorMessage = "Proszę podać nazwisko!")]
+        public string Nazwisko { get; set; }
+        [Required(ErrorMessage = "Proszę podać numer telefonu!")]
+        public int Telefon { get; set; }
+        [Required(ErrorMessage = "Proszę podać adres e-mail!")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail jest niepoprawny")]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Proszę wybrać typ!")]
+        public string Typ { get; set; }
+        public List<SelectListItem> ListaTyp { get; set; }
+
+        public string Specjalizacja { get; set; }
+        public List<SelectListItem> ListaSpecjalizacji { get; set; }
+        [Required(ErrorMessage = "Proszę podać hasło!")]
+        public string Haslo { get; set; }
+        [System.ComponentModel.DataAnnotations.Compare("Haslo", ErrorMessage = "Hasła nie są zgodne!")]
+        public string PowtorzHaslo { get; set; }
+        [Required(ErrorMessage = "Proszę podać miasto!")]
+        public string Miasto { get; set; }
+
+        public string Wojewodztwo { get; set; }
+        public List<SelectListItem> ListaWojewodztwa { get; set; }
+        [Required(ErrorMessage = "Proszę podać ulicę!")]
+        public string Ulica { get; set; }
+        [Required(ErrorMessage = "Prosze podać numer domu badź mieszkania!")]
+        public string Numer { get; set; }
+        [Required(ErrorMessage = "Prosze podać kod pocztowy")]
+        public string Kod { get; set; }
+
+        public DodajPersonelModel()
+        {
+            this.PlacowkaList = InitPlacowka();
+            this.ListaWojewodztwa = InitWojewodztwa();
+            this.ListaTyp = InitTyp();
+            this.ListaSpecjalizacji = InitSpecjalizacje();
+        }
+
+        private List<SelectListItem> InitSpecjalizacje()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = " Brak", Text = " Brak" },
+                new SelectListItem() { Value = "Chirurgia", Text = "Chirurgia" },
+                new SelectListItem() { Value = "Chirurgia szczękowo twarzowa", Text = "Chirurgia szczękowo twarzowa" },
+                new SelectListItem() { Value = "Ortodoncja", Text = "Ortodoncja" },
+                new SelectListItem() { Value = "Pedodoncja", Text = "Pedodoncja" },
+                new SelectListItem() { Value = "Pielęgniarka", Text = "Pielęgniarka" },
+                new SelectListItem() { Value = "Protetyka stomatologiczna", Text = "Protetyka stomatologiczna" },
+                new SelectListItem() { Value = "Stomatologia", Text = "Stomatologia" },
+                new SelectListItem() { Value = "Stomatologia zachowawcza z endodoncją", Text = "Stomatologia zachowawcza z endodoncją" }
+            };
+
+            return lista;
+        }
+        private List<SelectListItem> InitTyp()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Administrator", Text = "Administrator" },
+                new SelectListItem() { Value = "Personel", Text = "Personel" }
+            };
+
+            return lista;
+        }
+        private List<SelectListItem> InitWojewodztwa()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Dolnośląskie", Text = "Dolnośląskie" },
+                new SelectListItem() { Value = "Kujawsko-Pomorskie", Text = "Kujawsko-Pomorskie" },
+                new SelectListItem() { Value = "Lubelskie", Text = "Lubelskie" },
+                new SelectListItem() { Value = "Lubuskie", Text = "Lubuskie" },
+                new SelectListItem() { Value = "Łódzkie", Text = "Łódzkie" },
+                new SelectListItem() { Value = "Małopolskie", Text = "Małopolskie" },
+                new SelectListItem() { Value = "Mazowieckie", Text = "Mazowieckie" },
+                new SelectListItem() { Value = "Opolskie", Text = "Opolskie" },
+                new SelectListItem() { Value = "Podkarpackie", Text = "Podkarpackie" },
+                new SelectListItem() { Value = "Podlaskie", Text = "Podlaskie" },
+                new SelectListItem() { Value = "Pomorskiem", Text = "Pomorskiem" },
+                new SelectListItem() { Value = "Śląskie", Text = "Śląskie" },
+                new SelectListItem() { Value = "Świętokrzyskie", Text = "Świętokrzyskie" },
+                new SelectListItem() { Value = "Warmińsko-Mazurskie", Text = "Warmińsko-Mazurskie" },
+                new SelectListItem() { Value = "Wielkopolskie", Text = "Wielkopolskie" },
+                new SelectListItem() { Value = "Zachodniopomorskie", Text = "Zachodniopomorskie" }
+            };
+            return lista;
+        }
+        private List<SelectListItem> InitPlacowka()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetPlacowkaList();
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Nazwa, Text = item.Nazwa });
+            }
+
+            return lista;
+        }
+    }
+    #endregion
+
+    #region EditPersonelModel
+    public class EditPersonelModel
+    {
+        public int PersonelID { get; set; }
+        [Required(ErrorMessage = "Proszę podać nazwę gabinetu!")]
+        public string Placowka { get; set; }
+
+        public List<SelectListItem> PlacowkaList { get; set; }
+        [Required(ErrorMessage = "Proszę podać imię!")]
+        public string Imie { get; set; }
+        [Required(ErrorMessage = "Proszę podać nazwisko!")]
+        public string Nazwisko { get; set; }
+        [Required(ErrorMessage = "Proszę podać numer telefonu!")]
+        public int Telefon { get; set; }
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail jest niepoprawny")]
+        public string Email { get; set; }
+
+        public string Typ { get; set; }
+        public List<SelectListItem> ListaTyp { get; set; }
+
+        public string Specjalizacja { get; set; }
+        public List<SelectListItem> ListaSpecjalizacji { get; set; }
+        public string Haslo { get; set; }
+        [System.ComponentModel.DataAnnotations.Compare("Haslo", ErrorMessage = "Hasła nie są zgodne!")]
+        public string PowtorzHaslo { get; set; }
+        [Required(ErrorMessage = "Proszę podać miasto!")]
+        public string Miasto { get; set; }
+
+        public string Wojewodztwo { get; set; }
+        public List<SelectListItem> ListaWojewodztwa { get; set; }
+        [Required(ErrorMessage = "Proszę podać nazwe ulicy!")]
+        public string Ulica { get; set; }
+        [Required(ErrorMessage = "Proszę podać numer!")]
+        public string Numer { get; set; }
+        [Required(ErrorMessage = "Proszę podać kod pocztowy!")]
+        public string Kod { get; set; }
+        public EditPersonelModel()
+        {
+
+        }
+
+        public EditPersonelModel(string placowka, string wojewodztwo, string typ, string specjalizacja)
+        {
+            this.PlacowkaList = InitPlacowka(placowka);
+            this.ListaWojewodztwa = InitWojewodztwa(wojewodztwo);
+            this.ListaTyp = InitTyp(typ);
+            this.ListaSpecjalizacji = InitSpecjalizacje(specjalizacja);
+        }
+
+        private List<SelectListItem> InitSpecjalizacje(string specjalizacja)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = " Brak", Text = " Brak" },
+                new SelectListItem() { Value = "Chirurgia", Text = "Chirurgia" },
+                new SelectListItem() { Value = "Chirurgia szczękowo twarzowa", Text = "Chirurgia szczękowo twarzowa" },
+                new SelectListItem() { Value = "Ortodoncja", Text = "Ortodoncja" },
+                new SelectListItem() { Value = "Pedodoncja", Text = "Pedodoncja" },
+                new SelectListItem() { Value = "Pielęgniarka", Text = "Pielęgniarka" },
+                new SelectListItem() { Value = "Protetyka stomatologiczna", Text = "Protetyka stomatologiczna" },
+                new SelectListItem() { Value = "Stomatologia", Text = "Stomatologia" },
+                new SelectListItem() { Value = "Stomatologia zachowawcza z endodoncją", Text = "Stomatologia zachowawcza z endodoncją" }
+            };
+
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == specjalizacja });
+            }
+            return nowa;
+        }
+
+        private List<SelectListItem> InitTyp(string typ)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Administrator", Text = "Administrator" },
+                new SelectListItem() { Value = "Personel", Text = "Personel" }
+            };
+
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == typ });
+            }
+            return nowa;
+        }
+
+        private List<SelectListItem> InitPlacowka(string placowka)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetPlacowkaList();
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Nazwa, Text = item.Nazwa, Selected = item.Nazwa == placowka });
+            }
+            return lista;
+        }
+
+        private List<SelectListItem> InitWojewodztwa(string wojewodztwo)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Dolnośląskie", Text = "Dolnośląskie" },
+                new SelectListItem() { Value = "Kujawsko-Pomorskie", Text = "Kujawsko-Pomorskie" },
+                new SelectListItem() { Value = "Lubelskie", Text = "Lubelskie" },
+                new SelectListItem() { Value = "Lubuskie", Text = "Lubuskie" },
+                new SelectListItem() { Value = "Łódzkie", Text = "Łódzkie" },
+                new SelectListItem() { Value = "Małopolskie", Text = "Małopolskie" },
+                new SelectListItem() { Value = "Mazowieckie", Text = "Mazowieckie" },
+                new SelectListItem() { Value = "Opolskie", Text = "Opolskie" },
+                new SelectListItem() { Value = "Podkarpackie", Text = "Podkarpackie" },
+                new SelectListItem() { Value = "Podlaskie", Text = "Podlaskie" },
+                new SelectListItem() { Value = "Pomorskiem", Text = "Pomorskiem" },
+                new SelectListItem() { Value = "Śląskie", Text = "Śląskie" },
+                new SelectListItem() { Value = "Świętokrzyskie", Text = "Świętokrzyskie" },
+                new SelectListItem() { Value = "Warmińsko-Mazurskie", Text = "Warmińsko-Mazurskie" },
+                new SelectListItem() { Value = "Wielkopolskie", Text = "Wielkopolskie" },
+                new SelectListItem() { Value = "Zachodniopomorskie", Text = "Zachodniopomorskie" }
+            };
+
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == wojewodztwo });
+            }
+            return nowa;
+        }
+    }
+    #endregion
+
+    #region EditPlacowkiModel
+    public class EditPlacowkiModel
+    {
+        public int PlacowkaID { get; set; }
+        [Required(ErrorMessage = "Proszę podać nazwe gabinetu!")]
+        public string Nazwa { get; set; }
+        [Required(ErrorMessage = "Proszę podać numer telefonu!")]
+        public int Telefon { get; set; }
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail jest niepoprawny")]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Ustaw godzinę otwarcia!")]
+        public string GodzOd { get; set; }
+        public List<SelectListItem> ListaGodzOd { get; set; }
+        public List<SelectListItem> ListaGodzDo { get; set; }
+        [Required(ErrorMessage = "Ustaw godzinę zamknięcia!")]
+        public string GodzDo { get; set; }
+        [Required(ErrorMessage = "Proszę podać miasto!")]
+        public string Miasto { get; set; }
+        public string Wojewodztwo { get; set; }
+        public List<SelectListItem> ListaWojewodztwa { get; set; }
+        [Required(ErrorMessage = "Proszę podać ulicę!")]
+        public string Ulica { get; set; }
+        [Required(ErrorMessage = "Proszę podać numer!")]
+        public string Numer { get; set; }
+
+        public EditPlacowkiModel()
+        {
+
+        }
+
+        public EditPlacowkiModel(string wojewodztwo, string godzinaOd, string godzinaDo)
+        {
+            this.ListaWojewodztwa = InitWojewodztwa(wojewodztwo);
+            this.ListaGodzOd = InitGodzinyOd(godzinaOd);
+            this.ListaGodzDo = InitGodzinyDo(godzinaDo);
+
+        }
+
+        private List<SelectListItem> InitGodzinyDo(string godzinaDo)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+           {
+               new SelectListItem(){Value = "6.00", Text = "6.00"},
+               new SelectListItem(){Value = "7.00", Text = "7.00"},
+               new SelectListItem(){Value = "8.00", Text = "8.00"},
+               new SelectListItem(){Value = "9.00", Text = "9.00"},
+               new SelectListItem(){Value = "10.00", Text = "10.00"},
+               new SelectListItem(){Value = "11.00", Text = "11.00"},
+               new SelectListItem(){Value = "12.00", Text = "12.00"},
+               new SelectListItem(){Value = "13.00", Text = "13.00"},
+               new SelectListItem(){Value = "14.00", Text = "14.00"},
+               new SelectListItem(){Value = "15.00", Text = "15.00"},
+               new SelectListItem(){Value = "16.00", Text = "16.00"},
+               new SelectListItem(){Value = "17.00", Text = "17.00"},
+               new SelectListItem(){Value = "18.00", Text = "18.00"},
+               new SelectListItem(){Value = "19.00", Text = "19.00"},
+               new SelectListItem(){Value = "20.00", Text = "20.00"},
+               new SelectListItem(){Value = "21.00", Text = "21.00"},
+               new SelectListItem(){Value = "22.00", Text = "22.00"},
+               new SelectListItem(){Value = "23.00", Text = "23.00"},
+            };
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == godzinaDo });
+            }
+            return nowa;
+        }
+
+        private List<SelectListItem> InitGodzinyOd(string godzinaOd)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+           {
+               new SelectListItem(){Value = "6", Text = "6.00"},
+               new SelectListItem(){Value = "7", Text = "7.00"},
+               new SelectListItem(){Value = "8", Text = "8.00"},
+               new SelectListItem(){Value = "9", Text = "9.00"},
+               new SelectListItem(){Value = "10", Text = "10.00"},
+               new SelectListItem(){Value = "11", Text = "11.00"},
+               new SelectListItem(){Value = "12", Text = "12.00"},
+               new SelectListItem(){Value = "13", Text = "13.00"},
+               new SelectListItem(){Value = "14", Text = "14.00"},
+               new SelectListItem(){Value = "15", Text = "15.00"},
+               new SelectListItem(){Value = "16", Text = "16.00"},
+               new SelectListItem(){Value = "17", Text = "17.00"},
+               new SelectListItem(){Value = "18", Text = "18.00"},
+               new SelectListItem(){Value = "19", Text = "19.00"},
+               new SelectListItem(){Value = "20", Text = "20.00"},
+               new SelectListItem(){Value = "21", Text = "21.00"},
+               new SelectListItem(){Value = "22", Text = "22.00"},
+               new SelectListItem(){Value = "23", Text = "23.00"},
+            };
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == godzinaOd });
+            }
+            return nowa;
+        }
+
+
+
+        private List<SelectListItem> InitWojewodztwa(string wojewodztwo)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Dolnośląskie", Text = "Dolnośląskie" },
+                new SelectListItem() { Value = "Kujawsko-Pomorskie", Text = "Kujawsko-Pomorskie" },
+                new SelectListItem() { Value = "Lubelskie", Text = "Lubelskie" },
+                new SelectListItem() { Value = "Lubuskie", Text = "Lubuskie" },
+                new SelectListItem() { Value = "Łódzkie", Text = "Łódzkie" },
+                new SelectListItem() { Value = "Małopolskie", Text = "Małopolskie" },
+                new SelectListItem() { Value = "Mazowieckie", Text = "Mazowieckie" },
+                new SelectListItem() { Value = "Opolskie", Text = "Opolskie" },
+                new SelectListItem() { Value = "Podkarpackie", Text = "Podkarpackie" },
+                new SelectListItem() { Value = "Podlaskie", Text = "Podlaskie" },
+                new SelectListItem() { Value = "Pomorskiem", Text = "Pomorskiem" },
+                new SelectListItem() { Value = "Śląskie", Text = "Śląskie" },
+                new SelectListItem() { Value = "Świętokrzyskie", Text = "Świętokrzyskie" },
+                new SelectListItem() { Value = "Warmińsko-Mazurskie", Text = "Warmińsko-Mazurskie" },
+                new SelectListItem() { Value = "Wielkopolskie", Text = "Wielkopolskie" },
+                new SelectListItem() { Value = "Zachodniopomorskie", Text = "Zachodniopomorskie" }
+            };
+
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == wojewodztwo });
+            }
+            return nowa;
+        }
+    }
+    #endregion
+
+    #region ListaZabiegówModel
+    public class ListaZabiegow
+    {
+        public int ZabiegID { get; set; }
+
+        public string Zabieg { get; set; }
+
+        public string Kategoria { get; set; }
+
+        public int Cena { get; set; }
+    }
+    #endregion
+
+    #region DodajZabiegModel
+    public class DodajZabiegModel
+    {
+        public int ZabiegID { get; set; }
+
+        public string Zabieg { get; set; }
+
+        public string Kategoria { get; set; }
+        public List<SelectListItem> ListKategorie { get; set; }
+
+        public int Cena { get; set; }
+
+        public DodajZabiegModel()
+        {
+            this.ListKategorie = InitKategorie();
+        }
+
+        private List<SelectListItem> InitKategorie()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+            {
+                new SelectListItem(){Value = "Stomatologia", Text = "Stomatologia"},
+                new SelectListItem(){Value = "Ortodoncja", Text = "Ortodoncja"},
+                new SelectListItem(){Value = "Protetyka", Text = "Protetyka"}
+            };
+            return lista;
+        }
+    }
+
+    #endregion
+
+    #region EditZabiegModel
+    public class EditZabiegModel
+    {
+        public int ZabiegID { get; set; }
+
+        public string Zabieg { get; set; }
+
+        public string Kategoria { get; set; }
+        public List<SelectListItem> ListKategorie { get; set; }
+
+        public int Cena { get; set; }
+
+        public EditZabiegModel()
+        {
+
+        }
+
+        public EditZabiegModel(string kategoria)
+        {
+            this.ListKategorie = InitKategorie(kategoria);
+        }
+
+        private List<SelectListItem> InitKategorie(string kategoria)
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+            {
+                new SelectListItem(){Value = "Stomatologia", Text = "Stomatologia"},
+                new SelectListItem(){Value = "Ortodoncja", Text = "Ortodoncja"},
+                new SelectListItem(){Value = "Protetyka", Text = "Protetyka"}
+            };
+
+            List<SelectListItem> nowa = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                nowa.Add(new SelectListItem() { Value = item.Value, Text = item.Text, Selected = item.Text == kategoria });
+            }
+            return lista;
+        }
+    }
+    #endregion
+
+    #region DodajWizyteModel
+    public class DodajWizyteModel
+    {
+        public int WizytaID { get; set; }
+
+        public string Miasto { get; set; }
+        public List<SelectListItem> ListaMiast { get; set; }
+
+        public string GabinetID { get; set; }
+        public List<SelectListItem> ListaGabinetow { get; set; }
+
+        public string LekarzID { get; set; }
+        public List<SelectListItem> ListaLekarzy { get; set; }
+
+        public DateTime Data { get; set; }
+
+        public string Godzina { get; set; }
+        public List<SelectListItem> ListaGodzin { get; set; }
+
+        public string Typ { get; set; }
+        public List<SelectListItem> ListaTypy { get; set; }
+        public string Stan { get; set; }
+        public List<SelectListItem> ListaStanow { get; set; }
+        public string Rodzaj { get; set; }
+        List<SelectListItem> ListaRodzajow { get; set; }
+
+        public DodajWizyteModel()
+        {
+            this.ListaMiast = InitMiasta();
+        }
+        public DodajWizyteModel(string miasto)
+        {
+            this.ListaGabinetow = InitGabinety(miasto);
+
+
+            //this.ListaTypy = InitTypy();
+            //this.ListaStanow = InitStany();
+            //this.ListaRodzajow = InitRodzaj();
+            this.ListaMiast = InitMiasta();
+            //this.ListaGodzin = InitGodziny();
+        }
+
+        //private List<SelectListItem> InitGodziny()
+        //{
+        //    throw new NotImplementedException();
+        //}
+        private List<SelectListItem> InitLekarz(string gabinet)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var wynik = client.GetPesonelList();
+
+            foreach (var item in wynik)
+            {
+                if (item.Placowka == gabinet)
+                {
+                    lista.Add(new SelectListItem() { Value = item.PersonelID.ToString(), Text = item.Imie + " " + item.Nazwisko });
+                }
+            }
+            return lista;
+        }
+
+        private List<SelectListItem> InitGabinety(string miasto)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var placowka = client.GetPlacowkaList();
+            var wynik = client.GetAdresPlacowkaList().Where(a => a.Miasto == miasto).ToList();
+            foreach (var pl in placowka)
+            {
+                foreach (var adr in wynik)
+                {
+                    if (pl.PlacowkaID == adr.AdresID)
+                    {
+                        lista.Add(new SelectListItem() { Value = pl.Nazwa, Text = pl.Nazwa });
+                    }
+                }
+            }
+            return lista;
+        }
+
+        private List<SelectListItem> InitMiasta()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetAdresPlacowkaList().Select(a => a.Miasto).Distinct();
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+            }
+            return lista;
+        }
+
+        //private List<SelectListItem> InitRodzaj()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //private List<SelectListItem> InitStany()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //private List<SelectListItem> InitTypy()
+        //{
+        //    throw new NotImplementedException();
+        //}
+    }
+    #endregion
+    #region GabinetyPartialModel
+    public class GabinetyModel
+    {
+        public string LekarzID { get; set; }
+        public List<SelectListItem> ListaLekarzy { get; set; }
+        public GabinetyModel()
+        {
+
+        }
+
+        public GabinetyModel(string gabinet)
+        {
+            this.ListaLekarzy = InitLekarz(gabinet);
+        }
+
+        private List<SelectListItem> InitLekarz(string gabinet)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var wynik = client.GetPesonelList();
+
+            foreach (var item in wynik)
+            {
+                if (item.Placowka == gabinet)
+                {
+                    lista.Add(new SelectListItem() { Value = item.PersonelID.ToString(), Text = item.Imie + " " + item.Nazwisko });
+                }
+            }
+            return lista;
+        }
+    }
+    #endregion
+
+    #region LekarzePartialModel
+    public class LekarzeModel
+    {
+        public string LekarzID { get; set; }
+        public List<SelectListItem> ListaLekarzy { get; set; }
+        public LekarzeModel()
+        {
+
+        }
+
+        public LekarzeModel(string gabinet)
+        {
+            this.ListaLekarzy = InitLekarz(gabinet);
+        }
+
+        private List<SelectListItem> InitLekarz(string gabinet)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var wynik = client.GetPesonelList();
+
+            foreach (var item in wynik)
+            {
+                if (item.Placowka == gabinet)
+                {
+                    lista.Add(new SelectListItem() { Value = item.PersonelID.ToString(), Text = item.Imie + " " + item.Nazwisko });
+                }
+            }
+            return lista;
+        }
+    }
+    #endregion
+
+    #region WizytaGodzinaModel
+    public class WizytaGodzinaModel
+    {
+        public string Godzina { get; set; }
+        public List<SelectListItem> ListaGodzin { get; set; }
+
+        public WizytaGodzinaModel(DateTime data, int lekarz, string name)
+        {
+            this.ListaGodzin = InitGodziny(data, lekarz, name);
+        }
+
+        private List<SelectListItem> InitGodziny(DateTime data, int lekarz, string name)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            var gabinet = client.GetPlacowkaByName(name);
+
+            var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
+            List<int> godziny = new List<int>()
+           {
+               6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+
+            };
+
+            foreach (var item in daty)
+            {
+                if (item.Godzina != godziny.ToString())
+                {
+                    foreach (var item2 in godziny)
+                    {
+                        if (item2 >= Convert.ToInt32(gabinet.GodzOd) && item2 <= Convert.ToInt32(gabinet.GodzDo))
+                        {
+
+                        }
+                        lista.Add(new SelectListItem() { Value = item2.Value, Text = item2.Text });
+                    }
+                }
+            }
+
+            return lista;
+
+
+
+        }
     }
     #endregion
 }

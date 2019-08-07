@@ -4,5 +4,15 @@
     Layout = "~/Views/Shared/MenuAdmin.cshtml";
 }
 
-<h2>Cennik</h2>
+<div id="container">
+    <div class="text-danger">
+         @TempData["Zapisano"]
+    </div>   
+    <div id="header" >
+        <input type="button" class="button-add" value="Dodaj nowy zabieg" onclick="location.href='@Url.Action("DodajZabieg", "Admin")'"/><br />
+    </div>
 
+    <div id="list">        
+        @Html.Action("ListaZabiegów")
+    </div>
+</div>

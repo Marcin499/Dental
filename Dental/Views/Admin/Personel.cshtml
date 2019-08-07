@@ -1,8 +1,18 @@
 ﻿
 @{
-    ViewBag.Title = "Personel";
+   
     Layout = "~/Views/Shared/MenuAdmin.cshtml";
 }
 
-<h2>Personel</h2>
+<div id="container">
+    <div class="text-danger">
+         @TempData["Zapisano"]
+    </div>   
+    <div id="header" >
+        <input type="button" class="button-add" value="Dodaj nowego pracownika" onclick="location.href='@Url.Action("DodajPersonel", "Admin")'"/><br />
+    </div>
 
+    <div id="list">        
+        @Html.Action("ListaPersonel")
+    </div>
+</div>

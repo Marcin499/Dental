@@ -1,8 +1,89 @@
-﻿
+﻿@model Dental.Models.DodajWizyteModel
 @{
-    ViewBag.Title = "Wizyta";
+
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
 }
 
-<h2>Wizyta</h2>
+<h4>Umów sie na wizytę</h4>
 
+@using (Html.BeginForm("SavePlacowka", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px; padding-top:50px">
+
+        <div class="col-md-4">
+            <div id="part1">
+                @Html.Label("Miasto:")<br />
+                @Html.DropDownListFor(model => model.Miasto, Model.ListaMiast, "Select", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Miasto)<br />
+
+                <div id="part2">
+                    @Html.Action("WizytaGabinet")
+                </div>
+
+                <div id="part3">
+                    @Html.Action("WizytaLekarz")
+                </div>
+
+                <div id="part3">
+
+                    @Html.Label("Data:")<br />
+                    @Html.TextBoxFor(model => model.Data, new { @class = "form-control" })
+                </div>
+
+
+                @*@Html.Label("Lekarz:")<br />
+                    @Html.DropDownListFor(model => model.LekarzID, Model.ListaLekarzy, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LekarzID)<br />*@
+
+
+                @*@Html.Label("Wojewodztwo:")<br />
+                            @Html.DropDownListFor(model => model.Wojewodztwo,Model.ListaWojewodztwa, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.Wojewodztwo)<br />
+                            <br />
+                            <input type="submit" class="button" value="Zapisz"/><br />
+                            <div class="text-danger">
+                                @ViewBag.Message
+                            </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div id="part2">
+                             @Html.Label("Miasto:")<br />
+                            @Html.TextBoxFor(model => model.Miasto, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.Miasto)<br />
+
+                              @Html.Label("Ulica:")<br />
+                            @Html.TextBoxFor(model => model.Ulica, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Ulica)<br />
+
+                        @Html.Label("Numer:")<br />
+                            @Html.TextBoxFor(model => model.Numer, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Numer)<br />
+
+
+                            @Html.Label("Godzina otwarcia:")<br />
+                            @Html.DropDownListFor(model => model.GodzOd,Model.ListaGodz, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.GodzOd)<br />
+
+                            @Html.Label("Godzina zamknięcia:")<br />
+                            @Html.DropDownListFor(model => model.GodzDo,Model.ListaGodz, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.GodzDo)<br />*@
+
+
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#Data').datepicker({
+            format: 'mm.dd.yyyy',
+            daysOfWeekDisabled: [0,6],
+            
+        });
+    })
+</script>

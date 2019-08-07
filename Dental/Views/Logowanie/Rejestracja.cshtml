@@ -59,7 +59,7 @@
                 @Html.ValidationMessageFor(model => model.PowtorzHaslo)<br />
 
                   @Html.Label("Województwo:")<br />             
-                @Html.EnumDropDownListFor(model => model.Wojewodztwo, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Wojewodztwo, Model.ListaWojewodztwa, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Wojewodztwo)<br />
 
             @Html.Label("Miasto:")<br />             
