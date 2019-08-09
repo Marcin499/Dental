@@ -1,8 +1,30 @@
-﻿
+﻿@model Dental.Models.KontaktModel
 @{
-    ViewBag.Title = "Kontakt";
+   
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
 }
 
-<h2>Kontakt</h2>
+<div>
+     @Html.Label("Miasto:")<br />             
+                @Html.DropDownListFor(model => model.Miasto, Model.ListaMiast, "Wybierz", new { @class = "form-control" })
+               <br />
+</div>
+<div id="listaGabinetow">
+     @Html.Action("ListaGabinetowDefault")
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Miasto').change(function () {
+            var miasto = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Pacjent/ListaGabinetow',
+                data: { miasto: miasto },
+                success: function (data) {
+                    $('#listaGabinetow').html(data);
+                }
+            })
+        })
+    })
+</script>
 

@@ -1,0 +1,18 @@
+﻿
+@model IEnumerable<Dental.Models.ListaPlacowkiModel>
+
+@using GridMvc.Html
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(a => a.Nazwa).Titled("Gabinet");
+    columns.Add(a => a.Wojewodztwo).Titled("Województwo");    
+    columns.Add(a => a.Miasto).Titled("Miasto");
+    columns.Add(a => a.Ulica).Titled("Ulica");
+    columns.Add(a => a.Numer).Titled("Numer");
+    columns.Add(a => a.GodzOd).Titled("Godzina otwarcia");
+    columns.Add(a => a.GodzDo).Titled("Godzina zamknięcia");
+    columns.Add(a => a.Telefon).Titled("Telefon");
+    columns.Add(a => a.Email).Titled("Email");
+    
+}).WithPaging(20).Sortable(true).Filterable(true)

@@ -303,7 +303,7 @@ namespace Dental.Controllers
                     {
                         Imie = model.Imie,
                         Nazwisko = model.Nazwisko,
-                        Placowka = model.Placowka.ToString(),
+                        Placowka = model.Placowka,
                         Typ = model.Typ.ToString(),
                         Specjalizacja = model.Specjalizacja.ToString(),
                         Telefon = model.Telefon,
@@ -368,7 +368,7 @@ namespace Dental.Controllers
                 var modelPersonel = client.GetPersonelByID(PersonelID);
                 var modelAdres = client.GetAdresPersonelByID(PersonelID);
 
-                EditPersonelModel model = new EditPersonelModel(modelPersonel.Placowka, modelAdres.Wojewodztwo, modelPersonel.Typ, modelPersonel.Specjalizacja)
+                EditPersonelModel model = new EditPersonelModel(modelPersonel.Placowka.ToString(), modelAdres.Wojewodztwo, modelPersonel.Typ, modelPersonel.Specjalizacja)
                 {
                     PersonelID = modelPersonel.PersonelID,
                     Imie = modelPersonel.Imie,

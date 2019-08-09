@@ -1,8 +1,30 @@
-﻿
+﻿@model Dental.Models.CennikModel
 @{
-    ViewBag.Title = "Cennik";
+   
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
 }
 
-<h2>Cennik</h2>
+<div>
+     @Html.Label("Kategorie zabiegów:")<br />             
+                @Html.DropDownListFor(model => model.Kategoria, Model.ListaKategorie, "Wybierz", new { @class = "form-control" })
+               <br />
+</div>
+<div id="listaCennik">
+     @Html.Action("ListaCennikDefault")
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Kategoria').change(function () {
+            var kategoria = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Pacjent/ListaCennik',
+                data: { kategoria: kategoria },
+                success: function (data) {
+                    $('#listaCennik').html(data);
+                }
+            })
+        })
+    })
+</script>
 

@@ -2,6 +2,8 @@
 using DAL.Model;
 using Dental.Models;
 using System;
+using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Dental.Controllers
@@ -57,9 +59,9 @@ namespace Dental.Controllers
             return PartialView(model);
         }
 
-        public ActionResult WizytaLekarz(string gabinet)
+        public ActionResult WizytaLekarz(string gabinetid)
         {
-            LekarzeModel model = new LekarzeModel(gabinet);
+            LekarzeModel model = new LekarzeModel(gabinetid);
 
             return PartialView(model);
         }
@@ -72,19 +74,57 @@ namespace Dental.Controllers
             return PartialView(model);
         }
 
-        public ActionResult WizytaGodzina(string lekarz)
+        public ActionResult WizytaGodzina()
         {
-            LekarzeModel model = new LekarzeModel(lekarz);
+            DodajWizyteModel model = new DodajWizyteModel();
 
             return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult WizytaGodzina2(string lekarz)
+        public ActionResult WizytaGodzina2(string data, int lekarz, string placowkaID)
         {
-            LekarzeModel model = new LekarzeModel(lekarz);
+            WizytaGodzinaModel model = new WizytaGodzinaModel(data, lekarz, placowkaID);
 
             return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult SaveWizyta(string gabinet, string lekarz, string data, string godzina, string rodzajWizyty, string typWizyty, string stan)
+        {
+
+            if (Session["Sesja"] != null)
+            {
+                Wizyta model = new Wizyta()
+                {
+                    PacjentID = Convert.ToInt32(Session["ID"]),
+                    GabinetID = Convert.ToInt32(gabinet),
+                    LekarzID = Convert.ToInt32(lekarz),
+                    Data = data,
+                    Godzina = godzina,
+                    Rodzaj = rodzajWizyty,
+                    Typ = typWizyty,
+                    Stan = stan
+                };
+
+                bool isOk = client.WizytaInsert(model);
+                if (isOk == true)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.OK;
+                    return RedirectToAction("MenuPacjent", "Pacjent");
+                }
+                else
+                {
+                    TempData["Zapisano"] = "Bląd! Spróbuj jeszcze raz.";
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return View("Wizyta", "Pacjent");
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
         }
 
         public ActionResult Historia()
@@ -107,7 +147,37 @@ namespace Dental.Controllers
             {
                 ViewBag.Strona = "Dental - Cennik";
                 TempData.Keep();
-                return View();
+                CennikModel model = new CennikModel();
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult ListaCennikDefault()
+        {
+            if (Session["Sesja"] != null)
+            {
+                var wynikKategoria = client.GetCennikList();
+
+                return PartialView(wynikKategoria);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ListaCennik(string kategoria)
+        {
+            if (Session["Sesja"] != null)
+            {
+                var wynikKategoria = client.GetCennikByKategoria(kategoria);
+
+                return PartialView(wynikKategoria);
             }
             else
             {
@@ -121,7 +191,70 @@ namespace Dental.Controllers
             {
                 ViewBag.Strona = "Dental - Kontakt";
                 TempData.Keep();
-                return View();
+
+                KontaktModel model = new KontaktModel();
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+
+        public ActionResult ListaGabinetowDefault()
+        {
+            if (Session["Sesja"] != null)
+            {
+                var wynikAdres = client.GetAdresPlacowkaList();
+                var wynikMiasto = client.GetPlacowkaList();
+
+                var model = from c in wynikAdres
+                            join a in wynikMiasto on c.AdresID equals a.PlacowkaID
+                            select new ListaPlacowkiModel()
+                            {
+                                Nazwa = a.Nazwa,
+                                Miasto = c.Miasto,
+                                Ulica = c.Ulica,
+                                Wojewodztwo = c.Wojewodztwo,
+                                Numer = c.Numer,
+                                GodzOd = a.GodzOd,
+                                GodzDo = a.GodzDo,
+                                Telefon = a.Telefon,
+                                Email = a.Email
+                            };
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+        [HttpPost]
+        public ActionResult ListaGabinetow(string miasto)
+        {
+            if (Session["Sesja"] != null)
+            {
+                var wynikAdres = client.GetAdresPlacowkaByCity(miasto);
+                var wynikMiasto = client.GetPlacowkaList();
+
+                var model = from c in wynikAdres
+                            join a in wynikMiasto on c.AdresID equals a.PlacowkaID
+                            select new ListaPlacowkiModel()
+                            {
+                                Nazwa = a.Nazwa,
+                                Miasto = c.Miasto,
+                                Ulica = c.Ulica,
+                                Wojewodztwo = c.Wojewodztwo,
+                                Numer = c.Numer,
+                                GodzOd = a.GodzOd,
+                                GodzDo = a.GodzDo,
+                                Telefon = a.Telefon,
+                                Email = a.Email
+                            };
+
+                return PartialView(model);
             }
             else
             {

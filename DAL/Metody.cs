@@ -189,11 +189,6 @@ namespace DAL
             return context.Placowka.Where(a => a.PlacowkaID == id).FirstOrDefault();
         }
 
-        public Placowka GetPlacowkaByName(string nazwa)
-        {
-            return context.Placowka.Where(a => a.Nazwa == nazwa).FirstOrDefault();
-        }
-
         public List<Placowka> GetPlacowkaList()
         {
             return context.Placowka.ToList();
@@ -379,6 +374,10 @@ namespace DAL
             return context.AdresPlacowka.Where(a => a.AdresID == id).FirstOrDefault();
         }
 
+        public List<AdresPlacowka> GetAdresPlacowkaByCity(string miasto)
+        {
+            return context.AdresPlacowka.Where(a => a.Miasto == miasto).ToList();
+        }
 
         public List<AdresPlacowka> GetAdresPlacowkaList()
         {
@@ -403,6 +402,11 @@ namespace DAL
         public Cennik GetCennikByID(int id)
         {
             return context.Cennik.Where(a => a.ZabiegID == id).FirstOrDefault();
+        }
+
+        public List<Cennik> GetCennikByKategoria(string kategoria)
+        {
+            return context.Cennik.Where(a => a.Kategoria == kategoria).ToList();
         }
 
 
@@ -559,7 +563,7 @@ namespace DAL
             }
         }
 
-        public List<Wizyta> GetWizytaByDateAndDoctor(DateTime date, int lekarz)
+        public List<Wizyta> GetWizytaByDateAndDoctor(string date, int lekarz)
         {
             var wynik = context.Wizyta.Where(a => a.Data == date && a.LekarzID == lekarz).ToList();
 

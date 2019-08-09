@@ -8,14 +8,15 @@
     columns.Add(a => a.Placowka).Titled("Placowka");
     columns.Add(a => a.Telefon).Titled("Telefon");
     columns.Add(a => a.Email).Titled("Email");
-    columns.Add(a => a.Typ).Titled("Typ");
-    columns.Add(a => a.Specjalizacja).Titled("Specjalizacja");
     columns.Add(a => a.Haslo).Titled("Hasło");
+     columns.Add(a => a.Typ).Titled("Typ");
+    columns.Add(a => a.Specjalizacja).Titled("Specjalizacja");
     columns.Add(a => a.Wojewodztwo).Titled("Województwo");
     columns.Add(a => a.Miasto).Titled("Miasto");
     columns.Add(a => a.Ulica).Titled("Ulica");
     columns.Add(a => a.Numer).Titled("Numer");
     columns.Add(a => a.Kod).Titled("Numer");
+    
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Edytuj", "EditPersonel", new { a.PersonelID }, new { @style = "color:blue" })).Titled("Edytuj");;
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Usuń", "DeletePersonel", new { a.PersonelID }, new { @style = "color:red" })).Titled("Usuń");
 }).WithPaging(20).Sortable(true).Filterable(true)

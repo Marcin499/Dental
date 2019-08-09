@@ -1,0 +1,13 @@
+﻿@model IEnumerable<DAL.Model.Cennik>
+
+@using GridMvc.Html
+
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(a => a.Zabieg).Titled("Zabieg");    
+    columns.Add(a => a.Kategoria).Titled("Kategoria");
+    columns.Add(a => a.Cena).Titled("Cena");
+      
+}).WithPaging(20).Sortable(true).Filterable(true)
+

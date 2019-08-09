@@ -10,14 +10,14 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px; padding-top:50px">
+    <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px; padding-top:100px">
 
         <div class="col-md-4">
             <div id="part1">
                 @Html.Label("Miasto:")<br />
-                @Html.DropDownListFor(model => model.Miasto, Model.ListaMiast, "Select", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Miasto, Model.ListaMiast, "Wybierz", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Miasto)<br />
-
+            </div>
                 <div id="part2">
                     @Html.Action("WizytaGabinet")
                 </div>
@@ -26,64 +26,82 @@
                     @Html.Action("WizytaLekarz")
                 </div>
 
-                <div id="part3">
-
+                <div id="part4">
                     @Html.Label("Data:")<br />
                     @Html.TextBoxFor(model => model.Data, new { @class = "form-control" })
                 </div>
-
-
-                @*@Html.Label("Lekarz:")<br />
-                    @Html.DropDownListFor(model => model.LekarzID, Model.ListaLekarzy, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.LekarzID)<br />*@
-
-
-                @*@Html.Label("Wojewodztwo:")<br />
-                            @Html.DropDownListFor(model => model.Wojewodztwo,Model.ListaWojewodztwa, new { @class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.Wojewodztwo)<br />
-                            <br />
-                            <input type="submit" class="button" value="Zapisz"/><br />
-                            <div class="text-danger">
-                                @ViewBag.Message
-                            </div>
-                            </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div id="part2">
-                             @Html.Label("Miasto:")<br />
-                            @Html.TextBoxFor(model => model.Miasto, new { @class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.Miasto)<br />
-
-                              @Html.Label("Ulica:")<br />
-                            @Html.TextBoxFor(model => model.Ulica, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Ulica)<br />
-
-                        @Html.Label("Numer:")<br />
-                            @Html.TextBoxFor(model => model.Numer, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Numer)<br />
-
-
-                            @Html.Label("Godzina otwarcia:")<br />
-                            @Html.DropDownListFor(model => model.GodzOd,Model.ListaGodz, new { @class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.GodzOd)<br />
-
-                            @Html.Label("Godzina zamknięcia:")<br />
-                            @Html.DropDownListFor(model => model.GodzDo,Model.ListaGodz, new { @class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.GodzDo)<br />*@
-
-
-            </div>
         </div>
-    </div>
+        <div class="col-md-4">
+                <div id="part5">
+                     @Html.Action("WizytaGodzina")<br />
+                </div>
+
+                <div id="part6">                    
+                    @Html.Label("Rodzaj wizyty:")<br />
+                    @Html.DropDownListFor(model => model.Rodzaj, Model.ListaRodzajow,  new { @class = "form-control" })<br />
+                </div>
+
+                 <div id="part7">                    
+                    @Html.Label("Typ wizyty:")<br />
+                    @Html.DropDownListFor(model => model.Typ, Model.ListaTypy, new { @class = "form-control" })<br />
+                </div>
+
+                 <div id="part8">                   
+                    @Html.HiddenFor(model => model.Stan, new { @class = "form-control" })<br />
+                </div>
+
+                <input type="button" class="button" value="Zapisz" onclick="SaveWizyta()"/><br />
+                <div class="text-danger">
+                    @TempData["Zapisano"]
+                </div>  
+            </div>
+        </div>  
+    
 }
 
 <script>
     $(document).ready(function () {
         $('#Data').datepicker({
-            format: 'mm.dd.yyyy',
+            format: 'dd.mm.yyyy',
             daysOfWeekDisabled: [0,6],
             
         });
+
+         $('#Data').change(function () {
+                debugger;
+             var lekarz = $('#LekarzID').val();
+             var gabinet = $('#GabinetID').val();
+             var data = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Pacjent/WizytaGodzina2',
+                    data: { placowkaID: gabinet, lekarz: lekarz, data: data },
+                    success: function (data) {
+                        $('#part5').html(data);
+                    }
+
+                });
+
+            })
     })
+
+    function SaveWizyta() {        
+        var gabinet = $('#GabinetID').val();
+        var lekarz = $('#LekarzID').val();
+        var data = $('#Data').val();
+        var godzina = $('#Godzina').val();
+        var rodzajWizyty = $('#Rodzaj').val(); 
+        var typWizyty = $('#Typ').val();
+        var stan = $('#Stan').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Pacjent/SaveWizyta',
+            data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan },
+            success: function () {
+                alert("Poprawnie utworzono wizyte.")
+            }
+        })
+    }
 </script>
+

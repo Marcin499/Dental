@@ -29,41 +29,42 @@ namespace Dental.Controllers
                 var wynikEmail = modelBaza.Where(p => p.Email == model.Email).FirstOrDefault();
                 var wynikEmail2 = modelBazaPersonel.Where(p => p.Email == model.Email).FirstOrDefault();
 
-                var wynikHasło = modelBaza.Where(p => p.Haslo == model.Haslo).FirstOrDefault();
-                var wynikHasło2 = modelBazaPersonel.Where(p => p.Haslo == model.Haslo).FirstOrDefault();
-
                 var wynikTyp = client.GetPacjentEmail(model.Email);
-                if (wynikTyp != null)
-                {
-                    if (wynikEmail != null && wynikHasło != null && wynikTyp.Typ == null)
-                    {
-                        var imie = wynikEmail.Imie;
-                        var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
-                        Session["ID"] = wynikID;
-                        Session["Sesja"] = true;
-                        return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
-                    }
-                }
-                else
-                {
-                    var wynikTyp2 = client.GetPersonelEmail(model.Email).Typ;
 
-                    if (wynikEmail2 != null && wynikHasło2 != null && wynikTyp2 == "Administrator")
+                if (wynikEmail.Haslo == model.Haslo || wynikEmail2.Haslo == model.Haslo)
+                {
+                    if (wynikTyp != null)
                     {
-                        var imie = wynikEmail2.Imie;
-                        var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
-                        Session["ID"] = wynikID;
-                        Session["Sesja"] = true;
-                        return RedirectToAction("MenuAdmin", "Admin", new { imie });
-
+                        if (wynikTyp.Typ == null)
+                        {
+                            var imie = wynikEmail.Imie;
+                            var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
+                            Session["ID"] = wynikID;
+                            Session["Sesja"] = true;
+                            return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
+                        }
                     }
-                    else if (wynikEmail2 != null && wynikHasło2 != null && wynikTyp2 == "Personel")
+                    else
                     {
-                        var imie = wynikEmail2.Imie;
-                        var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
-                        Session["ID"] = wynikID;
-                        Session["Sesja"] = true;
-                        return RedirectToAction("MenuLekarz", "Lekarz", new { imie });
+                        var wynikTyp2 = client.GetPersonelEmail(model.Email).Typ;
+
+                        if (wynikTyp2 == "Administrator")
+                        {
+                            var imie = wynikEmail2.Imie;
+                            var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
+                            Session["ID"] = wynikID;
+                            Session["Sesja"] = true;
+                            return RedirectToAction("MenuAdmin", "Admin", new { imie });
+
+                        }
+                        else if (wynikTyp2 == "Personel")
+                        {
+                            var imie = wynikEmail2.Imie;
+                            var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
+                            Session["ID"] = wynikID;
+                            Session["Sesja"] = true;
+                            return RedirectToAction("MenuLekarz", "Lekarz", new { imie });
+                        }
                     }
                 }
                 ViewBag.Message = "Błędne hasło lub email!";
