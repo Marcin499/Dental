@@ -3,6 +3,29 @@
     ViewBag.Title = "Wizyta";
     Layout = "~/Views/Shared/MenuAdmin.cshtml";
 }
+<div id="container">
 
-<h2>Wizyta</h2>
+    <h4>Lista pacjentów w dniu: @DateTime.Now.Date.ToShortDateString()</h4>
+<div style="color:red">
+    @TempData["Zapisano"]
+</div>
+<div style="float:right">
+    <input type="button" class="button" value="Nowa wizyta" onclick="SzybkaWizyta()" style="background-color:dodgerblue"/><br />
+               <br />
+</div>
+<div id="listaGabinetow">
+     @Html.Action("ListaWizyt")
+</div>
+</div>
+<script>
+    function SzybkaWizyta() {
+        $.ajax({
+            type: 'GET',
+            url: '/Admin/SzybkaWizyta',
+            success: function (data) {
+                $('#container').html(data);
+            }
+        });
+    }
+</script>
 

@@ -3,7 +3,6 @@ using DAL.Model;
 using Dental.Models;
 using System;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
 namespace Dental.Controllers
@@ -90,7 +89,7 @@ namespace Dental.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveWizyta(string gabinet, string lekarz, string data, string godzina, string rodzajWizyty, string typWizyty, string stan)
+        public ActionResult SaveWizyta(string gabinet, string lekarz, string data, string godzina, string rodzajWizyty, string typWizyty, string stan, string uwagi)
         {
 
             if (Session["Sesja"] != null)
@@ -104,20 +103,20 @@ namespace Dental.Controllers
                     Godzina = godzina,
                     Rodzaj = rodzajWizyty,
                     Typ = typWizyty,
-                    Stan = stan
+                    Stan = stan,
+                    Uwagi = uwagi
                 };
 
                 bool isOk = client.WizytaInsert(model);
                 if (isOk == true)
                 {
-                    Response.StatusCode = (int)HttpStatusCode.OK;
-                    return RedirectToAction("MenuPacjent", "Pacjent");
+                    TempData["Zapisano"] = "Utworzono nową wizyte!";
+                    return RedirectToAction("Wizyta");
                 }
                 else
                 {
                     TempData["Zapisano"] = "Bląd! Spróbuj jeszcze raz.";
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return View("Wizyta", "Pacjent");
+                    return RedirectToAction("Wizyta");
                 }
 
             }

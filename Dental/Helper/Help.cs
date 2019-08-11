@@ -8,6 +8,6 @@ namespace Dental.Helper
 {
     public class Help
     {
-       
+      
     }
 }

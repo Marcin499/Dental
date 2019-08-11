@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Dental.Models.EditPacjentModel>
+@using GridMvc.Html
+@{
+    ViewBag.Title = "DetaleWizyta";
+    Layout = "~/Views/Shared/MenuAdmin.cshtml";
+}
+
+<h4>Szczegóły konta</h4>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(a => a.Imie).Titled("Imię");
+    columns.Add(a => a.Nazwisko).Titled("Nazwisko");
+    columns.Add(a => a.PESEL).Titled("PESEL");
+    columns.Add(a => a.Telefon).Titled("Telefon");
+    columns.Add(a => a.Email).Titled("Email");    
+    columns.Add(a => a.Wojewodztwo).Titled("Województwo");
+    columns.Add(a => a.Miasto).Titled("Miasto");
+    columns.Add(a => a.Ulica).Titled("Ulica");
+    columns.Add(a => a.Numer).Titled("Numer");
+    columns.Add(a => a.Kod).Titled("Kod");
+     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Edytuj", "EditDetale", new { a.PacjentID }, new { @style = "color:blue" })).Titled("Edycja");
+   
+}).WithPaging(20).Sortable(true).Filterable(true)
+<br />
+<h4>Historia wizyt</h4>
+<div>
+    
+
+               
+</div>

@@ -23,5 +23,7 @@ namespace DAL.Model
         public string Stan { get; set; }
 
         public string Rodzaj { get; set; }
+
+        public string Uwagi { get; set; }
     }
 }

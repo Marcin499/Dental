@@ -1,0 +1,73 @@
+﻿@model Dental.Models.EditPacjentModel
+
+@{
+    ViewBag.Title = "EditDetale";
+    Layout = "~/Views/Shared/MenuAdmin.cshtml";
+}
+
+<h4>Edycja konta</h4>
+
+@using (Html.BeginForm("DetaleEditSave", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px">
+        
+        <div class="col-md-4">            
+            <div id="part1">
+                @Html.HiddenFor(model => model.PacjentID)
+            @Html.Label("Imię:")<br />            
+                @Html.TextBoxFor(model => model.Imie, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Imie)<br />
+
+        
+            @Html.Label("Nazwisko:")<br />             
+                @Html.TextBoxFor(model => model.Nazwisko, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nazwisko)<br />
+        
+            @Html.Label("PESEL:")<br />             
+                @Html.TextBoxFor(model => model.PESEL, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PESEL)<br />
+
+        
+            @Html.Label("Telefon:")<br />             
+                @Html.TextBoxFor(model => model.Telefon, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Telefon)<br />
+                
+                 @Html.Label("Email:")<br />             
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)<br />                
+                
+                  <input type="submit" class="button" value="Zapisz"/><br />               
+                
+                </div>
+        </div>
+
+        <div class="col-md-4">
+            <div id="part2">                
+
+                  @Html.Label("Województwo:")<br />             
+                @Html.DropDownListFor(model => model.Wojewodztwo, Model.ListaWojewodztwa, new { @class = "form-control" } )<br />
+
+            @Html.Label("Miasto:")<br />             
+                @Html.TextBoxFor(model => model.Miasto, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Miasto)<br />
+
+        
+            @Html.Label("Ulica:")<br />             
+                @Html.TextBoxFor(model => model.Ulica, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Ulica)<br />
+
+        
+            @Html.Label("Numer:")<br />             
+                @Html.TextBoxFor(model => model.Numer, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Numer)<br />
+
+        
+            @Html.Label("Kod:")<br />             
+                @Html.TextBoxFor(model => model.Kod, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Kod)<br />                
+            </div>
+        </div>        
+    </div>
+}

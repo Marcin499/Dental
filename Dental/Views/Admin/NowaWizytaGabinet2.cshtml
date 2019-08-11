@@ -1,0 +1,26 @@
+﻿@model Dental.Models.NowaWizytaModel
+
+<div>
+        @Html.Label("Gabinet:")<br />             
+                @Html.DropDownListFor(model => model.GabinetID, Model.ListaGabinetow, "Wybierz", new { @class = "form-control" })
+               <br />
+    </div>
+<script>
+    $(document).ready(function () {
+
+        $('#GabinetID').change(function () {
+                debugger;
+                var gabinet = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/NowaWizytaLekarz2',
+                    data: { gabinetid: gabinet },
+                    success: function (data) {
+                        $('#part6').html(data);
+                    }
+
+                });
+
+            })
+    })
+</script>

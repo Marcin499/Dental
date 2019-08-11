@@ -1,6 +1,7 @@
 ﻿using DAL;
 using DAL.Model;
 using Dental.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -82,7 +83,7 @@ namespace Dental.Controllers
                     if (isOk == true)
                     {
                         TempData["Zapisano"] = "Gabinet został dodany!";
-                        return RedirectToAction("Administracja", "Admin");
+                        return RedirectToAction("Administracja");
                     }
                     else
                     {
@@ -216,11 +217,429 @@ namespace Dental.Controllers
             }
         }
 
+        public ActionResult ListaWizyt()
+        {
+            if (Session["Sesja"] != null)
+            {
+
+                ViewBag.Strona = "Dental - Menu";
+
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString());
+                var pacjenci = client.GetPacjentList();
+                var model = from c in wizyty
+                            join a in pacjenci on c.PacjentID equals a.PacjentID
+                            select new ListaWizytModel()
+                            {
+                                WizytaID = c.WizytaID,
+                                Imie = a.Imie,
+                                Nazwisko = a.Nazwisko,
+                                PESEL = a.PESEL,
+                                Godzina = c.Godzina,
+                                Stan = c.Stan,
+                                Uwagi = c.Uwagi
+                            };
+
+                return PartialView(model.Where(a => a.Stan != "Zakończona" && a.Stan != "Anulowana").ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+
+        public ActionResult UsunWizyte(int wizytaID)
+        {
+            if (Session["Sesja"] != null)
+            {
+
+                ViewBag.Strona = "Dental - Menu";
+                Wizyta wizyta = client.GetWizytaByID(wizytaID);
+                string stan = "Anulowana";
+                Wizyta model = new Wizyta()
+                {
+                    WizytaID = wizyta.WizytaID,
+                    PacjentID = wizyta.PacjentID,
+                    LekarzID = wizyta.LekarzID,
+                    GabinetID = wizyta.GabinetID,
+                    Godzina = wizyta.Godzina,
+                    Rodzaj = wizyta.Rodzaj,
+                    Data = wizyta.Data,
+                    Stan = stan,
+                    Typ = wizyta.Typ,
+                    Uwagi = wizyta.Uwagi
+                };
+                bool isOk = client.WizytaUpdate(model);
+
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Wizyta z godziny: " + wizyta.Godzina + " została anulowana!";
+                    return RedirectToAction("Wizyta");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult PotwierdzWizyte(int wizytaID)
+        {
+            if (Session["Sesja"] != null)
+            {
+
+                ViewBag.Strona = "Dental - Menu";
+                Wizyta wizyta = client.GetWizytaByID(wizytaID);
+                string stan = "Oczekuje w kolejce";
+                Wizyta model = new Wizyta()
+                {
+                    WizytaID = wizyta.WizytaID,
+                    PacjentID = wizyta.PacjentID,
+                    LekarzID = wizyta.LekarzID,
+                    GabinetID = wizyta.GabinetID,
+                    Godzina = wizyta.Godzina,
+                    Rodzaj = wizyta.Rodzaj,
+                    Data = wizyta.Data,
+                    Stan = stan,
+                    Typ = wizyta.Typ,
+                    Uwagi = wizyta.Uwagi
+                };
+                bool isOk = client.WizytaUpdate(model);
+
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Wizyta  z godziny: " + wizyta.Godzina + " została potwierdzona!";
+                    return RedirectToAction("Wizyta");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult ZamknijWizyte(int wizytaID)
+        {
+
+            if (Session["Sesja"] != null)
+            {
+
+                ViewBag.Strona = "Dental - Menu";
+                Wizyta wizyta = client.GetWizytaByID(wizytaID);
+                string stan = "Zakończona";
+                Wizyta model = new Wizyta()
+                {
+                    WizytaID = wizyta.WizytaID,
+                    PacjentID = wizyta.PacjentID,
+                    LekarzID = wizyta.LekarzID,
+                    GabinetID = wizyta.GabinetID,
+                    Godzina = wizyta.Godzina,
+                    Rodzaj = wizyta.Rodzaj,
+                    Data = wizyta.Data,
+                    Stan = stan,
+                    Typ = wizyta.Typ,
+                    Uwagi = wizyta.Uwagi
+
+                };
+                bool isOk = client.WizytaUpdate(model);
+
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Wizyta z godziny: " + wizyta.Godzina + " została zakończona!";
+                    return RedirectToAction("Wizyta");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult NowaWizyta()
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                NowaWizytaModel model = new NowaWizytaModel();
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult SzybkaWizyta()
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                SzybkaWizytaModel model = new SzybkaWizytaModel();
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult NowaWizytaGabinet(string miasto)
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                NowaWizytaModel model = new NowaWizytaModel(miasto);
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult NowaWizytaGabinet2(string miasto)
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                NowaWizytaModel model = new NowaWizytaModel(miasto);
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult NowaWizytaLekarz(string gabinetid)
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                LekarzeModel model = new LekarzeModel(gabinetid);
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult NowaWizytaLekarz2(string gabinetid)
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                LekarzeModel model = new LekarzeModel(gabinetid);
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult NowaWizytaGodzina()
+        {
+            DodajWizyteModel model = new DodajWizyteModel();
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult NowaWizytaGodzina2(string data, int lekarz, string placowkaID)
+        {
+            WizytaGodzinaModel model = new WizytaGodzinaModel(data, lekarz, placowkaID);
+
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult NowaWizytaSave(string gabinet, string lekarz, string data, string godzina, string rodzajWizyty, string typWizyty, string stan, string uwagi, string imie, string nazwisko, string telefon)
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Wizyta";
+                Adres adresModel = new Adres();
+                Pacjent model = new Pacjent()
+                {
+                    Imie = imie,
+                    Nazwisko = nazwisko,
+                    Telefon = Convert.ToInt32(telefon),
+                    PacjentAdres = adresModel
+                };
+                bool isOk = client.PacjentInsert(model);
+                var wynik = client.GetPacjentList().Last();
+
+                Wizyta wizytaModel = new Wizyta()
+                {
+                    PacjentID = wynik.PacjentID,
+                    GabinetID = Convert.ToInt32(gabinet),
+                    LekarzID = Convert.ToInt32(lekarz),
+                    Data = data,
+                    Godzina = godzina,
+                    Rodzaj = rodzajWizyty,
+                    Stan = stan,
+                    Typ = typWizyty,
+                    Uwagi = "Uzupełnić dane!!!"
+                };
+
+                bool isOk2 = client.WizytaInsert(wizytaModel);
+
+
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Pracownik został dodany!";
+                    return RedirectToAction("Wizyta");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+        public ActionResult EditDetale(int pacjentID)
+        {
+            if (Session["Sesja"] != null)
+            {
+                ViewBag.Strona = "Dental - Menu";
+
+                var modelPacjent = client.GetPacjentByID(pacjentID);
+                var adres = client.GetAdresByID(modelPacjent.PacjentID);
+
+                EditPacjentModel model = new EditPacjentModel()
+                {
+                    PacjentID = modelPacjent.PacjentID,
+                    Imie = modelPacjent.Imie,
+                    Nazwisko = modelPacjent.Nazwisko,
+                    Telefon = modelPacjent.Telefon,
+                    Email = modelPacjent.Email,
+                    Miasto = adres.Miasto,
+                    Wojewodztwo = adres.Wojewodztwo,
+                    Ulica = adres.Ulica,
+                    Numer = adres.Numer,
+                    PESEL = modelPacjent.PESEL,
+                    Kod = adres.Kod,
+
+                };
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult DetaleWizyta(int wizytaID)
+        {
+            if (Session["Sesja"] != null)
+            {
+
+                ViewBag.Strona = "Dental - Menu";
+                var wizyta = client.GetWizytaByID(wizytaID);
+                var pacjent = wizyta.PacjentID;
+                var modelPacjent = client.GetPacjentByID(pacjent);
+                var adres = client.GetAdresByID(modelPacjent.PacjentID);
+
+                EditPacjentModel model = new EditPacjentModel()
+                {
+                    PacjentID = modelPacjent.PacjentID,
+                    Imie = modelPacjent.Imie,
+                    Nazwisko = modelPacjent.Nazwisko,
+                    Telefon = modelPacjent.Telefon,
+                    Email = modelPacjent.Email,
+                    Miasto = adres.Miasto,
+                    Wojewodztwo = adres.Wojewodztwo,
+                    Ulica = adres.Ulica,
+                    Numer = adres.Numer,
+                    PESEL = modelPacjent.PESEL,
+                    Kod = adres.Kod,
+
+                };
+                List<EditPacjentModel> lista = new List<EditPacjentModel>();
+                lista.Add(model);
+                return View(lista);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DetaleEditSave(EditPacjentModel model)
+        {
+
+            if (Session["Sesja"] != null)
+            {
+                Adres modelAdres = new Adres()
+                {
+                    Miasto = model.Miasto,
+                    Ulica = model.Ulica,
+                    Wojewodztwo = model.Wojewodztwo,
+                    Kod = model.Kod,
+                    Numer = model.Numer
+                };
+
+                Pacjent modelPacjent = new Pacjent()
+                {
+                    PacjentID = model.PacjentID,
+                    Imie = model.Imie,
+                    Nazwisko = model.Nazwisko,
+                    Telefon = model.Telefon,
+                    Email = model.Email,
+                    PESEL = model.PESEL,
+                    PacjentAdres = modelAdres
+                };
+
+                bool isOk = client.PacjentUpdate(modelPacjent);
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Dane zostały zaktualizowane!";
+                    return RedirectToAction("Wizyta");
+                }
+                else
+                {
+                    TempData["Zapisano"] = "Błąd! Spróbuj ponownie!";
+                    return RedirectToAction("Wizyta");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+
+        }
         public ActionResult Personel()
         {
             if (Session["Sesja"] != null)
             {
                 ViewBag.Strona = "Dental - Pesonel";
+
 
                 return View();
             }
@@ -629,10 +1048,14 @@ namespace Dental.Controllers
             }
         }
 
-        public ActionResult Zabiegi()
+        public ActionResult Zabiegi(string[] zabiegi)
         {
             if (Session["Sesja"] != null)
             {
+                foreach (var item in zabiegi)
+                {
+
+                }
 
                 ViewBag.Strona = "Dental - Menu";
 

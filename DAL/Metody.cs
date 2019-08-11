@@ -493,13 +493,13 @@ namespace DAL
             return context.Wizyta.ToList();
         }
 
-        public bool WizytaDelete(int id)
+        public bool WizytaDelete(Wizyta wizyta)
         {
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    var wynik = context.Wizyta.Where(a => a.WizytaID == id).First();
+                    var wynik = context.Wizyta.Where(a => a.WizytaID == wizyta.WizytaID).First();
                     context.Wizyta.Remove(wynik);
 
                     context.SaveChanges();

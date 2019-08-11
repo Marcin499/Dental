@@ -379,6 +379,17 @@
     <Content Include="Views\Pacjent\ListaCennik.cshtml" />
     <Content Include="Views\Pacjent\ListaCennikDefault.cshtml" />
     <Content Include="Views\Pacjent\ListaGabinetowDefault.cshtml" />
+    <Content Include="Views\Admin\ListaWizyt.cshtml" />
+    <Content Include="Views\Admin\NowaWizyta.cshtml" />
+    <Content Include="Views\Admin\NowaWizytaGabinet.cshtml" />
+    <Content Include="Views\Admin\NowaWizytaGabinet2.cshtml" />
+    <Content Include="Views\Admin\NowaWizytaLekarz.cshtml" />
+    <Content Include="Views\Admin\NowaWizytaLekarz2.cshtml" />
+    <Content Include="Views\Admin\NowaWizytaGodzina.cshtml" />
+    <Content Include="Views\Admin\NowaWizytaGodzina2.cshtml" />
+    <Content Include="Views\Admin\DetaleWizyta.cshtml" />
+    <Content Include="Views\Admin\EditDetale.cshtml" />
+    <Content Include="Views\Admin\SzybkaWizyta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

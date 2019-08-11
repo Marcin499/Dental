@@ -5,10 +5,9 @@
 }
 
 <h4>Umów sie na wizytę</h4>
-
-@using (Html.BeginForm("SavePlacowka", "Admin", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+<div style="color:red">
+    @TempData["Zapisano"]
+</div>
 
     <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px; padding-top:100px">
 
@@ -30,6 +29,9 @@
                     @Html.Label("Data:")<br />
                     @Html.TextBoxFor(model => model.Data, new { @class = "form-control" })
                 </div>
+                <div id="part8">                   
+                    @Html.HiddenFor(model => model.Stan, new { @class = "form-control" })<br />
+                </div>
         </div>
         <div class="col-md-4">
                 <div id="part5">
@@ -44,21 +46,15 @@
                  <div id="part7">                    
                     @Html.Label("Typ wizyty:")<br />
                     @Html.DropDownListFor(model => model.Typ, Model.ListaTypy, new { @class = "form-control" })<br />
+                </div>                 
+                
+                <div id="part9">
+                    @Html.Label("Uwagi:")<br />
+                    @Html.TextAreaFor(model => model.Uwagi, new { @class = "form-control" })<br />
                 </div>
-
-                 <div id="part8">                   
-                    @Html.HiddenFor(model => model.Stan, new { @class = "form-control" })<br />
-                </div>
-
-                <input type="button" class="button" value="Zapisz" onclick="SaveWizyta()"/><br />
-                <div class="text-danger">
-                    @TempData["Zapisano"]
-                </div>  
+                <input type="button" class="button" value="Zapisz" onclick="SaveWizyta()"/><br />                
             </div>
         </div>  
-    
-}
-
 <script>
     $(document).ready(function () {
         $('#Data').datepicker({
@@ -93,13 +89,14 @@
         var rodzajWizyty = $('#Rodzaj').val(); 
         var typWizyty = $('#Typ').val();
         var stan = $('#Stan').val();
+        var uwagi = $('#Uwagi').val();
 
         $.ajax({
             type: 'POST',
             url: '/Pacjent/SaveWizyta',
-            data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan },
+            data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
             success: function () {
-                alert("Poprawnie utworzono wizyte.")
+                
             }
         })
     }

@@ -1,0 +1,7 @@
+﻿@model Dental.Models.WizytaGodzinaModel
+
+<div>
+     @Html.Label("Godzina:")<br />
+                @Html.DropDownListFor(model => model.Godzina, Model.ListaGodzin, "Wybierz", new { @class = "form-control" })
+</div>
+ 

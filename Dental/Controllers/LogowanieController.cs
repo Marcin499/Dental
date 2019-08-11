@@ -31,20 +31,9 @@ namespace Dental.Controllers
 
                 var wynikTyp = client.GetPacjentEmail(model.Email);
 
-                if (wynikEmail.Haslo == model.Haslo || wynikEmail2.Haslo == model.Haslo)
+                if (wynikEmail == null)
                 {
-                    if (wynikTyp != null)
-                    {
-                        if (wynikTyp.Typ == null)
-                        {
-                            var imie = wynikEmail.Imie;
-                            var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
-                            Session["ID"] = wynikID;
-                            Session["Sesja"] = true;
-                            return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
-                        }
-                    }
-                    else
+                    if (wynikEmail2.Haslo == model.Haslo)
                     {
                         var wynikTyp2 = client.GetPersonelEmail(model.Email).Typ;
 
@@ -66,8 +55,27 @@ namespace Dental.Controllers
                             return RedirectToAction("MenuLekarz", "Lekarz", new { imie });
                         }
                     }
+                    ViewBag.Message = "Błędne hasło lub email!";
                 }
-                ViewBag.Message = "Błędne hasło lub email!";
+                else
+                {
+                    if (wynikEmail.Haslo == model.Haslo)
+                    {
+                        if (wynikTyp != null)
+                        {
+                            if (wynikTyp.Typ == null)
+                            {
+                                var imie = wynikEmail.Imie;
+                                var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
+                                Session["ID"] = wynikID;
+                                Session["Sesja"] = true;
+                                return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
+                            }
+                        }
+                    }
+                    ViewBag.Message = "Błędne hasło lub email!";
+                }
+
                 return View("Login", model);
             }
             return View("Login", model);

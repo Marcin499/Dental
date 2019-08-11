@@ -1,0 +1,7 @@
+﻿@model Dental.Models.NowaWizytaModel
+
+<div>
+        @Html.Label("Gabinet:")<br />             
+                @Html.DropDownListFor(model => model.GabinetID, Model.ListaGabinetow, "Wybierz", new { @class = "form-control" })
+               <br />
+    </div>
