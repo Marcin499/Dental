@@ -43,6 +43,11 @@
                  @Html.Label("Hasło:")<br />             
                 @Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type="password" })
                 @Html.ValidationMessageFor(model => model.Haslo)<br />
+
+                
+                 @Html.Label("Data urodzenia:")<br />             
+                @Html.TextBoxFor(model => model.DataUrodzin, new { @class = "form-control" })
+                <br />
                 
                   <input type="submit" class="button" value="Zapisz"/><br />
                 <div class="text-danger">
@@ -200,7 +205,13 @@ Zespół Dental</p>
                 $('#ex1').modal("show");
                 $('.close-modal').hide();
 			}			
-		});
+        });
+         
+        $('#DataUrodzin').datepicker({
+            format: 'dd.mm.yyyy',
+            daysOfWeekDisabled: [0, 6],
+        });
+        $('#DataUrodzin').val("");
     });    
 </script>
 

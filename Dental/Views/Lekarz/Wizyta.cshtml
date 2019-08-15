@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Dental.Models.ListaWizytModel>
+
+@{
+    ViewBag.Title = "Wizyta";
+    Layout = "~/Views/Shared/MenuLekarz.cshtml";
+}
+
+<h4>Następnym pacjentem oczekującym w kolejce jest: @TempData["Pacjent"], lat @TempData["Wiek"]</h4>
+<br />
+@using GridMvc.Html
+
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(a => a.Imie).Titled("Imię");
+    columns.Add(a => a.Nazwisko).Titled("Nazwisko");
+    columns.Add(a => a.PESEL).Titled("PESEL");
+    columns.Add(a => a.Godzina).Titled("Godzina");
+    columns.Add(a => a.Stan).Titled("Stan");   
+    columns.Add(a => a.Uwagi).Titled("Uwagi");
+    columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Przeprowadź wizytę", "RozpocznijLeczenie", new { a.WizytaID }, new { @style = "color:green" })).Titled("Potwierdzenie");
+   
+}).WithPaging(20).Sortable(true).Filterable(true).WithMultipleFilters()
+    

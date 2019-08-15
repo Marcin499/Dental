@@ -42,7 +42,10 @@
                  @Html.Label("Hasło:")<br />             
                 @Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type="password" })
                 @Html.ValidationMessageFor(model => model.Haslo)<br />
-                
+
+                 @Html.Label("Data urodzenia:")<br />             
+                @Html.TextBoxFor(model => model.DataUrodzenia, new { @class = "form-control"})                
+                <br />
                   <input type="submit" class="button" value="Zapisz"/><br />
                 <div class="text-danger">
                     @TempData["Success"]
@@ -83,24 +86,16 @@
         </div>        
     </div>
 }
-<div id="mod" class="modal" style="width:auto; height:auto">    
-        <div id="Dolnośląskie"><a href="#" rel="modal:close" style="color:black">- Dolnośląskie</a></div>
-        <div id="Kujawsko_Pomorskie"><a href="#" rel="modal:close" style="color:black">- Kujawsko-Pomorskie</a></div>
-        <div id="Lubelskie"><a href="#" rel="modal:close" style="color:black">- Lubelskie</a></div>
-        <div id="Lubuskie"><a href="#" rel="modal:close" style="color:black">- Lubuskie</a></div>
-        <div id="Łódzkie"><a href="#" rel="modal:close" style="color:black">- Łódzkie</a></div>
-        <div id="Małopolskie"><a href="#" rel="modal:close" style="color:black">- Małopolskie</a></div>
-        <div id="Mazowieckie"><a href="#" rel="modal:close" style="color:black">- Mazowieckie</a></div>
-        <div id="Opolskie"><a href="#" rel="modal:close" style="color:black">- Opolskie</a></div>
-        <div id="Podkarpackie"><a href="#" rel="modal:close" style="color:black">- Podkarpackie</a></div>
-        <div id="Podlaskie"><a href="#" rel="modal:close" style="color:black">- Podlaskie</a></div>
-        <div id="Pomorskiem"><a href="#" rel="modal:close" style="color:black">- Pomorskiem</a></div>
-        <div id="Śląskie"><a href="#" rel="modal:close" style="color:black">- Śląskie</a></div>
-        <div id="Świetokrzyskie"><a href="#" rel="modal:close" style="color:black">- Świetokrzyskie</a></div>
-        <div id="Warmińsko_Mazurskie"><a href="#" rel="modal:close" style="color:black">- Warmińsko-Mazurskie</a></div>
-        <div id="Wielkopolskie"><a href="#" rel="modal:close" style="color:black">- Wielkopolskie</a></div>
-        <div id="Zachodniopomorskie"><a href="#" rel="modal:close" style="color:black">- Zachodniopomorskie</a></div>        
-</div>
+<script>
+    $(document).ready(function () {
+         $('#DataUrodzenia').datepicker({
+            format: 'dd.mm.yyyy',
+            daysOfWeekDisabled: [0, 6],
+        });
+        $('#DataUrodzenia').val("");
+    })
+</script>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

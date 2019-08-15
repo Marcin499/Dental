@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Dental.Models.EditPacjentModel>
 @using GridMvc.Html
 @{
-    ViewBag.Title = "DetaleWizyta";
+    ViewBag.Title = "DetaleWizyta";    
     Layout = "~/Views/Shared/MenuAdmin.cshtml";
 }
 
@@ -26,6 +26,6 @@
 <h4>Historia wizyt</h4>
 <div>
     
-
+    @Html.Action("WizytaHistoria", new { historia =TempData["Dane"] })
                
 </div>

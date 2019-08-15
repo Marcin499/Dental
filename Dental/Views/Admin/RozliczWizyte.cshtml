@@ -1,0 +1,41 @@
+﻿@model DAL.Model.Rachunek
+
+@{
+    ViewBag.Title = "RozliczWizyte";
+    Layout = "~/Views/Shared/MenuAdmin.cshtml";
+}
+
+<h4>Rozlicz wizytę</h4>
+
+@using (Html.BeginForm("SaveRachunek", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body row" style="padding-left: 450px; margin-right:100px; padding-bottom: 100px; padding-top:50px;">
+        
+        <div class="col-md-4">            
+            <div id="part1">
+            @Html.Label("Cena:")<br />            
+                @Html.TextBoxFor(model => model.Cena, new { @class = "form-control" })
+                
+
+        
+            @Html.Label("Rabat:")<br />             
+                @Html.TextBoxFor(model => model.Rabat, new { @class = "form-control" })
+                
+        
+            @Html.Label("Forma zapłaty:")<br />             
+                @Html.TextBoxFor(model => model.FormaPlatnosci, new { @class = "form-control" })
+                                     
+                                                
+                 @Html.Label("Faktura:")<br />             
+                @Html.TextBoxFor(model => model.Faktura, new { @class = "form-control"})
+                                
+                @Html.Label("Kwota do zapłaty:")<br />             
+                @Html.TextBoxFor(model => model.KwotaDoZaplaty, new { @class = "form-control" })
+                <br />
+                <input type="submit" class="button" value="Zapisz" /><br />
+        </div>
+      </div>
+    </div>
+}

@@ -1,4 +1,6 @@
-﻿namespace DAL.Model
+﻿using System;
+
+namespace DAL.Model
 {
     public class Pacjent
     {
@@ -10,6 +12,8 @@
         public string Nazwisko { get; set; }
 
         public string PESEL { get; set; }
+
+        public DateTime DataUrodzin { get; set; }
 
         public int Telefon { get; set; }
 

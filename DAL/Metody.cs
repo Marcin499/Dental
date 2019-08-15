@@ -487,6 +487,10 @@ namespace DAL
             return context.Wizyta.Where(a => a.WizytaID == id).FirstOrDefault();
         }
 
+        public List<Wizyta> GetWizytaByPacjentID(int id)
+        {
+            return context.Wizyta.Where(a => a.PacjentID == id).ToList();
+        }
 
         public List<Wizyta> GetWizytaList()
         {
@@ -569,6 +573,88 @@ namespace DAL
 
             return wynik;
         }
+        #endregion
+
+        #region Rachunek
+        public Rachunek GetRachunekByID(int id)
+        {
+            return context.Rachunek.Where(a => a.RachunekID == id).FirstOrDefault();
+        }
+
+        public List<Rachunek> GetRachunekList()
+        {
+            return context.Rachunek.ToList();
+        }
+
+        public bool RachunekDelete(Rachunek rachunek)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Rachunek.Where(a => a.RachunekID == rachunek.RachunekID).First();
+                    context.Rachunek.Remove(wynik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool RachunekInsert(Rachunek rachunek)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Rachunek.Add(rachunek);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool RachunekUpdate(Rachunek rachunek)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Rachunek.Where(a => a.RachunekID == rachunek.RachunekID).FirstOrDefault();
+                    wynik.RachunekID = rachunek.RachunekID;
+                    wynik.Cena = rachunek.Cena;
+                    wynik.Rabat = rachunek.Rabat;
+                    wynik.KwotaDoZaplaty = rachunek.KwotaDoZaplaty;
+                    wynik.FormaPlatnosci = rachunek.FormaPlatnosci;
+                    wynik.Faktura = rachunek.Faktura;
+
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
         #endregion
     }
 }

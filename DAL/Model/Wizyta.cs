@@ -16,6 +16,8 @@ namespace DAL.Model
 
         public string Data { get; set; }
 
+        public DateTime DataUrodzenia { get; set; }
+
         public string Godzina { get; set; }
 
         public string Typ { get; set; }
@@ -23,6 +25,8 @@ namespace DAL.Model
         public string Stan { get; set; }
 
         public string Rodzaj { get; set; }
+
+        public int RachunekID { get; set; }
 
         public string Uwagi { get; set; }
     }

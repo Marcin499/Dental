@@ -1,0 +1,126 @@
+﻿@model Dental.Models.SzybkaWizytaModel
+
+<div class="modal-body row" style="margin-right:100px; padding-top: 100px;  ">
+
+        <div class="col-md-4">            
+             @Html.HiddenFor(model => model.PacjentID)
+             <div id="part4">                    
+                    @Html.Label("Miasto:")<br />
+                    @Html.DropDownListFor(model => model.Miasto, Model.ListaMiast, "Wybierz",  new { @class = "form-control" })<br />
+                </div>
+            
+              <div id="part5">
+                    @Html.Action("NowaWizytaGabinet")
+                </div>
+            <div id="part6">
+                    @Html.Action("NowaWizytaLekarz")
+                </div>
+                
+              
+        </div>
+        <div class="col-md-4">
+            
+            <div id="part7">
+                @Html.Label("Data:")<br />
+                @Html.TextBoxFor(model => model.Data, new { @class = "form-control" })<br />
+                
+            </div>
+                <div id="part8">
+                    @Html.Action("NowaWizytaGodzina")
+                </div>  
+                 <div id="part9">                   
+                    @Html.HiddenFor(model => model.Stan, new { @class = "form-control" })<br />
+                </div>
+            <div id="part10">                    
+                    @Html.Label("Rodzaj wizyty:")<br />
+                    @Html.DropDownListFor(model => model.Rodzaj, Model.ListaRodzajow,  new { @class = "form-control" })<br />
+                </div>
+         </div>
+     <div class="col-md-4">
+                 <div id="part11">                    
+                    @Html.Label("Typ wizyty:")<br />
+                    @Html.DropDownListFor(model => model.Typ, Model.ListaTypy, new { @class = "form-control" })<br />
+                </div>                 
+                      <br />          
+                <input type="button" class="button" value="Zapisz" onclick="NowaSaveWizyta()"/><br />                
+      </div>
+</div>
+<script>
+   $(document).ready(function () {
+        $('#Data').datepicker({
+            format: 'dd.mm.yyyy',
+            daysOfWeekDisabled: [0, 6],
+        });
+                
+        $('#Miasto').change(function () {
+            debugger;
+            var dane = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/NowaWizytaGabinet2',
+                data: { miasto: dane },
+                success: function (data) {
+                    $('#part5').html(data);
+                }
+            });
+        });
+
+        $('#GabinetID').change(function () {
+            debugger;
+            var gabinet = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/NowaWizytaLekarz2',
+                data: { gabinet: gabinet },
+                success: function (data) {
+                    $('#part6').html(data);
+                }
+
+            });
+
+        })
+
+        $('#Data').change(function () {
+            debugger;
+            var lekarz = $('#LekarzID').val();
+            var gabinet = $('#GabinetID').val();
+            var data = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/NowaWizytaGodzina2',
+                data: { placowkaID: gabinet, lekarz: lekarz, data: data },
+                success: function (data) {
+                    $('#part8').html(data);
+                }
+
+            });
+
+       })
+    });
+
+     function NowaSaveWizyta() {        
+        var gabinet = $('#GabinetID').val();
+        var lekarz = $('#LekarzID').val();
+        var data = $('#Data').val();
+        var godzina = $('#Godzina').val();
+        var rodzajWizyty = $('#Rodzaj').val(); 
+        var typWizyty = $('#Typ').val();
+        var stan = $('#Stan').val();        
+        var imie = $('#Imie').val();
+        var nazwisko = $('#Nazwisko').val();
+         var telefon = $('#Telefon').val();
+         var pacjentID = $('#PacjentID').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/NowaWizytaSave2',
+            data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, imie: imie, nazwisko: nazwisko, telefon: telefon, pacjentID: pacjentID },
+            success: function (data) {
+                alert("Wizyta została utworzona");
+                location.reload();
+            }
+        });
+    };
+    
+</script>
+  

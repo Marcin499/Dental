@@ -222,6 +222,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.datetimepicker.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -390,6 +392,12 @@
     <Content Include="Views\Admin\DetaleWizyta.cshtml" />
     <Content Include="Views\Admin\EditDetale.cshtml" />
     <Content Include="Views\Admin\SzybkaWizyta.cshtml" />
+    <Content Include="Views\Admin\ListaWyszukiwania.cshtml" />
+    <Content Include="Views\Admin\ListaSzybkaWizyta.cshtml" />
+    <Content Include="Views\Admin\WizytaHistoria.cshtml" />
+    <Content Include="Views\Admin\RozliczWizyte.cshtml" />
+    <Content Include="Views\Lekarz\ListaWizyty.cshtml" />
+    <Content Include="Views\Lekarz\Wizyta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

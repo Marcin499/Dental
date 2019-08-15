@@ -9,7 +9,16 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/Gridmbv.css")
     @Scripts.Render("~/Scripts/gridmvc.js")
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>    
+     <link href="~/Content/bootstrap-datepicker.standalone.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker3.standalone.css" rel="stylesheet" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <script src="~/Scripts/gridmvc.js"></script>
+    <script src="~/Scripts/gridmvc.lang.ru.js"></script>
+    <script src="~/Scripts/gridmvc.min.js"></script>
 </head>
 <style>
     a:hover, a:visited, a:link, a:active, #witaj{
@@ -59,7 +68,7 @@
     </div>
  <div id="body" style="display:flex; height:600px; ">        
   <ul class="menu"style="background-color:lightgray">
-  <li class="klasa"><a href="@Url.Action("MenuPacjent", "Lekarz")"><span>Kalendarz</span></a></li>
+  <li class="klasa"><a href="@Url.Action("MenuLekarz", "Lekarz")"><span>Kalendarz</span></a></li>
   <li class="klasa"><a href="@Url.Action("Wizyta", "Lekarz")" ><span>Wizyta</span></a></li>
   <li  class="klasa"><a href="@Url.Action("Historia", "Lekarz")"><span>Pacjenci</span></a></li>
   
@@ -79,7 +88,9 @@
     
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     

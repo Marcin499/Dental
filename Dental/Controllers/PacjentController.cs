@@ -19,6 +19,7 @@ namespace Dental.Controllers
 
                 ViewBag.Strona = "Dental - Menu";
                 TempData["imie"] = imie;
+                TempData.Keep();
                 return View();
             }
             else
@@ -94,6 +95,7 @@ namespace Dental.Controllers
 
             if (Session["Sesja"] != null)
             {
+                var dataUrodzenia = client.GetPacjentByID(Convert.ToInt32(Session["ID"]));
                 Wizyta model = new Wizyta()
                 {
                     PacjentID = Convert.ToInt32(Session["ID"]),
@@ -104,7 +106,8 @@ namespace Dental.Controllers
                     Rodzaj = rodzajWizyty,
                     Typ = typWizyty,
                     Stan = stan,
-                    Uwagi = uwagi
+                    Uwagi = uwagi,
+                    DataUrodzenia = dataUrodzenia.DataUrodzin
                 };
 
                 bool isOk = client.WizytaInsert(model);
@@ -132,7 +135,25 @@ namespace Dental.Controllers
             {
                 ViewBag.Strona = "Dental - Historia";
                 TempData.Keep();
-                return View();
+                int id = Convert.ToInt32(Session["ID"]);
+                var model = client.GetWizytaByPacjentID(id);
+
+                var lekarz = client.GetPesonelList();
+                var gabinet = client.GetPlacowkaList();
+                var wynik = from a in model
+                            join c in lekarz on a.LekarzID equals c.PersonelID
+                            join d in gabinet on a.GabinetID equals d.PlacowkaID
+                            select new WizytaHistoria()
+                            {
+                                Gabinet = d.Nazwa,
+                                ImieLekarz = c.Imie,
+                                NazwiskoLekarz = c.Nazwisko,
+                                Data = a.Data,
+                                Godzina = a.Godzina,
+                                Stan = a.Stan
+
+                            };
+                return View(wynik);
             }
             else
             {
@@ -286,7 +307,8 @@ namespace Dental.Controllers
                     Ulica = wynikAdresID.Ulica,
                     Numer = wynikAdresID.Numer,
                     Kod = wynikAdresID.Kod,
-                    Wojewodztwo = wynikAdresID.Wojewodztwo
+                    Wojewodztwo = wynikAdresID.Wojewodztwo,
+                    DataUrodzenia = wynikPacjentID.DataUrodzin,
                 };
 
                 return View(editPacjentModel);
@@ -339,7 +361,9 @@ namespace Dental.Controllers
                         Haslo = model.Haslo,
                         PESEL = model.PESEL,
                         PowtorzHaslo = model.PowtorzHaslo,
-                        PacjentAdres = modelAdres
+                        PacjentAdres = modelAdres,
+                        DataUrodzin = model.DataUrodzenia
+
                     };
 
                     bool isOk = client.PacjentUpdate(modelPacjent);

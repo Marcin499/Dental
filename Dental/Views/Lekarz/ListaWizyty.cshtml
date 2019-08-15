@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Dental.Models.ListaWizytModel>
+
 @{
     ViewBag.Title = "MenuLekarz";
-    Layout = "~/Views/Shared/MenuLekarz.cshtml";
+   
 }
 <div id="lista">
-<h4>Na dzień @TempData["Data"] zaplanowano @TempData["Wizyty"] @if (TempData["Wizyty"].Equals(1)) { @Html.Label("wizytę") } else if (TempData["Wizyty"].Equals(0)) {@Html.Label("wizyt") } else {@Html.Label("wizyty") }.</h4><br />
+<h4>Na dzień @TempData["Data"] zaplanowano @TempData["Wizyty"] @if (TempData["Wizyty"].Equals(1)) { @Html.Label("wizytę") }  else if (TempData["Wizyty"].Equals(0)) {@Html.Label("wizyt") } else {@Html.Label("wizyty") }.</h4><br />
 
 @Html.Label("Wybierz date:")
 @Html.TextBox("Data")<br />

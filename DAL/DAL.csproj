@@ -78,6 +78,22 @@
     <Compile Include="Migrations\201908101242423_7.Designer.cs">
       <DependentUpon>201908101242423_7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908141929236_8.cs" />
+    <Compile Include="Migrations\201908141929236_8.Designer.cs">
+      <DependentUpon>201908141929236_8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908151455559_9.cs" />
+    <Compile Include="Migrations\201908151455559_9.Designer.cs">
+      <DependentUpon>201908151455559_9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908151521313_10.cs" />
+    <Compile Include="Migrations\201908151521313_10.Designer.cs">
+      <DependentUpon>201908151521313_10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908151540256_11.cs" />
+    <Compile Include="Migrations\201908151540256_11.Designer.cs">
+      <DependentUpon>201908151540256_11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Adres.cs" />
     <Compile Include="Model\AdresPersonel.cs" />
@@ -86,6 +102,7 @@
     <Compile Include="Model\Pacjent.cs" />
     <Compile Include="Model\Personel.cs" />
     <Compile Include="Model\Placowka.cs" />
+    <Compile Include="Model\Rachunek.cs" />
     <Compile Include="Model\Wizyta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -114,6 +131,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908101242423_7.resx">
       <DependentUpon>201908101242423_7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908141929236_8.resx">
+      <DependentUpon>201908141929236_8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908151455559_9.resx">
+      <DependentUpon>201908151455559_9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908151521313_10.resx">
+      <DependentUpon>201908151521313_10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908151540256_11.resx">
+      <DependentUpon>201908151540256_11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

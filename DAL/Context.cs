@@ -38,5 +38,6 @@ namespace DAL
         public DbSet<Placowka> Placowka { get; set; }
         public DbSet<Cennik> Cennik { get; set; }
         public DbSet<Wizyta> Wizyta { get; set; }
+        public DbSet<Rachunek> Rachunek { get; set; }
     }
 }

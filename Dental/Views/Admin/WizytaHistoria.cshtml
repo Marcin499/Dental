@@ -1,21 +1,18 @@
 ﻿@model IEnumerable<Dental.Models.WizytaHistoria>
-@{
-    ViewBag.Title = "Historia";
-    Layout = "~/Views/Shared/MenuPacjent.cshtml";
-}
 
 @using GridMvc.Html
 
 
 @Html.Grid(Model).Columns(columns =>
 {
-    columns.Add(a => a.Data).Titled("Data");
-    columns.Add(a => a.Godzina).Titled("Godzina");
+   
     columns.Add(a => a.Gabinet).Titled("Gabinet");
     columns.Add(a => a.ImieLekarz).Titled("Imię lekarza");
     columns.Add(a => a.NazwiskoLekarz).Titled("Nazwisko lekarza");
-    columns.Add(a => a.Stan).Titled("Stan");
-
+    columns.Add(a => a.Data).Titled("Data");  
+    columns.Add(a => a.Godzina).Titled("Godzina"); 
+     columns.Add(a => a.Stan).Titled("Stan");  
+   
 }).WithPaging(20).Sortable(true).Filterable(true)
 
 

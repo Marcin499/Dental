@@ -43,7 +43,7 @@ namespace Dental.Controllers
                             var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
                             Session["ID"] = wynikID;
                             Session["Sesja"] = true;
-                            return RedirectToAction("MenuAdmin", "Admin", new { imie });
+                            return RedirectToAction("Wizyta", "Admin", new { imie });
 
                         }
                         else if (wynikTyp2 == "Personel")
@@ -164,7 +164,8 @@ namespace Dental.Controllers
                         Email = model.Email,
                         Haslo = model.Haslo,
                         PowtorzHaslo = model.PowtorzHaslo,
-                        PacjentAdres = modelAdres
+                        PacjentAdres = modelAdres,
+                        DataUrodzin = model.DataUrodzin
 
                     };
 

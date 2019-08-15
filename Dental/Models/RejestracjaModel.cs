@@ -39,6 +39,8 @@ namespace Dental.Models
         public List<SelectListItem> ListaWojewodztwa { get; set; }
         [Required(ErrorMessage = "Proszę podać ulicę!")]
         public string Ulica { get; set; }
+        [Required(ErrorMessage = "Proszę podać date urodzenia!")]
+        public DateTime DataUrodzin { get; set; }
         [Display(Name = "Numer domu lub mieszkania")]
         [Required(ErrorMessage = "Prosze podać numer domu badź mieszkania!")]
         public string Numer { get; set; }
@@ -135,6 +137,8 @@ namespace Dental.Models
         public string PowtorzHaslo { get; set; }
         [Required(ErrorMessage = "Proszę podać miasto!")]
         public string Miasto { get; set; }
+        [Required(ErrorMessage = "Proszę podać date urodzenia!")]
+        public DateTime DataUrodzenia { get; set; }
         [Display(Name = "Województwo")]
         [Required(ErrorMessage = "Proszę wybrac województwo!")]
         public string Wojewodztwo { get; set; }
@@ -913,38 +917,6 @@ namespace Dental.Models
         }
     }
     #endregion
-    #region GabinetyPartialModel
-    //public class GabinetyModel
-    //{
-    //    public string LekarzID { get; set; }
-    //    public List<SelectListItem> ListaLekarzy { get; set; }
-    //    public GabinetyModel()
-    //    {
-
-    //    }
-
-    //    public GabinetyModel(string gabinet)
-    //    {
-    //        this.ListaLekarzy = InitLekarz(gabinet);
-    //    }
-
-    //    private List<SelectListItem> InitLekarz(string gabinet)
-    //    {
-    //        Metody client = new Metody();
-    //        List<SelectListItem> lista = new List<SelectListItem>();
-    //        var wynik = client.GetPesonelList();
-
-    //        foreach (var item in wynik)
-    //        {
-    //            if (item.Placowka.ToString() == gabinet)
-    //            {
-    //                lista.Add(new SelectListItem() { Value = item.PersonelID.ToString(), Text = item.Imie + " " + item.Nazwisko });
-    //            }
-    //        }
-    //        return lista;
-    //    }
-    //}
-    #endregion
 
     #region LekarzePartialModel
     public class LekarzeModel
@@ -1412,6 +1384,8 @@ namespace Dental.Models
         public int Cena { get; set; } = 0;
 
         public string Uwagi { get; set; }
+
+        public DateTime DataUrodzin { get; set; }
     }
     #endregion
 
@@ -1867,134 +1841,135 @@ namespace Dental.Models
         }
         #endregion
     }
-        #region SzybkaWizytaModel
-        public class SzybkaWizytaModel
+    #region SzybkaWizytaModel
+    public class SzybkaWizytaModel
+    {
+        public int PacjentID { get; set; }
+
+        public string Imie { get; set; }
+        public List<SelectListItem> ListaImion { get; set; }
+
+        public string Nazwisko { get; set; }
+        public List<SelectListItem> ListaNazwisk { get; set; }
+
+        public string Data { get; set; }
+
+        public string Miasto { get; set; }
+        public List<SelectListItem> ListaMiast { get; set; }
+
+        public string LekarzID { get; set; }
+        public List<SelectListItem> ListaLekarzy { get; set; }
+
+        public string GabinetID { get; set; }
+        public List<SelectListItem> ListaGabinetow { get; set; }
+
+        public string Godzina { get; set; }
+        public List<SelectListItem> ListaGodzin { get; set; }
+
+        public string Typ { get; set; }
+        public List<SelectListItem> ListaTypy { get; set; }
+        public string Stan { get; set; } = "Zaplanowana";
+
+        public string Rodzaj { get; set; }
+        public List<SelectListItem> ListaRodzajow { get; set; }
+
+        public int Cena { get; set; } = 0;
+
+        public string Uwagi { get; set; }
+
+        public SzybkaWizytaModel()
         {
+            this.ListaMiast = InitMiasta();
+            this.ListaTypy = InitTypy();
+            this.ListaRodzajow = InitRodzaj();
+        }
 
-            public string Imie { get; set; }
-            public List<SelectListItem> ListaImion { get; set; }
+        public SzybkaWizytaModel(string miasto)
+        {
+            this.ListaGabinetow = InitGabinety(miasto);
+            this.ListaTypy = InitTypy();
+            this.ListaRodzajow = InitRodzaj();
+        }
 
-            public string Nazwisko { get; set; }
-            public List<SelectListItem> ListaNazwisk { get; set; }
+        public SzybkaWizytaModel(string data, int lekarz, string name, string gabinet, string miasto)
+        {
+            this.ListaMiast = InitMiasta();
+            this.ListaGodzin = InitGodziny(data, lekarz, name);
+            this.ListaLekarzy = InitLekarz(gabinet);
+            this.ListaGabinetow = InitGabinety(miasto);
+            this.ListaTypy = InitTypy();
+            this.ListaRodzajow = InitRodzaj();
+        }
 
-            public string Data { get; set; }
-
-            public string Miasto { get; set; }
-            public List<SelectListItem> ListaMiast { get; set; }
-
-            public string LekarzID { get; set; }
-            public List<SelectListItem> ListaLekarzy { get; set; }
-
-            public string GabinetID { get; set; }
-            public List<SelectListItem> ListaGabinetow { get; set; }
-
-            public string Godzina { get; set; }
-            public List<SelectListItem> ListaGodzin { get; set; }
-
-            public string Typ { get; set; }
-            public List<SelectListItem> ListaTypy { get; set; }
-            public string Stan { get; set; } = "Zaplanowana";
-
-            public string Rodzaj { get; set; }
-            public List<SelectListItem> ListaRodzajow { get; set; }
-
-            public int Cena { get; set; } = 0;
-
-            public string Uwagi { get; set; }
-
-            public SzybkaWizytaModel()
-            {
-                this.ListaMiast = InitMiasta();
-                this.ListaTypy = InitTypy();
-                this.ListaRodzajow = InitRodzaj();
-            }
-
-            public SzybkaWizytaModel(string miasto)
-            {
-                this.ListaGabinetow = InitGabinety(miasto);
-                this.ListaTypy = InitTypy();
-                this.ListaRodzajow = InitRodzaj();
-            }
-
-            public SzybkaWizytaModel(string data, int lekarz, string name, string gabinet, string miasto)
-            {
-                this.ListaMiast = InitMiasta();
-                this.ListaGodzin = InitGodziny(data, lekarz, name);
-                this.ListaLekarzy = InitLekarz(gabinet);
-                this.ListaGabinetow = InitGabinety(miasto);
-                this.ListaTypy = InitTypy();
-                this.ListaRodzajow = InitRodzaj();
-            }
-
-            private List<SelectListItem> InitRodzaj()
-            {
-                List<SelectListItem> lista = new List<SelectListItem>()
+        private List<SelectListItem> InitRodzaj()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
             {
                 new SelectListItem() {Value = "Pierwsza wizyta", Text= "Pierwsza wizyta"},
                 new SelectListItem() {Value = "Wizyta stomatologiczna", Text= "Wizyta stomatologiczna"},
             };
-                return lista;
-            }
-            private List<SelectListItem> InitTypy()
-            {
-                List<SelectListItem> lista = new List<SelectListItem>()
+            return lista;
+        }
+        private List<SelectListItem> InitTypy()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
             {
                 new SelectListItem() {Value = "Wizyta prywatna", Text= "Wizyta prywatna"},
                 new SelectListItem() {Value = "Wizyta NFZ", Text= "Wizyta NFZ"},
             };
-                return lista;
-            }
+            return lista;
+        }
 
-            private List<SelectListItem> InitGabinety(string miasto)
+        private List<SelectListItem> InitGabinety(string miasto)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var placowka = client.GetPlacowkaList();
+            var wynik = client.GetAdresPlacowkaList().Where(a => a.Miasto == miasto).ToList();
+            foreach (var pl in placowka)
+            {
+                foreach (var adr in wynik)
+                {
+                    if (pl.PlacowkaID == adr.AdresID)
+                    {
+                        lista.Add(new SelectListItem() { Value = pl.PlacowkaID.ToString(), Text = pl.Nazwa });
+                    }
+                }
+            }
+            return lista;
+        }
+
+        private List<SelectListItem> InitLekarz(string gabinet)
+        {
+            try
             {
                 Metody client = new Metody();
                 List<SelectListItem> lista = new List<SelectListItem>();
-                var placowka = client.GetPlacowkaList();
-                var wynik = client.GetAdresPlacowkaList().Where(a => a.Miasto == miasto).ToList();
-                foreach (var pl in placowka)
+                var personel = client.GetPesonelList();
+                var wynik = personel.Where(a => a.Typ == "Personel" && a.Specjalizacja != "Brak");
+                var filter = wynik.Where(a => a.Specjalizacja != "Pielęgniarka");
+                foreach (var item in filter)
                 {
-                    foreach (var adr in wynik)
+                    if (item.Placowka == Convert.ToInt32(gabinet))
                     {
-                        if (pl.PlacowkaID == adr.AdresID)
-                        {
-                            lista.Add(new SelectListItem() { Value = pl.PlacowkaID.ToString(), Text = pl.Nazwa });
-                        }
+                        lista.Add(new SelectListItem() { Value = item.PersonelID.ToString(), Text = item.Imie + " " + item.Nazwisko });
                     }
                 }
                 return lista;
             }
-
-            private List<SelectListItem> InitLekarz(string gabinet)
+            catch (Exception ex)
             {
-                try
-                {
-                    Metody client = new Metody();
-                    List<SelectListItem> lista = new List<SelectListItem>();
-                    var personel = client.GetPesonelList();
-                    var wynik = personel.Where(a => a.Typ == "Personel" && a.Specjalizacja != "Brak");
-                    var filter = wynik.Where(a => a.Specjalizacja != "Pielęgniarka");
-                    foreach (var item in filter)
-                    {
-                        if (item.Placowka == Convert.ToInt32(gabinet))
-                        {
-                            lista.Add(new SelectListItem() { Value = item.PersonelID.ToString(), Text = item.Imie + " " + item.Nazwisko });
-                        }
-                    }
-                    return lista;
-                }
-                catch (Exception ex)
-                {
-                    List<SelectListItem> lista = new List<SelectListItem>()
+                List<SelectListItem> lista = new List<SelectListItem>()
                 {
                     new SelectListItem() {Value = ex.ToString(), Text = "Błąd! Powtórz" }
                 };
-                    Console.WriteLine(ex.Message);
-                    return lista;
-                }
-
+                Console.WriteLine(ex.Message);
+                return lista;
             }
 
-            private List<SelectListItem> InitMiasta()
+        }
+
+        private List<SelectListItem> InitMiasta()
         {
             Metody client = new Metody();
             List<SelectListItem> lista = new List<SelectListItem>();
@@ -2007,316 +1982,336 @@ namespace Dental.Models
             return lista;
         }
 
-            private List<SelectListItem> InitGodziny(string data, int lekarz, string placowkaID)
+        private List<SelectListItem> InitGodziny(string data, int lekarz, string placowkaID)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            List<string> lista2 = new List<string>();
+
+            var gabinet = client.GetPlacowkaByID(Convert.ToInt32(placowkaID));
+            if (gabinet.GodzOd.Length == 5)
             {
-                Metody client = new Metody();
-                List<SelectListItem> lista = new List<SelectListItem>();
-                List<string> lista2 = new List<string>();
+                string gabinetString = gabinet.GodzOd.Substring(0, 2);
+                int godzinaOD = Convert.ToInt32(gabinetString);
 
-                var gabinet = client.GetPlacowkaByID(Convert.ToInt32(placowkaID));
-                if (gabinet.GodzOd.Length == 5)
+
+                if (gabinet.GodzDo.Length == 5)
                 {
-                    string gabinetString = gabinet.GodzOd.Substring(0, 2);
-                    int godzinaOD = Convert.ToInt32(gabinetString);
+                    string gabinetString2 = gabinet.GodzDo.Substring(0, 2);
+                    int godzinaDo = Convert.ToInt32(gabinetString2);
 
+                    var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
 
-                    if (gabinet.GodzDo.Length == 5)
-                    {
-                        string gabinetString2 = gabinet.GodzDo.Substring(0, 2);
-                        int godzinaDo = Convert.ToInt32(gabinetString2);
-
-                        var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
-
-                        List<int> godziny = new List<int>()
+                    List<int> godziny = new List<int>()
                         {
                              6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
                          };
 
-                        if (daty.Count() != 0)
+                    if (daty.Count() != 0)
+                    {
+                        foreach (var item in godziny)
                         {
-                            foreach (var item in godziny)
+                            if (item >= godzinaOD && item <= godzinaDo)
                             {
-                                if (item >= godzinaOD && item <= godzinaDo)
-                                {
-                                    lista2.Add(item.ToString());
-                                }
+                                lista2.Add(item.ToString());
                             }
+                        }
 
-                            foreach (var item2 in daty)
+                        foreach (var item2 in daty)
+                        {
+                            foreach (string i in lista2.ToList())
                             {
-                                foreach (string i in lista2.ToList())
+                                if (item2.Godzina.Length == 5)
                                 {
-                                    if (item2.Godzina.Length == 5)
+                                    if (item2.Godzina.Substring(0, 2) == i.ToString())
+
                                     {
-                                        if (item2.Godzina.Substring(0, 2) == i.ToString())
-
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
+                                        lista2.Remove(i);
                                     }
                                     else
                                     {
-                                        if (item2.Godzina.Substring(0, 1) == i.ToString())
 
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
                                     }
-
                                 }
-                            }
+                                else
+                                {
+                                    if (item2.Godzina.Substring(0, 1) == i.ToString())
 
-                            foreach (var id in lista2)
-                            {
-                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                                    {
+                                        lista2.Remove(i);
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+
                             }
                         }
-                        else
-                        {
-                            foreach (var item2 in godziny)
-                            {
-                                if (item2 >= godzinaOD && item2 <= godzinaDo)
-                                {
-                                    lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
-                                }
 
-                            }
+                        foreach (var id in lista2)
+                        {
+                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
                         }
                     }
                     else
                     {
-                        string gabinetString2 = gabinet.GodzDo.Substring(0, 1);
-                        int godzinaDo = Convert.ToInt32(gabinetString2);
-
-                        var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
-
-                        List<int> godziny = new List<int>()
+                        foreach (var item2 in godziny)
                         {
-                             6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
-                          };
-
-
-                        if (daty.Count() != 0)
-                        {
-                            foreach (var item in godziny)
+                            if (item2 >= godzinaOD && item2 <= godzinaDo)
                             {
-                                if (item >= godzinaOD && item <= godzinaDo)
-                                {
-                                    lista2.Add(item.ToString());
-                                }
+                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
                             }
 
-                            foreach (var item2 in daty)
-                            {
-                                foreach (string i in lista2.ToList())
-                                {
-                                    if (item2.Godzina.Length == 5)
-                                    {
-                                        if (item2.Godzina.Substring(0, 2) == i.ToString())
-
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (item2.Godzina.Substring(0, 1) == i.ToString())
-
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                    }
-
-                                }
-                            }
-
-                            foreach (var id in lista2)
-                            {
-                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
-                            }
                         }
-                        else
-                        {
-                            foreach (var item2 in godziny)
-                            {
-                                if (item2 >= godzinaOD && item2 <= godzinaDo)
-                                {
-                                    lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
-                                }
-
-                            }
-                        }
-
                     }
                 }
                 else
                 {
-                    string gabinetString = gabinet.GodzOd.Substring(0, 1);
-                    int godzinaOD = Convert.ToInt32(gabinetString);
+                    string gabinetString2 = gabinet.GodzDo.Substring(0, 1);
+                    int godzinaDo = Convert.ToInt32(gabinetString2);
 
+                    var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
 
-                    if (gabinet.GodzDo.Length == 5)
-                    {
-                        string gabinetString2 = gabinet.GodzDo.Substring(0, 2);
-                        int godzinaDo = Convert.ToInt32(gabinetString2);
-
-                        var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
-
-                        List<int> godziny = new List<int>()
-                         {
-                              6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+                    List<int> godziny = new List<int>()
+                        {
+                             6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
                           };
 
-                        if (daty.Count() != 0)
+
+                    if (daty.Count() != 0)
+                    {
+                        foreach (var item in godziny)
                         {
-
-                            foreach (var item in godziny)
+                            if (item >= godzinaOD && item <= godzinaDo)
                             {
-                                if (item >= godzinaOD && item <= godzinaDo)
-                                {
-                                    lista2.Add(item.ToString());
-                                }
+                                lista2.Add(item.ToString());
                             }
+                        }
 
-                            foreach (var item2 in daty)
+                        foreach (var item2 in daty)
+                        {
+                            foreach (string i in lista2.ToList())
                             {
-                                foreach (string i in lista2.ToList())
+                                if (item2.Godzina.Length == 5)
                                 {
-                                    if (item2.Godzina.Length == 5)
+                                    if (item2.Godzina.Substring(0, 2) == i.ToString())
+
                                     {
-                                        if (item2.Godzina.Substring(0, 2) == i.ToString())
-
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
+                                        lista2.Remove(i);
                                     }
                                     else
                                     {
-                                        if (item2.Godzina.Substring(0, 1) == i.ToString())
 
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
                                     }
-
                                 }
-                            }
-
-                            foreach (var id in lista2)
-                            {
-                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
-                            }
-
-                        }
-                        else
-                        {
-                            foreach (var item2 in godziny)
-                            {
-                                if (item2 >= godzinaOD && item2 <= godzinaDo)
+                                else
                                 {
-                                    lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                                    if (item2.Godzina.Substring(0, 1) == i.ToString())
+
+                                    {
+                                        lista2.Remove(i);
+                                    }
+                                    else
+                                    {
+
+                                    }
                                 }
 
                             }
+                        }
+
+                        foreach (var id in lista2)
+                        {
+                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
                         }
                     }
                     else
                     {
-                        string gabinetString2 = gabinet.GodzDo.Substring(0, 1);
-                        int godzinaDo = Convert.ToInt32(gabinetString2);
+                        foreach (var item2 in godziny)
+                        {
+                            if (item2 >= godzinaOD && item2 <= godzinaDo)
+                            {
+                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                            }
 
-                        var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
-                        List<int> godziny = new List<int>()
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                string gabinetString = gabinet.GodzOd.Substring(0, 1);
+                int godzinaOD = Convert.ToInt32(gabinetString);
+
+
+                if (gabinet.GodzDo.Length == 5)
+                {
+                    string gabinetString2 = gabinet.GodzDo.Substring(0, 2);
+                    int godzinaDo = Convert.ToInt32(gabinetString2);
+
+                    var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
+
+                    List<int> godziny = new List<int>()
+                         {
+                              6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+                          };
+
+                    if (daty.Count() != 0)
+                    {
+
+                        foreach (var item in godziny)
+                        {
+                            if (item >= godzinaOD && item <= godzinaDo)
+                            {
+                                lista2.Add(item.ToString());
+                            }
+                        }
+
+                        foreach (var item2 in daty)
+                        {
+                            foreach (string i in lista2.ToList())
+                            {
+                                if (item2.Godzina.Length == 5)
+                                {
+                                    if (item2.Godzina.Substring(0, 2) == i.ToString())
+
+                                    {
+                                        lista2.Remove(i);
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+                                else
+                                {
+                                    if (item2.Godzina.Substring(0, 1) == i.ToString())
+
+                                    {
+                                        lista2.Remove(i);
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                        foreach (var id in lista2)
+                        {
+                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                        }
+
+                    }
+                    else
+                    {
+                        foreach (var item2 in godziny)
+                        {
+                            if (item2 >= godzinaOD && item2 <= godzinaDo)
+                            {
+                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    string gabinetString2 = gabinet.GodzDo.Substring(0, 1);
+                    int godzinaDo = Convert.ToInt32(gabinetString2);
+
+                    var daty = client.GetWizytaByDateAndDoctor(data, lekarz);
+                    List<int> godziny = new List<int>()
                           {
                              6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
                           };
 
-                        if (daty.Count() != 0)
+                    if (daty.Count() != 0)
+                    {
+                        foreach (var item in godziny)
                         {
-                            foreach (var item in godziny)
+                            if (item >= godzinaOD && item <= godzinaDo)
                             {
-                                if (item >= godzinaOD && item <= godzinaDo)
-                                {
-                                    lista2.Add(item.ToString());
-                                }
+                                lista2.Add(item.ToString());
                             }
+                        }
 
-                            foreach (var item2 in daty)
+                        foreach (var item2 in daty)
+                        {
+                            foreach (string i in lista2.ToList())
                             {
-                                foreach (string i in lista2.ToList())
+                                if (item2.Godzina.Length == 5)
                                 {
-                                    if (item2.Godzina.Length == 5)
+                                    if (item2.Godzina.Substring(0, 2) == i.ToString())
+
                                     {
-                                        if (item2.Godzina.Substring(0, 2) == i.ToString())
-
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
+                                        lista2.Remove(i);
                                     }
                                     else
                                     {
-                                        if (item2.Godzina.Substring(0, 1) == i.ToString())
 
-                                        {
-                                            lista2.Remove(i);
-                                        }
-                                        else
-                                        {
-
-                                        }
                                     }
-
                                 }
-                            }
+                                else
+                                {
+                                    if (item2.Godzina.Substring(0, 1) == i.ToString())
 
-                            foreach (var id in lista2)
-                            {
-                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                                    {
+                                        lista2.Remove(i);
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+
                             }
                         }
-                        else
-                        {
-                            foreach (var item2 in godziny)
-                            {
-                                if (item2 >= godzinaOD && item2 <= godzinaDo)
-                                {
-                                    lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
-                                }
 
+                        foreach (var id in lista2)
+                        {
+                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item2 in godziny)
+                        {
+                            if (item2 >= godzinaOD && item2 <= godzinaDo)
+                            {
+                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
                             }
+
                         }
                     }
                 }
-                return lista;
             }
-            #endregion
+            return lista;
         }
+        #endregion
     }
+    #region WizytaHistoria
+    public class WizytaHistoria
+    {
+
+        public string Data { get; set; }
+
+        public string Gabinet { get; set; }
+
+        public string Godzina { get; set; }
+
+        public string ImieLekarz { get; set; }
+
+        public string NazwiskoLekarz { get; set; }
+
+        public string Stan { get; set; }
+
+
+    }
+    #endregion
+
+}
