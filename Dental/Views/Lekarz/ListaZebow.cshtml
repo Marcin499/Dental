@@ -1,0 +1,55 @@
+﻿@model Dental.Models.KategoriaModel
+
+@{ 
+    var id = TempData["ID"];
+}
+    <br />
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+   <div id="z1">
+        @Html.DropDownListFor(m =>m.Kategoria, Model.ListaKategorie, "-Wybierz-",  new { @class = "form-control" })
+   </div>
+  </li>
+  <li class="nav-item">
+    <div id="z2">
+       @Html.DropDownListFor(m =>m.Brakujace, Model.ListaBrakujace, "-Wybierz-",  new { @class = "form-control" })
+    </div>
+  </li>
+  
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" style="border-style: double solid; text-align:center;" id="zeby1" role="tabpanel" aria-labelledby="home-tab"> </div>
+  
+  
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Kategoria').change(function () {
+            var kat = $(this).val();
+            $('#Brakujace').val('Wybierz');
+            $.ajax({
+                type: 'POST',
+                url: '/Lekarz/Zeby',
+                data: { kategoria: kat },
+                success: function (data) {
+                    $('#zeby1').html(data);
+                }
+            });
+        })
+
+        $('#Brakujace').change(function () {
+            debugger;
+             $('#Kategoria').val('Wybierz');
+             var id = @id;
+             $.ajax({
+                 type: 'POST',
+                 url: '/Lekarz/BrakujaceZeby',
+                 data: {id : id},
+                success: function (data) {
+                    $('#zeby1').html(data);
+                }
+            });
+        });
+    })
+</script>

@@ -3,16 +3,16 @@ namespace DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _11 : DbMigration
+    public partial class _12 : DbMigration
     {
         public override void Up()
         {
-            AlterColumn("dbo.Wizytas", "Data", c => c.DateTime(nullable: false));
+            AddColumn("dbo.BrakZebows", "PacjentID", c => c.Int(nullable: false));
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.Wizytas", "Data", c => c.String());
+            DropColumn("dbo.BrakZebows", "PacjentID");
         }
     }
 }

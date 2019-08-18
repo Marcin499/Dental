@@ -90,20 +90,26 @@
     <Compile Include="Migrations\201908151521313_10.Designer.cs">
       <DependentUpon>201908151521313_10.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908151540256_11.cs" />
-    <Compile Include="Migrations\201908151540256_11.Designer.cs">
-      <DependentUpon>201908151540256_11.cs</DependentUpon>
+    <Compile Include="Migrations\201908161817241_11.cs" />
+    <Compile Include="Migrations\201908161817241_11.Designer.cs">
+      <DependentUpon>201908161817241_11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908181517389_12.cs" />
+    <Compile Include="Migrations\201908181517389_12.Designer.cs">
+      <DependentUpon>201908181517389_12.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Adres.cs" />
     <Compile Include="Model\AdresPersonel.cs" />
     <Compile Include="Model\AdresPlacowka.cs" />
+    <Compile Include="Model\BrakZebow.cs" />
     <Compile Include="Model\Cennik.cs" />
     <Compile Include="Model\Pacjent.cs" />
     <Compile Include="Model\Personel.cs" />
     <Compile Include="Model\Placowka.cs" />
     <Compile Include="Model\Rachunek.cs" />
     <Compile Include="Model\Wizyta.cs" />
+    <Compile Include="Model\Zeby.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,8 +147,11 @@
     <EmbeddedResource Include="Migrations\201908151521313_10.resx">
       <DependentUpon>201908151521313_10.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908151540256_11.resx">
-      <DependentUpon>201908151540256_11.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908161817241_11.resx">
+      <DependentUpon>201908161817241_11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908181517389_12.resx">
+      <DependentUpon>201908181517389_12.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

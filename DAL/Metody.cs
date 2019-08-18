@@ -654,7 +654,96 @@ namespace DAL
                 }
             }
         }
+        #endregion
 
+        #region Zeby
+
+        public List<Zeby> GetZebyList()
+        {
+            return context.Zeby.ToList();
+        }
+
+        #endregion
+
+        #region BrakZebow
+
+        public List<BrakZebow> GetBrakZebowList()
+        {
+            return context.BrakZebow.ToList();
+        }
+
+        public BrakZebow GetBrakZebowByID(int id)
+        {
+            return context.BrakZebow.Where(a => a.ZabID == id).FirstOrDefault();
+        }
+
+        public bool BrakZebowDelete(BrakZebow brakZebow)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.BrakZebow.Where(a => a.ZabID == brakZebow.ZabID).First();
+                    context.BrakZebow.Remove(wynik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool BrakZebowInsert(BrakZebow brakZebow)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.BrakZebow.Add(brakZebow);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool BrakZebowUpdate(BrakZebow brakZebow)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.BrakZebow.Where(a => a.ZabID == brakZebow.ZabID).FirstOrDefault();
+                    wynik.ZabID = brakZebow.ZabID;
+                    wynik.Kategoria = brakZebow.Kategoria;
+                    wynik.GD = brakZebow.GD;
+                    wynik.LP = brakZebow.LP;
+                    wynik.Zab = brakZebow.Zab;
+
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
         #endregion
     }
 }

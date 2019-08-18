@@ -168,6 +168,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Image\verMenuImages.png" />
     <Content Include="Image\Zab.png" />
     <None Include="Connected Services\DentalReference\DentalService.wsdl" />
     <None Include="Connected Services\DentalReference\DentalService.xsd">
@@ -354,7 +355,6 @@
     <Content Include="Views\Shared\MenuAdmin.cshtml" />
     <Content Include="Views\Shared\MenuLekarz.cshtml" />
     <Content Include="Views\Lekarz\MenuLekarz.cshtml" />
-    <Content Include="Views\Admin\MenuAdmin.cshtml" />
     <Content Include="Views\Admin\Wizyta.cshtml" />
     <Content Include="Views\Admin\Personel.cshtml" />
     <Content Include="Views\Admin\Cennik.cshtml" />
@@ -398,6 +398,12 @@
     <Content Include="Views\Admin\RozliczWizyte.cshtml" />
     <Content Include="Views\Lekarz\ListaWizyty.cshtml" />
     <Content Include="Views\Lekarz\Wizyta.cshtml" />
+    <Content Include="Views\Lekarz\Leczenie.cshtml" />
+    <Content Include="Views\Lekarz\ListaZebow.cshtml" />
+    <Content Include="Views\Lekarz\Rozpoznanie.cshtml" />
+    <Content Include="Views\Lekarz\ListaLeczenia.cshtml" />
+    <Content Include="Views\Lekarz\Zeby.cshtml" />
+    <Content Include="Views\Lekarz\BrakujaceZeby.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

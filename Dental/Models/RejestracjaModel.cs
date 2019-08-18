@@ -2310,7 +2310,191 @@ namespace Dental.Models
 
         public string Stan { get; set; }
 
+    }
+    #endregion
 
+    #region ZebyModel
+    public class ZebyModel
+    {
+        public int GL { get; set; }
+        public List<SelectListItem> ListGL { get; set; }
+
+        public int GP { get; set; }
+        public List<SelectListItem> ListGP { get; set; }
+
+        public int DL { get; set; }
+        public List<SelectListItem> ListDL { get; set; }
+
+        public int DP { get; set; }
+        public List<SelectListItem> ListDP { get; set; }
+
+        public ZebyModel()
+        {
+            this.ListGL = InitGL();
+            this.ListGP = InitGP();
+            this.ListDL = InitDL();
+            this.ListDP = InitDP();
+        }
+
+        public ZebyModel(string kategoria)
+        {
+            this.ListGL = InitGL(kategoria);
+            this.ListGP = InitGP(kategoria);
+            this.ListDL = InitDL(kategoria);
+            this.ListDP = InitDP(kategoria);
+        }
+
+        private List<SelectListItem> InitDP()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Dolne" && a.LP == "Prawa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitDL()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Dolne" && a.LP == "Lewa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitGP()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Górne" && a.LP == "Prawa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitGL()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Górne" && a.LP == "Lewa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitDP(string kategoria)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Prawa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitDL(string kategoria)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Lewa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitGP(string kategoria)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Prawa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitGL(string kategoria)
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Lewa");
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+            }
+
+            return lista;
+        }
+    }
+    #endregion
+
+    #region KategoriaModel
+    public class KategoriaModel
+    {
+        public string Kategoria { get; set; }
+        public List<SelectListItem> ListaKategorie { get; set; }
+
+        public string Brakujace { get; set; }
+        public List<SelectListItem> ListaBrakujace { get; set; }
+
+        public KategoriaModel()
+        {
+            this.ListaKategorie = InitKategorie();
+            this.ListaBrakujace = InitBrakujące();
+        }
+
+        private List<SelectListItem> InitBrakujące()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+           {
+               new SelectListItem(){Value="Brakujace", Text="Brakujace zęby"},
+
+           };
+
+            return lista;
+        }
+
+        private List<SelectListItem> InitKategorie()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>()
+           {
+               new SelectListItem(){Value="Stałe", Text="Zęby stałe"},
+               new SelectListItem(){Value="Mleczne", Text="Zęby mleczne"},
+           };
+
+            return lista;
+
+        }
     }
     #endregion
 

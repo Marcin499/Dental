@@ -27,7 +27,6 @@ namespace DAL
                 .HasRequired(s => s.PlacowkaAdresPlacowka)
                 .WithRequiredPrincipal(s => s.AdresPlacowkaAdres);
 
-
         }
 
         public DbSet<Pacjent> Pacjent { get; set; }
@@ -39,5 +38,7 @@ namespace DAL
         public DbSet<Cennik> Cennik { get; set; }
         public DbSet<Wizyta> Wizyta { get; set; }
         public DbSet<Rachunek> Rachunek { get; set; }
+        public DbSet<Zeby> Zeby { get; set; }
+        public DbSet<BrakZebow> BrakZebow { get; set; }
     }
 }

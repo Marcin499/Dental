@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Leczenie";
+    Layout = "~/Views/Shared/MenuLekarz.cshtml";
+    var id = TempData["ID"];
+}
+<style>
+    #historia{
+        color:cornflowerblue;
+    }
+</style>
+<h4>Pacjent:  @TempData["Pacjent"], lat @TempData["Wiek"]. &ensp;  <a id="historia" href=""> Historia pacjenta</a></h4>
+
+
+<div id="container" class="row">   
+    <div id="zeby" class="col-md-4">
+        @Html.Action("ListaZebow", new { id})
+    </div>
+
+    <div id="rozpoznanie" class="col-md-2">
+        
+    </div>
+
+    <div id="rozpoznanie" class="col-md-4">
+        @Html.Action("Rozpoznanie")
+    </div>
+</div>
+<div id="lista"> 
+    @Html.Action("ListaLeczenia")
+</div>

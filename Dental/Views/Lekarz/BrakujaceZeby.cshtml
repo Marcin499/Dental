@@ -1,0 +1,70 @@
+﻿@model Dental.Models.ZebyModel
+
+@{ 
+    var id = TempData["ID"];
+}
+<br />
+<b>Szczęka</b>
+<div id="container" class="row" style="margin-left:5px;">
+    <div  class="col-md-5" >
+        <br />
+        
+        <span>Lewa strona</span>
+        @Html.DropDownListFor(a =>a.GL, Model.ListGL,  "-Wybierz-",  new { @class = "form-control" })<br />
+    </div>
+  
+    <div  class="col-md-5" style="margin-left:60px;">
+       <br />
+        <span>Prawa strona</span>
+        @Html.DropDownListFor(a =>a.GP, Model.ListGP,  "-Wybierz-", new { @class = "form-control" })<br />
+    </div>
+</div>
+ <b>Żuchwa</b>
+<div id="container2" class="row" style="margin-left:5px;">
+    <div  class="col-md-5">
+        <br />
+        <span>Lewa strona</span>
+        @Html.DropDownListFor(a =>a.DL, Model.ListDL,  "-Wybierz-", new { @class = "form-control" })<br />
+    </div>
+
+    <div  class="col-md-5" style="margin-left:60px;">
+        <br />
+        <span>Prawa strona</span>
+        @Html.DropDownListFor(a =>a.DP, Model.ListDP,  "-Wybierz-", new { @class = "form-control" })<br />
+    </div>
+</div>
+<div>
+ Brak zębów w szczęce
+        <input type="checkbox" value="" id="szczeka" name="Brak zębów w szczęce"/>
+        <br />
+Brak zębów w żuchwie
+        <input type="checkbox" value=""  id="zuchwa" name="Brak zębów w żuchwie"/>
+        <br />
+<input type="button" class="button" value="Zapisz zęby" style="background-color:dodgerblue;" onclick="ZapiszBrakujace()"/><br />
+    </div>
+<script>
+    function ZapiszBrakujace() {
+        debugger;
+        var gl = $('#GL').val();
+        var gp = $('#GP').val();
+        var dl = $('#DL').val();
+        var dp = $('#DP').val();
+        if ($('#szczeka').prop('checked')) {
+            var szczeka = true;
+        }
+        if ($('#zuchwa').prop('checked')) {
+            var zuchwa = true;
+        }       
+        var id = @id;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Lekarz/SaveBrakujace',
+            data: { gl: gl, gp: gp, dl: dl, dp: dp, szczeka: szczeka, zuchwa: zuchwa, id:id },
+            success: function (data) {
+                alert('Zeby zostały zapisane');
+            }
+        });
+
+    };
+</script>
