@@ -672,9 +672,9 @@ namespace DAL
             return context.BrakZebow.ToList();
         }
 
-        public BrakZebow GetBrakZebowByID(int id)
+        public List<BrakZebow> GetBrakZebowByID(int id)
         {
-            return context.BrakZebow.Where(a => a.ZabID == id).FirstOrDefault();
+            return context.BrakZebow.Where(a => a.PacjentID == id).ToList();
         }
 
         public bool BrakZebowDelete(BrakZebow brakZebow)
@@ -732,6 +732,164 @@ namespace DAL
                     wynik.LP = brakZebow.LP;
                     wynik.Zab = brakZebow.Zab;
 
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region Rozpoznanie
+
+        public Rozpoznanie GetRozpoznanieByID(int id)
+        {
+            return context.Rozpoznanie.Where(a => a.RozpoznanieID == id).FirstOrDefault();
+        }
+
+        public List<Rozpoznanie> GetRozpoznanieList()
+        {
+            return context.Rozpoznanie.ToList();
+        }
+
+        public bool RozpoznanieDelete(Rozpoznanie rozpoznanie)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Rozpoznanie.Where(a => a.RozpoznanieID == rozpoznanie.RozpoznanieID).First();
+                    context.Rozpoznanie.Remove(wynik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool RozpoznanieInsert(Rozpoznanie rozpoznanie)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Rozpoznanie.Add(rozpoznanie);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool RozpoznaieUpdate(Rozpoznanie rozpoznanie)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Rozpoznanie.Where(a => a.RozpoznanieID == rozpoznanie.RozpoznanieID).FirstOrDefault();
+                    wynik.RozpoznanieID = rozpoznanie.RozpoznanieID;
+                    wynik.Rozpoz = rozpoznanie.Rozpoz;
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+        #endregion
+
+        #region Leczenie
+
+        public List<Leczenie> GetLeczenieByIDWizyta(int id)
+        {
+            return context.Leczenie.Where(a => a.WizytaID == id).ToList();
+        }
+
+        public List<Leczenie> GetLeczenieList()
+        {
+            return context.Leczenie.ToList();
+        }
+
+        public bool LeczenieDelete(int id)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Leczenie.Where(a => a.LeczenieID == id).First();
+                    context.Leczenie.Remove(wynik);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool LeczenieInsert(Leczenie leczenie)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Leczenie.Add(leczenie);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool LeczenieUpdate(Leczenie leczenie)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Leczenie.Where(a => a.LeczenieID == leczenie.LeczenieID).FirstOrDefault();
+                    wynik.LeczenieID = leczenie.LeczenieID;
+                    wynik.GD = leczenie.GD;
+                    wynik.LP = leczenie.LP;
+                    wynik.Zab = leczenie.Zab;
+                    wynik.WizytaID = leczenie.WizytaID;
+                    wynik.Rozpoznanie = leczenie.Rozpoznanie;
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();

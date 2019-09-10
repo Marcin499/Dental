@@ -98,16 +98,30 @@
     <Compile Include="Migrations\201908181517389_12.Designer.cs">
       <DependentUpon>201908181517389_12.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908251217045_13.cs" />
+    <Compile Include="Migrations\201908251217045_13.Designer.cs">
+      <DependentUpon>201908251217045_13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908251745124_14.cs" />
+    <Compile Include="Migrations\201908251745124_14.Designer.cs">
+      <DependentUpon>201908251745124_14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909091946290_15.cs" />
+    <Compile Include="Migrations\201909091946290_15.Designer.cs">
+      <DependentUpon>201909091946290_15.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Adres.cs" />
     <Compile Include="Model\AdresPersonel.cs" />
     <Compile Include="Model\AdresPlacowka.cs" />
     <Compile Include="Model\BrakZebow.cs" />
     <Compile Include="Model\Cennik.cs" />
+    <Compile Include="Model\Leczenie.cs" />
     <Compile Include="Model\Pacjent.cs" />
     <Compile Include="Model\Personel.cs" />
     <Compile Include="Model\Placowka.cs" />
     <Compile Include="Model\Rachunek.cs" />
+    <Compile Include="Model\Rozpoznanie.cs" />
     <Compile Include="Model\Wizyta.cs" />
     <Compile Include="Model\Zeby.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,6 +166,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908181517389_12.resx">
       <DependentUpon>201908181517389_12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908251217045_13.resx">
+      <DependentUpon>201908251217045_13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908251745124_14.resx">
+      <DependentUpon>201908251745124_14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909091946290_15.resx">
+      <DependentUpon>201909091946290_15.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

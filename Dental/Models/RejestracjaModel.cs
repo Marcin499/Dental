@@ -1,5 +1,4 @@
 ﻿using DAL;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -2336,12 +2335,12 @@ namespace Dental.Models
             this.ListDP = InitDP();
         }
 
-        public ZebyModel(string kategoria)
+        public ZebyModel(string kategoria, int id)
         {
-            this.ListGL = InitGL(kategoria);
-            this.ListGP = InitGP(kategoria);
-            this.ListDL = InitDL(kategoria);
-            this.ListDP = InitDP(kategoria);
+            this.ListGL = InitGL(id, kategoria);
+            this.ListGP = InitGP(id, kategoria);
+            this.ListDL = InitDL(id, kategoria);
+            this.ListDP = InitDP(id, kategoria);
         }
 
         private List<SelectListItem> InitDP()
@@ -2400,60 +2399,132 @@ namespace Dental.Models
             return lista;
         }
 
-        private List<SelectListItem> InitDP(string kategoria)
+        private List<SelectListItem> InitDP(int id, string kategoria)
         {
             Metody client = new Metody();
-            List<SelectListItem> lista = new List<SelectListItem>();
+            var zeby = client.GetBrakZebowByID(id);
+            List<int> lista = new List<int>();
             var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Prawa");
 
             foreach (var item in model)
             {
-                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+                lista.Add(item.Zab);
             }
 
-            return lista;
+            foreach (var item in model)
+            {
+                foreach (var item2 in zeby)
+                {
+                    if (item.Zab == item2.Zab)
+                    {
+                        lista.Remove(item2.Zab);
+                    }
+                }
+            }
+            List<SelectListItem> listaModel = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+            }
+
+
+            return listaModel;
         }
 
-        private List<SelectListItem> InitDL(string kategoria)
+        private List<SelectListItem> InitDL(int id, string kategoria)
         {
             Metody client = new Metody();
-            List<SelectListItem> lista = new List<SelectListItem>();
+            var zeby = client.GetBrakZebowByID(id);
+            List<int> lista = new List<int>();
             var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Lewa");
 
             foreach (var item in model)
             {
-                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+                lista.Add(item.Zab);
             }
 
-            return lista;
+            foreach (var item in model)
+            {
+                foreach (var item2 in zeby)
+                {
+                    if (item.Zab == item2.Zab)
+                    {
+                        lista.Remove(item2.Zab);
+                    }
+                }
+            }
+            List<SelectListItem> listaModel = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+            }
+
+
+            return listaModel;
         }
 
-        private List<SelectListItem> InitGP(string kategoria)
+        private List<SelectListItem> InitGP(int id, string kategoria)
         {
             Metody client = new Metody();
-            List<SelectListItem> lista = new List<SelectListItem>();
+            var zeby = client.GetBrakZebowByID(id);
+            List<int> lista = new List<int>();
             var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Prawa");
 
             foreach (var item in model)
             {
-                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+                lista.Add(item.Zab);
             }
 
-            return lista;
+            foreach (var item in model)
+            {
+                foreach (var item2 in zeby)
+                {
+                    if (item.Zab == item2.Zab)
+                    {
+                        lista.Remove(item2.Zab);
+                    }
+                }
+            }
+            List<SelectListItem> listaModel = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+            }
+
+
+            return listaModel;
         }
 
-        private List<SelectListItem> InitGL(string kategoria)
+        private List<SelectListItem> InitGL(int id, string kategoria)
         {
             Metody client = new Metody();
-            List<SelectListItem> lista = new List<SelectListItem>();
+            var zeby = client.GetBrakZebowByID(id);
+            List<int> lista = new List<int>();
             var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Lewa");
 
             foreach (var item in model)
             {
-                lista.Add(new SelectListItem() { Value = item.Zab.ToString(), Text = item.Zab.ToString() });
+                lista.Add(item.Zab);
             }
 
-            return lista;
+            foreach (var item in model)
+            {
+                foreach (var item2 in zeby)
+                {
+                    if (item.Zab == item2.Zab)
+                    {
+                        lista.Remove(item2.Zab);
+                    }
+                }
+            }
+            List<SelectListItem> listaModel = new List<SelectListItem>();
+            foreach (var item in lista)
+            {
+                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+            }
+
+
+            return listaModel;
         }
     }
     #endregion
@@ -2494,6 +2565,37 @@ namespace Dental.Models
 
             return lista;
 
+        }
+    }
+    #endregion
+
+    #region Rozpoznanie
+    public class RozpoznanieModel
+    {
+        public int RozpoznanieID { get; set; }
+
+        public string Rozpoznanie { get; set; }
+        public List<SelectListItem> ListRozpoznanie { get; set; }
+
+        public string Dodaj { get; set; }
+
+        public RozpoznanieModel()
+        {
+            this.ListRozpoznanie = InitRozpoznanie();
+        }
+
+        private List<SelectListItem> InitRozpoznanie()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetRozpoznanieList();
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Rozpoz, Text = item.Rozpoz });
+            }
+
+            return lista;
         }
     }
     #endregion

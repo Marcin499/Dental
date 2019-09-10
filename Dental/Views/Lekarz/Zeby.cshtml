@@ -3,30 +3,30 @@
 <br />
 <b>Szczęka</b>
 <div id="container" class="row" style="margin-left:20px;">
-    <div id="GL" class="col-md-4" >
+    <div id="GoraL" class="col-md-4" >
         <br />
         
         <span>Lewa strona</span>
-        @Html.DropDownListFor(a =>a.GL, Model.ListGL,  new { @class = "form-control" })<br />
+        @Html.DropDownListFor(a =>a.GL, Model.ListGL, "Wybierz", new { @class = "form-control" })<br />
     </div>
    
-    <div id="GP" class="col-md-4" style="margin-left:80px;">
+    <div id="GoraP" class="col-md-4" style="margin-left:80px;">
        <br />
         <span>Prawa strona</span>
-        @Html.DropDownListFor(a =>a.GP, Model.ListGP,  new { @class = "form-control" })<br />
+        @Html.DropDownListFor(a =>a.GP, Model.ListGP, "Wybierz", new { @class = "form-control" })<br />
     </div>
 </div>
  <b>Żuchwa</b>
 <div id="container2" class="row" style="margin-left:20px;">
-    <div id="DL" class="col-md-4">
+    <div id="DolL" class="col-md-4">
         <br />
         <span>Lewa strona</span>
-        @Html.DropDownListFor(a =>a.DL, Model.ListDL,  new { @class = "form-control" })<br />
+        @Html.DropDownListFor(a =>a.DL, Model.ListDL, "Wybierz", new { @class = "form-control" })<br />
     </div>
 
-    <div id="DP" class="col-md-4" style="margin-left:80px;">
+    <div id="DolP" class="col-md-4" style="margin-left:80px;">
         <br />
         <span>Prawa strona</span>
-        @Html.DropDownListFor(a =>a.DP, Model.ListDP,  new { @class = "form-control" })<br />
+        @Html.DropDownListFor(a =>a.DP, Model.ListDP, "Wybierz", new { @class = "form-control" })<br />
     </div>
 </div>

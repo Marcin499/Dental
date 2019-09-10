@@ -404,6 +404,7 @@
     <Content Include="Views\Lekarz\ListaLeczenia.cshtml" />
     <Content Include="Views\Lekarz\Zeby.cshtml" />
     <Content Include="Views\Lekarz\BrakujaceZeby.cshtml" />
+    <Content Include="Views\Lekarz\DodajRozpoznanie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

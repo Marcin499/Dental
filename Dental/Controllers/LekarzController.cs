@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
+
     public class LekarzController : Controller
     {
         Metody client = new Metody();
@@ -99,9 +100,11 @@ namespace Dental.Controllers
                 var modelWidok = model.OrderByDescending(a => a.Godzina);
                 var pacjent = model.OrderByDescending(a => a.Godzina).FirstOrDefault();
                 var wiek = DateTime.Today.Year - pacjent.DataUrodzin.Year;
+                var wizyta = model.OrderByDescending(a => a.WizytaID).FirstOrDefault();
                 TempData["Ide"] = id;
                 TempData["Wiek"] = wiek;
                 TempData["Pacjent"] = pacjent.Imie + " " + pacjent.Nazwisko;
+                TempData["Wizyta"] = wizyta.WizytaID;
                 return View(modelWidok);
             }
             else
@@ -110,13 +113,14 @@ namespace Dental.Controllers
             }
         }
 
-        public ActionResult Leczenie(string pacjent, int wiek, int id)
+        public ActionResult Leczenie(string pacjent, int wiek, int id, int wizyta)
         {
             if (Session["Sesja"] != null)
             {
                 TempData["Wiek"] = wiek;
                 TempData["Pacjent"] = pacjent;
                 TempData["ID"] = id;
+                TempData["Wizyta"] = wizyta;
 
 
                 return View();
@@ -146,33 +150,8 @@ namespace Dental.Controllers
             if (Session["Sesja"] != null)
             {
 
-                return PartialView();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
-        }
+                RozpoznanieModel model = new RozpoznanieModel();
 
-        public ActionResult ListaLeczenia()
-        {
-            if (Session["Sesja"] != null)
-            {
-
-                return PartialView();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
-        }
-
-        [HttpPost]
-        public ActionResult Zeby(string kategoria)
-        {
-            if (Session["Sesja"] != null)
-            {
-                ZebyModel model = new ZebyModel(kategoria);
 
                 return PartialView(model);
             }
@@ -183,11 +162,198 @@ namespace Dental.Controllers
         }
 
         [HttpPost]
-        public ActionResult BrakujaceZeby(int id)
+        public ActionResult DodajRozpoznanie(string dane)
+        {
+            if (Session["Sesja"] != null)
+            {
+                Rozpoznanie model = new Rozpoznanie()
+                {
+                    Rozpoz = dane
+                };
+
+                bool isOk = client.RozpoznanieInsert(model);
+
+                RozpoznanieModel list = new RozpoznanieModel();
+
+                if (isOk == true)
+                {
+                    return PartialView(list);
+                }
+                else
+                {
+                    return View("Error");
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult ZapisLeczenie(string zab1, string zab2, string zab3, string zab4, string dg, string lp, string rozp, string kat, string wizyta)
+        {
+            if (zab1 != "")
+            {
+                string zab = zab1;
+                Leczenie model = new Leczenie()
+                {
+                    RodzajZebow = kat,
+                    GD = dg,
+                    LP = lp,
+                    Rozpoznanie = rozp,
+                    Zab = Convert.ToInt32(zab),
+                    WizytaID = Convert.ToInt32(wizyta)
+                };
+
+                bool isOk = client.LeczenieInsert(model);
+
+                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+
+                if (isOk == true)
+                {
+                    return PartialView("ListaLeczenia", lista);
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else if (zab2 != "")
+            {
+                string zab = zab2;
+                Leczenie model = new Leczenie()
+                {
+                    RodzajZebow = kat,
+                    GD = dg,
+                    LP = lp,
+                    Rozpoznanie = rozp,
+                    Zab = Convert.ToInt32(zab),
+                    WizytaID = Convert.ToInt32(wizyta)
+                };
+
+                bool isOk = client.LeczenieInsert(model);
+
+                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+
+                if (isOk == true)
+                {
+                    return PartialView("ListaLeczenia", lista);
+                }
+                else
+                {
+                    return View("Error");
+                }
+
+            }
+            else if (zab3 != "")
+            {
+                string zab = zab3;
+                Leczenie model = new Leczenie()
+                {
+                    RodzajZebow = kat,
+                    GD = dg,
+                    LP = lp,
+                    Rozpoznanie = rozp,
+                    Zab = Convert.ToInt32(zab),
+                    WizytaID = Convert.ToInt32(wizyta)
+                };
+
+                bool isOk = client.LeczenieInsert(model);
+
+                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+
+                if (isOk == true)
+                {
+                    return PartialView("ListaLeczenia", lista);
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else if (zab4 != "")
+            {
+                string zab = zab4;
+                Leczenie model = new Leczenie()
+                {
+                    RodzajZebow = kat,
+                    GD = dg,
+                    LP = lp,
+                    Rozpoznanie = rozp,
+                    Zab = Convert.ToInt32(zab),
+                    WizytaID = Convert.ToInt32(wizyta)
+                };
+
+                bool isOk = client.LeczenieInsert(model);
+
+                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+
+                if (isOk == true)
+                {
+                    return PartialView("ListaLeczenia", lista);
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+
+            return View("Error");
+        }
+
+        public ActionResult ListaLeczenia(int wizyta)
+        {
+            if (Session["Sesja"] != null)
+            {
+                TempData["Wizyta"] = wizyta;
+                var model = client.GetLeczenieByIDWizyta(wizyta);
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult DeleteZab(int LeczenieID, int wizyta)
+        {
+            bool isOk = client.LeczenieDelete(LeczenieID);
+            var lista = client.GetLeczenieByIDWizyta(wizyta);
+
+            if (isOk == true)
+            {
+                return PartialView("ListaLeczenia", lista);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Zeby(string kategoria, int id)
         {
             if (Session["Sesja"] != null)
             {
                 TempData["ID"] = id;
+                ZebyModel model = new ZebyModel(kategoria, id);
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult BrakujaceZeby()
+        {
+            if (Session["Sesja"] != null)
+            {
+
                 ZebyModel model = new ZebyModel();
 
                 return PartialView(model);

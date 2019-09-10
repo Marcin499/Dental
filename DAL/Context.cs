@@ -40,5 +40,7 @@ namespace DAL
         public DbSet<Rachunek> Rachunek { get; set; }
         public DbSet<Zeby> Zeby { get; set; }
         public DbSet<BrakZebow> BrakZebow { get; set; }
+        public DbSet<Rozpoznanie> Rozpoznanie { get; set; }
+        public DbSet<Leczenie> Leczenie { get; set; }
     }
 }

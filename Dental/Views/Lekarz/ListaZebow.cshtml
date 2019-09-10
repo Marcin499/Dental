@@ -7,11 +7,13 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
    <div id="z1">
+       Zęby do leczenia:
         @Html.DropDownListFor(m =>m.Kategoria, Model.ListaKategorie, "-Wybierz-",  new { @class = "form-control" })
    </div>
   </li>
   <li class="nav-item">
     <div id="z2">
+        Zaznacz brakujące zęby:
        @Html.DropDownListFor(m =>m.Brakujace, Model.ListaBrakujace, "-Wybierz-",  new { @class = "form-control" })
     </div>
   </li>
@@ -19,7 +21,7 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" style="border-style: double solid; text-align:center;" id="zeby1" role="tabpanel" aria-labelledby="home-tab"> </div>
+  <div class="tab-pane active" style="border-style: solid; text-align:center;" id="zeby1" role="tabpanel" aria-labelledby="home-tab"> </div>
   
   
 </div>
@@ -27,11 +29,12 @@
     $(document).ready(function () {
         $('#Kategoria').change(function () {
             var kat = $(this).val();
+            var id = @id;
             $('#Brakujace').val('Wybierz');
             $.ajax({
                 type: 'POST',
                 url: '/Lekarz/Zeby',
-                data: { kategoria: kat },
+                data: { kategoria: kat, id :id },
                 success: function (data) {
                     $('#zeby1').html(data);
                 }
