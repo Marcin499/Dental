@@ -168,7 +168,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Image\verMenuImages.png" />
+    <Content Include="Image\ver.png" />
     <Content Include="Image\Zab.png" />
     <None Include="Connected Services\DentalReference\DentalService.wsdl" />
     <None Include="Connected Services\DentalReference\DentalService.xsd">
@@ -405,6 +405,9 @@
     <Content Include="Views\Lekarz\Zeby.cshtml" />
     <Content Include="Views\Lekarz\BrakujaceZeby.cshtml" />
     <Content Include="Views\Lekarz\DodajRozpoznanie.cshtml" />
+    <Content Include="Views\Lekarz\Procedura.cshtml" />
+    <Content Include="Views\Lekarz\Cena.cshtml" />
+    <Content Include="Views\Lekarz\Brak.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

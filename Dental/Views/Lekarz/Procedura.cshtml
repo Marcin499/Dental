@@ -1,0 +1,5 @@
+﻿@model Dental.Models.ZabiegiModel
+
+<div id="cennik">
+    @Html.DropDownListFor(model => model.Zabieg, Model.ListaZabiegi,  new { @class = "form-control", })
+</div>

@@ -19,7 +19,7 @@ namespace Dental.Controllers
                 ViewBag.Strona = "Dental - Kalendarz";
                 var id = Session["ID"];
                 var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToShortDateString(), Convert.ToInt32(id));
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id);
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan != "Do rozliczenia");
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -35,7 +35,7 @@ namespace Dental.Controllers
                             };
 
                 TempData["Data"] = DateTime.Today.ToShortDateString();
-                TempData["Wizyty"] = listaWizyt.Count;
+                TempData["Wizyty"] = wizyty.Count();
                 TempData.Keep();
 
                 return View(model);
@@ -81,7 +81,7 @@ namespace Dental.Controllers
                 ViewBag.Strona = "Dental - Wizyta";
                 var id = Session["ID"];
                 var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToShortDateString(), Convert.ToInt32(id));
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan == "Oczekuje w kolejce");
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan == "Oczekuje w kolejce" || a.Stan == "W trakcie");
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -98,14 +98,24 @@ namespace Dental.Controllers
                             };
 
                 var modelWidok = model.OrderByDescending(a => a.Godzina);
+
                 var pacjent = model.OrderByDescending(a => a.Godzina).FirstOrDefault();
-                var wiek = DateTime.Today.Year - pacjent.DataUrodzin.Year;
-                var wizyta = model.OrderByDescending(a => a.WizytaID).FirstOrDefault();
-                TempData["Ide"] = id;
-                TempData["Wiek"] = wiek;
-                TempData["Pacjent"] = pacjent.Imie + " " + pacjent.Nazwisko;
-                TempData["Wizyta"] = wizyta.WizytaID;
-                return View(modelWidok);
+
+                if (pacjent == null)
+                {
+                    return View("Brak");
+                }
+                else
+                {
+                    var wiek = DateTime.Today.Year - pacjent.DataUrodzin.Year;
+                    var wizyta = model.OrderByDescending(a => a.WizytaID).FirstOrDefault();
+                    TempData["Ide"] = id;
+                    TempData["Wiek"] = wiek;
+                    TempData["Pacjent"] = pacjent.Imie + " " + pacjent.Nazwisko;
+                    TempData["Wizyta"] = wizyta.WizytaID;
+                    return View(modelWidok);
+                }
+
             }
             else
             {
@@ -122,8 +132,25 @@ namespace Dental.Controllers
                 TempData["ID"] = id;
                 TempData["Wizyta"] = wizyta;
 
+                Wizyta wizyt = client.GetWizytaByID(wizyta);
+                string stan = "W trakcie";
+                Wizyta model = new Wizyta()
+                {
+                    WizytaID = wizyt.WizytaID,
+                    PacjentID = wizyt.PacjentID,
+                    LekarzID = wizyt.LekarzID,
+                    GabinetID = wizyt.GabinetID,
+                    Godzina = wizyt.Godzina,
+                    Rodzaj = wizyt.Rodzaj,
+                    Data = wizyt.Data,
+                    Stan = stan,
+                    Typ = wizyt.Typ,
+                    Uwagi = wizyt.Uwagi,
+                    DataUrodzenia = wizyt.DataUrodzenia
+                };
+                bool isOk = client.WizytaUpdate(model);
 
-                return View();
+                return PartialView();
             }
             else
             {
@@ -191,23 +218,26 @@ namespace Dental.Controllers
             }
         }
 
-        public ActionResult ZapisLeczenie(string zab1, string zab2, string zab3, string zab4, string dg, string lp, string rozp, string kat, string wizyta)
+        public ActionResult ZapisLeczenie(string zab1, string zab2, string zab3, string zab4, string dg, string lp, string rozp, string kat, string wizyta, string zabieg)
         {
-            if (zab1 != "")
+            string[] proc = zabieg.Split(' ');
+
+            if (proc.First() == "Higienizacja" || proc.First() == "Przegląd")
             {
-                string zab = zab1;
                 Leczenie model = new Leczenie()
                 {
-                    RodzajZebow = kat,
-                    GD = dg,
-                    LP = lp,
-                    Rozpoznanie = rozp,
-                    Zab = Convert.ToInt32(zab),
-                    WizytaID = Convert.ToInt32(wizyta)
+                    RodzajZebow = null,
+                    GD = null,
+                    LP = null,
+                    Rozpoznanie = null,
+                    Zab = 0,
+                    WizytaID = Convert.ToInt32(wizyta),
+                    Procedura = proc.First(),
+                    Cena = Convert.ToInt32(proc.Last())
                 };
 
                 bool isOk = client.LeczenieInsert(model);
-
+                TempData["Wizyta"] = wizyta;
                 var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
                 if (isOk == true)
@@ -219,87 +249,154 @@ namespace Dental.Controllers
                     return View("Error");
                 }
             }
-            else if (zab2 != "")
+            else
             {
-                string zab = zab2;
-                Leczenie model = new Leczenie()
+                if (zab1 != "")
                 {
-                    RodzajZebow = kat,
-                    GD = dg,
-                    LP = lp,
-                    Rozpoznanie = rozp,
-                    Zab = Convert.ToInt32(zab),
-                    WizytaID = Convert.ToInt32(wizyta)
-                };
+                    string zab = zab1;
 
-                bool isOk = client.LeczenieInsert(model);
+                    Leczenie model = new Leczenie()
+                    {
+                        RodzajZebow = kat,
+                        GD = dg,
+                        LP = lp,
+                        Rozpoznanie = rozp,
+                        Zab = Convert.ToInt32(zab),
+                        WizytaID = Convert.ToInt32(wizyta),
+                        Procedura = proc.First(),
+                        Cena = Convert.ToInt32(proc.Last())
+                    };
 
-                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+                    bool isOk = client.LeczenieInsert(model);
+                    TempData["Wizyta"] = wizyta;
+                    var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
-                if (isOk == true)
-                {
-                    return PartialView("ListaLeczenia", lista);
+                    if (isOk == true)
+                    {
+                        return PartialView("ListaLeczenia", lista);
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
                 }
-                else
+                else if (zab2 != "")
                 {
-                    return View("Error");
+                    string zab = zab2;
+                    Leczenie model = new Leczenie()
+                    {
+                        RodzajZebow = kat,
+                        GD = dg,
+                        LP = lp,
+                        Rozpoznanie = rozp,
+                        Zab = Convert.ToInt32(zab),
+                        WizytaID = Convert.ToInt32(wizyta),
+                        Procedura = proc.First(),
+                        Cena = Convert.ToInt32(proc.Last())
+                    };
+
+                    bool isOk = client.LeczenieInsert(model);
+                    TempData["Wizyta"] = wizyta;
+                    var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+
+                    if (isOk == true)
+                    {
+                        return PartialView("ListaLeczenia", lista);
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+
                 }
-
-            }
-            else if (zab3 != "")
-            {
-                string zab = zab3;
-                Leczenie model = new Leczenie()
+                else if (zab3 != "")
                 {
-                    RodzajZebow = kat,
-                    GD = dg,
-                    LP = lp,
-                    Rozpoznanie = rozp,
-                    Zab = Convert.ToInt32(zab),
-                    WizytaID = Convert.ToInt32(wizyta)
-                };
+                    string zab = zab3;
+                    Leczenie model = new Leczenie()
+                    {
+                        RodzajZebow = kat,
+                        GD = dg,
+                        LP = lp,
+                        Rozpoznanie = rozp,
+                        Zab = Convert.ToInt32(zab),
+                        WizytaID = Convert.ToInt32(wizyta),
+                        Procedura = proc.First(),
+                        Cena = Convert.ToInt32(proc.Last())
+                    };
 
-                bool isOk = client.LeczenieInsert(model);
+                    bool isOk = client.LeczenieInsert(model);
+                    TempData["Wizyta"] = wizyta;
+                    var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
-                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
-
-                if (isOk == true)
-                {
-                    return PartialView("ListaLeczenia", lista);
+                    if (isOk == true)
+                    {
+                        return PartialView("ListaLeczenia", lista);
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
                 }
-                else
+                else if (zab4 != "")
                 {
-                    return View("Error");
-                }
-            }
-            else if (zab4 != "")
-            {
-                string zab = zab4;
-                Leczenie model = new Leczenie()
-                {
-                    RodzajZebow = kat,
-                    GD = dg,
-                    LP = lp,
-                    Rozpoznanie = rozp,
-                    Zab = Convert.ToInt32(zab),
-                    WizytaID = Convert.ToInt32(wizyta)
-                };
+                    string zab = zab4;
+                    Leczenie model = new Leczenie()
+                    {
+                        RodzajZebow = kat,
+                        GD = dg,
+                        LP = lp,
+                        Rozpoznanie = rozp,
+                        Zab = Convert.ToInt32(zab),
+                        WizytaID = Convert.ToInt32(wizyta),
+                        Procedura = proc.First(),
+                        Cena = Convert.ToInt32(proc.Last())
+                    };
 
-                bool isOk = client.LeczenieInsert(model);
+                    bool isOk = client.LeczenieInsert(model);
+                    TempData["Wizyta"] = wizyta;
+                    var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
-                var lista = client.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
-
-                if (isOk == true)
-                {
-                    return PartialView("ListaLeczenia", lista);
-                }
-                else
-                {
-                    return View("Error");
+                    if (isOk == true)
+                    {
+                        return PartialView("ListaLeczenia", lista);
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
                 }
             }
 
             return View("Error");
+        }
+
+        public ActionResult Procedura()
+        {
+            if (Session["Sesja"] != null)
+            {
+
+                ZabiegiModel model = new ZabiegiModel();
+
+                return PartialView(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+        }
+
+        public ActionResult Cena(int wizyta)
+        {
+            var model = client.GetLeczenieByIDWizyta(wizyta);
+            int suma = 0;
+
+            foreach (var item in model)
+            {
+                suma += item.Cena;
+            }
+
+            TempData["Cena"] = suma;
+            return PartialView();
         }
 
         public ActionResult ListaLeczenia(int wizyta)
@@ -484,5 +581,48 @@ namespace Dental.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult ZamknijWizyte(int wizyta, string cena)
+        {
+            if (Session["Sesja"] != null)
+            {
+                string[] cenki = cena.Split(' ');
+                Rachunek nowy = new Rachunek()
+                {
+                    Cena = Convert.ToInt32(cenki[5]),
+                    KwotaDoZaplaty = 0
+                };
+
+                bool isOk = client.RachunekInsert(nowy);
+
+                Wizyta wizyt = client.GetWizytaByID(wizyta);
+                string stan = "Do rozliczenia";
+                var ostatni = client.GetRachunekList().Last();
+                Wizyta model = new Wizyta()
+                {
+                    WizytaID = wizyt.WizytaID,
+                    PacjentID = wizyt.PacjentID,
+                    LekarzID = wizyt.LekarzID,
+                    GabinetID = wizyt.GabinetID,
+                    Godzina = wizyt.Godzina,
+                    Rodzaj = wizyt.Rodzaj,
+                    Data = wizyt.Data,
+                    Stan = stan,
+                    Typ = wizyt.Typ,
+                    Uwagi = wizyt.Uwagi,
+                    DataUrodzenia = wizyt.DataUrodzenia,
+                    RachunekID = ostatni.RachunekID
+
+                };
+                bool isOK = client.WizytaUpdate(model);
+
+                return RedirectToAction("Wizyta", "Lekarz");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logowanie");
+            }
+
+        }
     }
 }

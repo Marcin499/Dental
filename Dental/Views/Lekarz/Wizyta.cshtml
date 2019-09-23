@@ -8,7 +8,7 @@
     var id = TempData["Ide"];
     var wizyta = TempData["Wizyta"];
 }
-
+<div id="cont">
 <h4>Następnym pacjentem oczekującym w kolejce jest: @TempData["Pacjent"]</h4>
 <br />
 @using GridMvc.Html
@@ -22,7 +22,7 @@
     columns.Add(a => a.Godzina).Titled("Godzina");
     columns.Add(a => a.Stan).Titled("Stan");   
     columns.Add(a => a.Uwagi).Titled("Uwagi");
-    columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Przeprowadź wizytę", "Leczenie", new { pacjent, wiek, id, wizyta}, new { @style = "color:green" })).Titled("Potwierdzenie");
+    columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Ajax.ActionLink("Przeprowadź wizytę", "Leczenie", new { pacjent, wiek, id, wizyta},new AjaxOptions {UpdateTargetId="cont", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @style = "color:green" })).Titled("Potwierdzenie");
    
 }).WithPaging(20).Sortable(true).Filterable(true).WithMultipleFilters()
-    
+</div>

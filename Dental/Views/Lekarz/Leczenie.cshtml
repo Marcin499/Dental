@@ -1,7 +1,6 @@
 ﻿
 @{
     ViewBag.Title = "Leczenie";
-    Layout = "~/Views/Shared/MenuLekarz.cshtml";
     var id = TempData["ID"];
     var wizyta = TempData["Wizyta"];
 }
@@ -10,15 +9,13 @@
         color:cornflowerblue;
     }
 </style>
-<h4>Pacjent:  @TempData["Pacjent"], lat @TempData["Wiek"]. &ensp;  <a id="historia" href=""> Historia pacjenta</a></h4>
+<h4>Pacjent:  @TempData["Pacjent"], lat @TempData["Wiek"]. &ensp;  <a id="historia" href=""> Historia pacjenta</a> @Html.Action("Cena", new { wizyta })</h4>
 <div style="float:right">
-    Cena:<br />
-    @Html.TextBox("Cena")<br />
-    <input type="button" class="button-danger" value="Zamknij wizytę" onclick="ZamknijWizyte()" />
+   
     </div>
 <div id="container" class="row">   
-    <div id="zeby" class="col-md-5">
-        @Html.Action("ListaZebow", new { id})
+    <div id="zeby" class="col-md-4">
+        @Html.Action("ListaZebow", new { id })
     </div>
 
     <div id="rozpoznanie" class="col-md-1" style="position:center; margin-top:200px;">
@@ -26,18 +23,39 @@
         
     </div>
 
-    <div id="rozpoznanie" class="col-md-5">
+    <div id="rozpoznanie" class="col-md-4">
         @Html.Action("Rozpoznanie")
         <br />
-         <input type="button" class="button" value="Dodaj leczony ząb do historii wizyty" onclick="DodajLeczenie()" />
-    </div>    
+        
+    </div>
+    <div id="proced" class="col-md-1" style="position:center;">
+        <br />
+         Procedura:<br />
+    @Html.Action("Procedura")<br />
+    <input type="button" class="button" value="Dodaj ząb do historii wizyty" onclick="DodajLeczenie()" />
+    <input type="button" class="button-danger" value="Zamknij wizytę" onclick="ZamknijWizyte()" />
+        
+    </div>
 </div>
 <br />
 <h4>Leczone zęby</h4>
 <div id="lista"> 
-    @Html.Action("ListaLeczenia", new { wizyta})
+    @Html.Action("ListaLeczenia", new { wizyta })
 </div>
 <script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                    type: 'POST',
+                    url: '/Lekarz/Cena',
+                    data: {wizyta: @wizyta},
+                    success: function (data) {
+                        $('#cena').html(data);
+                    }
+                })
+        }, 500)
+    })
+
     function DodajLeczenie() {
          debugger;
         var zab1 = $('#GL').val();
@@ -46,6 +64,7 @@
         var zab4 = $('#DP').val();
         var rozp = $('#Rozpoznanie').val();
         var kat = $('#Kategoria').val();
+        var zabieg = $('#Zabieg').val();
 
         if ((zab1 != 0 && zab2 != 0) || (zab1 != 0 && zab3 != 0) || (zab1 != 0 && zab4 != 0) || (zab2 != 0 && zab3 != 0) || (zab2 != 0 && zab4 != 0) || (zab3 != 0 && zab4 != 0) ) {
             alert("Tylko jeden ząb naraz może byc dodany!");
@@ -71,12 +90,34 @@
         $.ajax({
             type: 'POST',
             url: '/Lekarz/ZapisLeczenie',
-            data: { zab1: zab1, zab2: zab2, zab3: zab3, zab4: zab4, dg: dg, lp: lp, rozp: rozp, kat: kat, wizyta: @wizyta },
+            data: { zab1: zab1, zab2: zab2, zab3: zab3, zab4: zab4, dg: dg, lp: lp, rozp: rozp, kat: kat, wizyta: @wizyta, zabieg: zabieg },
             success: function (data) {
                 $('#lista').html(data);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Lekarz/Cena',
+                    data: {wizyta: @wizyta},
+                    success: function (data) {
+                        $('#cena').html(data);
+                    }
+                })
             }
         })
         }
         
+    }
+
+    function ZamknijWizyte() {
+        debugger;
+        var cena = $('#cenka').text();
+        $.ajax({
+            type: 'POST',
+            url: '/Lekarz/ZamknijWizyte',
+            data: { wizyta: @wizyta, cena: cena },
+            success: function () {
+                alert("Wizyta została zamknięta");
+            }
+        })
+
     }
 </script>

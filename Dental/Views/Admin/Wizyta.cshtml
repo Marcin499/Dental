@@ -18,6 +18,18 @@
 </div>
 </div>
 <script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                    type: 'POST',
+                    url: '/Admin/ListaWizyt',
+                    data: '',
+                    success: function (data) {
+                        $('#listaGabinetow').html(data);
+                    }
+                })
+        }, 500)
+    })
     function SzybkaWizyta() {
         $.ajax({
             type: 'GET',

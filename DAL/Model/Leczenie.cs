@@ -15,5 +15,9 @@
         public int Zab { get; set; }
 
         public string Rozpoznanie { get; set; }
+
+        public string Procedura { get; set; }
+
+        public int Cena { get; set; }
     }
 }

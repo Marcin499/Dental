@@ -753,6 +753,36 @@ namespace Dental.Models
     }
     #endregion
 
+    #region ZabiegiModel
+    public class ZabiegiModel
+    {
+        public int ZabiegID { get; set; }
+
+        public string Zabieg { get; set; }
+        public List<SelectListItem> ListaZabiegi { get; set; }
+
+        public ZabiegiModel()
+        {
+            this.ListaZabiegi = InitZabiegi();
+        }
+
+        private List<SelectListItem> InitZabiegi()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            var model = client.GetCennikList();
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.Zabieg + " " + item.Cena.ToString(), Text = item.Zabieg, });
+            }
+
+            return lista;
+        }
+    }
+    #endregion
+
     #region DodajZabiegModel
     public class DodajZabiegModel
     {

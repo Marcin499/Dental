@@ -11,7 +11,8 @@
     columns.Add(a => a.GD).Titled("Szczęka/Żuchwa");
     columns.Add(a => a.LP).Titled("Strona");
     columns.Add(a => a.Zab).Titled("Ząb");
-    columns.Add(a => a.Rozpoznanie).Titled("Rozpoznanie");           
+    columns.Add(a => a.Rozpoznanie).Titled("Rozpoznanie");
+    columns.Add(a => a.Procedura).Titled("Procedura");
     
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Ajax.ActionLink("Usuń", "DeleteZab", new { a.LeczenieID, wizyta }, new AjaxOptions {UpdateTargetId="lista", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @style = "color:red" })).Titled("Usuń");
-}).WithPaging(20).Sortable(true).Filterable(true)
+}).WithPaging(10).Sortable(true).Filterable(true)

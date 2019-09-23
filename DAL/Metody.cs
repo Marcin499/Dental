@@ -553,6 +553,7 @@ namespace DAL
                     wynik.Stan = wizyta.Stan;
                     wynik.Typ = wizyta.Typ;
                     wynik.Rodzaj = wizyta.Rodzaj;
+                    wynik.RachunekID = wizyta.RachunekID;
 
 
                     context.SaveChanges();
