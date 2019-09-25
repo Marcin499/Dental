@@ -19,7 +19,7 @@ namespace Dental.Controllers
                 ViewBag.Strona = "Dental - Kalendarz";
                 var id = Session["ID"];
                 var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToShortDateString(), Convert.ToInt32(id));
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan != "Do rozliczenia");
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona");
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -150,6 +150,7 @@ namespace Dental.Controllers
                 };
                 bool isOk = client.WizytaUpdate(model);
 
+                TempData["PacjentID"] = model.PacjentID;
                 return PartialView();
             }
             else
@@ -622,6 +623,55 @@ namespace Dental.Controllers
             {
                 return RedirectToAction("Login", "Logowanie");
             }
+        }
+
+        public ActionResult Historia(int pacjentID)
+        {
+            var wizyta = client.GetWizytaByPacjentID(pacjentID);
+            var leczenie = client.GetLeczenieList();
+            var lekarz = client.GetPesonelList();
+
+            var model = from a in wizyta
+                        join b in leczenie on a.WizytaID equals b.WizytaID
+                        join c in lekarz on a.LekarzID equals c.PersonelID
+                        select new HistoriaPacjentaModel()
+                        {
+                            WizytaID = a.WizytaID,
+                            ImieL = c.Imie,
+                            NazwiskoL = c.Nazwisko,
+                            Data = a.Data,
+                            RodzajZebow = b.RodzajZebow,
+                            GD = b.GD,
+                            LP = b.LP,
+                            Zab = b.Zab,
+                            Rozpoznanie = b.Rozpoznanie,
+                            Procedura = b.Procedura,
+                        };
+
+            return View(model);
+        }
+
+        public ActionResult Pacjenci(int lekarzID)
+        {
+            var leczenie = client.GetWizytaByIDLekarz(lekarzID);
+
+            var pacjenci = client.GetPacjentList();
+
+            var model = from a in leczenie
+                        join b in pacjenci on a.PacjentID equals b.PacjentID
+
+                        select new PacjenciModel()
+                        {
+                            PacjentID = b.PacjentID,
+                            Imie = b.Imie,
+                            Nazwisko = b.Nazwisko,
+                            DataUrodzenia = b.DataUrodzin.ToShortDateString(),
+                            Telefon = b.Telefon
+                        };
+
+            var wynik = model.GroupBy(a => a.PacjentID).Select(a => a.First()).Distinct();
+
+            return View(wynik);
 
         }
     }

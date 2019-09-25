@@ -3,13 +3,15 @@
     ViewBag.Title = "Leczenie";
     var id = TempData["ID"];
     var wizyta = TempData["Wizyta"];
+    var pacjent = TempData["PacjentID"];
 }
 <style>
     #historia{
         color:cornflowerblue;
     }
 </style>
-<h4>Pacjent:  @TempData["Pacjent"], lat @TempData["Wiek"]. &ensp;  <a id="historia" href=""> Historia pacjenta</a> @Html.Action("Cena", new { wizyta })</h4>
+<div id="all">
+<h4>Pacjent:  @TempData["Pacjent"], lat @TempData["Wiek"]. &ensp;  <a id="historia" href="/Lekarz/Historia?pacjentID=@pacjent"> Historia pacjenta</a> @Html.Action("Cena", new { wizyta })</h4>
 <div style="float:right">
    
     </div>
@@ -42,6 +44,7 @@
 <div id="lista"> 
     @Html.Action("ListaLeczenia", new { wizyta })
 </div>
+    </div>
 <script>
     $(document).ready(function () {
         setInterval(function () {
@@ -50,7 +53,7 @@
                     url: '/Lekarz/Cena',
                     data: {wizyta: @wizyta},
                     success: function (data) {
-                        $('#cena').html(data);
+                        $('#cenka').html(data);
                     }
                 })
         }, 500)
@@ -98,7 +101,7 @@
                     url: '/Lekarz/Cena',
                     data: {wizyta: @wizyta},
                     success: function (data) {
-                        $('#cena').html(data);
+                        $('#cenka').html(data);                        
                     }
                 })
             }
@@ -116,6 +119,7 @@
             data: { wizyta: @wizyta, cena: cena },
             success: function () {
                 alert("Wizyta została zamknięta");
+                window.location.href = "/Lekarz/Wizyta";
             }
         })
 

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Dental.Models.PacjenciModel>
+@using GridMvc.Html
+
+@{ 
+    Layout = "~/Views/Shared/MenuLekarz.cshtml";
+}
+<h4>Lista Pacjentów</h4>
+<br />
+@Html.Grid(Model).Columns(columns =>
+{    
+    columns.Add(a => a.Imie).Titled("Imię");
+    columns.Add(a => a.Nazwisko).Titled("Nazwisko");
+    columns.Add(a => a.DataUrodzenia).Titled("Data urodzenia");    
+    columns.Add(a => a.Telefon).Titled("Telefon");    
+    
+     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("więcej info.", "InfoLeczenie", new { a.PacjentID }, new { @style = "color:blue" })).Titled("Informacje o leczeniu");
+}).WithPaging(20).Sortable(true).Filterable(true)

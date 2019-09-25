@@ -10,7 +10,6 @@
     columns.Add(a => a.PESEL).Titled("PESEL");
     columns.Add(a => a.Godzina).Titled("Godzina");
     columns.Add(a => a.Stan).Titled("Stan").Filterable(true);
-    columns.Add(a => a.Cena).Titled("Kwota do zapłaty");
     columns.Add(a => a.Uwagi).Titled("Uwagi");
    
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Potwierdź", "PotwierdzWizyte", new { a.WizytaID }, new { @style = "color:green" })).Titled("Potwierdzenie");

@@ -2630,4 +2630,43 @@ namespace Dental.Models
     }
     #endregion
 
+    #region HistoriaPacjentaModel
+    public class HistoriaPacjentaModel
+    {
+        public int WizytaID { get; set; }
+
+        public string Data { get; set; }
+
+        public string ImieL { get; set; }
+
+        public string NazwiskoL { get; set; }
+
+        public string RodzajZebow { get; set; }
+
+        public string GD { get; set; }
+
+        public string LP { get; set; }
+
+        public int Zab { get; set; }
+
+        public string Rozpoznanie { get; set; }
+
+        public string Procedura { get; set; }
+    }
+    #endregion
+
+    #region PacjenciModel
+    public class PacjenciModel
+    {
+        public int PacjentID { get; set; }
+
+        public string Imie { get; set; }
+
+        public string Nazwisko { get; set; }
+
+        public string DataUrodzenia { get; set; }
+
+        public int Telefon { get; set; }
+    }
+    #endregion
 }

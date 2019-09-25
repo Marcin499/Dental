@@ -18,6 +18,7 @@ namespace DAL.Model
         public int Telefon { get; set; }
 
         public string Email { get; set; }
+
         public string Typ { get; set; }
 
         public string Haslo { get; set; }

@@ -321,21 +321,30 @@ namespace Dental.Controllers
 
                 var rachunek = client.GetRachunekByID(wizyta.RachunekID);
 
+                TempData["Wizyta"] = wizytaID;
+
                 return PartialView(rachunek);
-                //if (isOk == true)
-                //{
-                //    TempData["Zapisano"] = "Wizyta z godziny: " + wizyta.Godzina + " została rozliczon!";
-                //    return RedirectToAction("Wizyta");
-                //}
-                //else
-                //{
-                //    return View("Error");
-                //}
             }
             else
             {
                 return RedirectToAction("Login", "Logowanie");
             }
+        }
+
+        public ActionResult KwotaDoZapłaty(int cena)
+        {
+            TempData["Kwota"] = cena;
+            return PartialView();
+        }
+
+        public ActionResult Rabat(int rabat, decimal cena)
+        {
+            decimal obniżka = (cena / 100) * rabat;
+            decimal kwotaPoObniżce = cena - obniżka;
+
+            TempData["Kwota"] = kwotaPoObniżce;
+
+            return PartialView();
         }
 
         public ActionResult NowaWizyta()
@@ -1054,6 +1063,53 @@ namespace Dental.Controllers
             {
                 return RedirectToAction("Login", "Logowanie");
             }
+        }
+
+        [HttpPost]
+        public ActionResult SaveRachunek(Rachunek rachunek, int wizyta)
+        {
+            Rachunek model = new Rachunek()
+            {
+                RachunekID = rachunek.RachunekID,
+                Cena = rachunek.Cena,
+                Rabat = rachunek.Rabat,
+                Faktura = false,
+                FormaPlatnosci = rachunek.FormaPlatnosci,
+                KwotaDoZaplaty = rachunek.KwotaDoZaplaty
+            };
+
+            bool isOk = client.RachunekUpdate(model);
+
+            Wizyta wizyt = client.GetWizytaByID(wizyta);
+            string stan = "Zakończona";
+            var ostatni = client.GetRachunekList().Last();
+            Wizyta model2 = new Wizyta()
+            {
+                WizytaID = wizyt.WizytaID,
+                PacjentID = wizyt.PacjentID,
+                LekarzID = wizyt.LekarzID,
+                GabinetID = wizyt.GabinetID,
+                Godzina = wizyt.Godzina,
+                Rodzaj = wizyt.Rodzaj,
+                Data = wizyt.Data,
+                Stan = stan,
+                Typ = wizyt.Typ,
+                Uwagi = wizyt.Uwagi,
+                DataUrodzenia = wizyt.DataUrodzenia,
+                RachunekID = ostatni.RachunekID,
+
+            };
+            bool isOK = client.WizytaUpdate(model2);
+            if (isOk == true)
+            {
+                TempData["Zapisano"] = "Wizyta z godziny: " + model2.Godzina + " została zamknięta!";
+                return RedirectToAction("Wizyta", "Admin");
+            }
+            else
+            {
+                return View("Error");
+            }
+
         }
 
         public ActionResult DeleteZabieg(int ZabiegID)

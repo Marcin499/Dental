@@ -46,6 +46,9 @@
 .menu li a span{line-height:40px;}
   
 </style>
+@{ 
+    var lekarzID = Session["ID"];
+}
 <body>
     <div class="naglowek">
         <div class="modal-body row" style="width:100%;">
@@ -68,7 +71,7 @@
   <ul class="menu"style="background-color:lightgray">
   <li class="klasa"><a href="@Url.Action("MenuLekarz", "Lekarz")"><span>Kalendarz</span></a></li>
   <li class="klasa"><a href="@Url.Action("Wizyta", "Lekarz")" ><span>Wizyta</span></a></li>
-  <li  class="klasa"><a href="@Url.Action("Historia", "Lekarz")"><span>Pacjenci</span></a></li>
+  <li  class="klasa"><a href="@Url.Action("Pacjenci", "Lekarz", new { lekarzID})"><span>Pacjenci</span></a></li>
   
  
 </ul>

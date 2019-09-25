@@ -408,6 +408,10 @@
     <Content Include="Views\Lekarz\Procedura.cshtml" />
     <Content Include="Views\Lekarz\Cena.cshtml" />
     <Content Include="Views\Lekarz\Brak.cshtml" />
+    <Content Include="Views\Admin\KwotaDoZapłaty.cshtml" />
+    <Content Include="Views\Admin\Rabat.cshtml" />
+    <Content Include="Views\Lekarz\Historia.cshtml" />
+    <Content Include="Views\Lekarz\Pacjenci.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

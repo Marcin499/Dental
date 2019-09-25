@@ -492,6 +492,11 @@ namespace DAL
             return context.Wizyta.Where(a => a.PacjentID == id).ToList();
         }
 
+        public List<Wizyta> GetWizytaByIDLekarz(int id)
+        {
+            return context.Wizyta.Where(a => a.LekarzID == id).ToList();
+        }
+
         public List<Wizyta> GetWizytaList()
         {
             return context.Wizyta.ToList();
@@ -642,7 +647,6 @@ namespace DAL
                     wynik.KwotaDoZaplaty = rachunek.KwotaDoZaplaty;
                     wynik.FormaPlatnosci = rachunek.FormaPlatnosci;
                     wynik.Faktura = rachunek.Faktura;
-
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
