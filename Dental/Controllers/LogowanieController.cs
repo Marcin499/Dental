@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
-    public class LogowanieController : Controller
+    public class LogowanieController : BaseController
     {
         Metody client = new Metody();
 
@@ -69,7 +69,7 @@ namespace Dental.Controllers
                                 var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
                                 Session["ID"] = wynikID;
                                 Session["Sesja"] = true;
-                                return RedirectToAction("MenuPacjent", "Pacjent", new { imie });
+                                return RedirectToAction("Wizyta", "Pacjent", new { imie });
                             }
                         }
                     }

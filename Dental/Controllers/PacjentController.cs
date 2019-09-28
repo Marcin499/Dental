@@ -7,45 +7,24 @@ using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
-    public class PacjentController : Controller
+    public class PacjentController : BaseController
     {
         Metody client = new Metody();
 
-        public ActionResult MenuPacjent(string imie)
+        public ActionResult Wizyta(string imie)
         {
+            CheckSession();
+            TempData["imie"] = imie;
+            ViewBag.Strona = "Dental - Wizyta";
+            TempData.Keep();
+            DodajWizyteModel model = new DodajWizyteModel();
+            return View(model);
 
-            if (Session["Sesja"] != null)
-            {
-
-                ViewBag.Strona = "Dental - Menu";
-                TempData["imie"] = imie;
-                TempData.Keep();
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
-
-        }
-
-        public ActionResult Wizyta()
-        {
-            if (Session["Sesja"] != null)
-            {
-                ViewBag.Strona = "Dental - Wizyta";
-                TempData.Keep();
-                DodajWizyteModel model = new DodajWizyteModel();
-                return View(model);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
         }
 
         public ActionResult WizytaGabinet(string miasto)
         {
+            CheckSession();
             DodajWizyteModel model = new DodajWizyteModel(miasto);
 
             return PartialView(model);
@@ -54,6 +33,7 @@ namespace Dental.Controllers
         [HttpPost]
         public ActionResult WizytaGabinet2(string miasto)
         {
+            CheckSession();
             DodajWizyteModel model = new DodajWizyteModel(miasto);
 
             return PartialView(model);
@@ -61,6 +41,7 @@ namespace Dental.Controllers
 
         public ActionResult WizytaLekarz(string gabinetid)
         {
+            CheckSession();
             LekarzeModel model = new LekarzeModel(gabinetid);
 
             return PartialView(model);
@@ -69,6 +50,7 @@ namespace Dental.Controllers
         [HttpPost]
         public ActionResult WizytaLekarz2(string gabinet)
         {
+            CheckSession();
             LekarzeModel model = new LekarzeModel(gabinet);
 
             return PartialView(model);
@@ -76,6 +58,7 @@ namespace Dental.Controllers
 
         public ActionResult WizytaGodzina()
         {
+            CheckSession();
             DodajWizyteModel model = new DodajWizyteModel();
 
             return PartialView(model);
@@ -84,6 +67,7 @@ namespace Dental.Controllers
         [HttpPost]
         public ActionResult WizytaGodzina2(string data, int lekarz, string placowkaID)
         {
+            CheckSession();
             WizytaGodzinaModel model = new WizytaGodzinaModel(data, lekarz, placowkaID);
 
             return PartialView(model);
@@ -92,251 +76,223 @@ namespace Dental.Controllers
         [HttpPost]
         public ActionResult SaveWizyta(string gabinet, string lekarz, string data, string godzina, string rodzajWizyty, string typWizyty, string stan, string uwagi)
         {
-
-            if (Session["Sesja"] != null)
+            CheckSession();
+            var dataUrodzenia = client.GetPacjentByID(Convert.ToInt32(Session["ID"]));
+            Wizyta model = new Wizyta()
             {
-                var dataUrodzenia = client.GetPacjentByID(Convert.ToInt32(Session["ID"]));
-                Wizyta model = new Wizyta()
-                {
-                    PacjentID = Convert.ToInt32(Session["ID"]),
-                    GabinetID = Convert.ToInt32(gabinet),
-                    LekarzID = Convert.ToInt32(lekarz),
-                    Data = data,
-                    Godzina = godzina,
-                    Rodzaj = rodzajWizyty,
-                    Typ = typWizyty,
-                    Stan = stan,
-                    Uwagi = uwagi,
-                    DataUrodzenia = dataUrodzenia.DataUrodzin
-                };
+                PacjentID = Convert.ToInt32(Session["ID"]),
+                GabinetID = Convert.ToInt32(gabinet),
+                LekarzID = Convert.ToInt32(lekarz),
+                Data = data,
+                Godzina = godzina,
+                Rodzaj = rodzajWizyty,
+                Typ = typWizyty,
+                Stan = stan,
+                Uwagi = uwagi,
+                DataUrodzenia = dataUrodzenia.DataUrodzin
+            };
 
-                bool isOk = client.WizytaInsert(model);
-                if (isOk == true)
-                {
-                    TempData["Zapisano"] = "Utworzono nową wizyte!";
-                    return RedirectToAction("Wizyta");
-                }
-                else
-                {
-                    TempData["Zapisano"] = "Bląd! Spróbuj jeszcze raz.";
-                    return RedirectToAction("Wizyta");
-                }
-
+            bool isOk = client.WizytaInsert(model);
+            if (isOk == true)
+            {
+                TempData["Zapisano"] = "Utworzono nową wizyte!";
+                return RedirectToAction("Wizyta");
             }
             else
             {
-                return RedirectToAction("Login", "Logowanie");
+                TempData["Zapisano"] = "Bląd! Spróbuj jeszcze raz.";
+                return RedirectToAction("Wizyta");
             }
         }
 
         public ActionResult Historia()
         {
-            if (Session["Sesja"] != null)
-            {
-                ViewBag.Strona = "Dental - Historia";
-                TempData.Keep();
-                int id = Convert.ToInt32(Session["ID"]);
-                var model = client.GetWizytaByPacjentID(id);
+            CheckSession();
+            ViewBag.Strona = "Dental - Historia";
+            TempData.Keep();
+            int id = Convert.ToInt32(Session["ID"]);
+            var model = client.GetWizytaByPacjentID(id);
 
-                var lekarz = client.GetPesonelList();
-                var gabinet = client.GetPlacowkaList();
-                var wynik = from a in model
-                            join c in lekarz on a.LekarzID equals c.PersonelID
-                            join d in gabinet on a.GabinetID equals d.PlacowkaID
-                            select new WizytaHistoria()
-                            {
-                                Gabinet = d.Nazwa,
-                                ImieLekarz = c.Imie,
-                                NazwiskoLekarz = c.Nazwisko,
-                                Data = a.Data,
-                                Godzina = a.Godzina,
-                                Stan = a.Stan
+            var lekarz = client.GetPesonelList();
+            var gabinet = client.GetPlacowkaList();
+            var rachunek = client.GetRachunekList();
+            var wynik = from a in model
+                        join b in rachunek on a.RachunekID equals b.RachunekID
+                        join c in lekarz on a.LekarzID equals c.PersonelID
+                        join d in gabinet on a.GabinetID equals d.PlacowkaID
+                        select new WizytaHistoriaPacjenta()
+                        {
+                            PacjentID = a.PacjentID,
+                            Gabinet = d.Nazwa,
+                            ImieLekarz = c.Imie,
+                            NazwiskoLekarz = c.Nazwisko,
+                            Data = a.Data,
+                            Godzina = a.Godzina,
+                            Kwota = b.KwotaDoZaplaty,
+                            FormaPlatnosci = b.FormaPlatnosci
 
-                            };
-                return View(wynik);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+                        };
+            return View(wynik);
+        }
+
+        public ActionResult InfoHistoriaPacjenta(int PacjentID, string Data)
+        {
+            CheckSession();
+            var wizyta = client.GetWizytaByPacjentID(PacjentID);
+            var leczenie = client.GetLeczenieList();
+            var lekarz = client.GetPesonelList();
+
+            var model = from a in wizyta
+                        join b in leczenie on a.WizytaID equals b.WizytaID
+                        join c in lekarz on a.LekarzID equals c.PersonelID
+                        select new HistoriaPacjentaModel()
+                        {
+                            WizytaID = a.WizytaID,
+                            ImieL = c.Imie,
+                            NazwiskoL = c.Nazwisko,
+                            Data = a.Data,
+                            RodzajZebow = b.RodzajZebow,
+                            GD = b.GD,
+                            LP = b.LP,
+                            Zab = b.Zab,
+                            Rozpoznanie = b.Rozpoznanie,
+                            Procedura = b.Procedura,
+                        };
+
+            var mod = model.Where(a => a.Data == Data).ToList();
+
+            return View(mod);
         }
 
         public ActionResult Cennik()
         {
-            if (Session["Sesja"] != null)
-            {
-                ViewBag.Strona = "Dental - Cennik";
-                TempData.Keep();
-                CennikModel model = new CennikModel();
-                return View(model);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            CheckSession();
+            ViewBag.Strona = "Dental - Cennik";
+            TempData.Keep();
+            CennikModel model = new CennikModel();
+            return View(model);
         }
 
         public ActionResult ListaCennikDefault()
         {
-            if (Session["Sesja"] != null)
-            {
-                var wynikKategoria = client.GetCennikList();
+            CheckSession();
+            var wynikKategoria = client.GetCennikList();
 
-                return PartialView(wynikKategoria);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            return PartialView(wynikKategoria);
         }
 
         [HttpPost]
         public ActionResult ListaCennik(string kategoria)
         {
-            if (Session["Sesja"] != null)
-            {
-                var wynikKategoria = client.GetCennikByKategoria(kategoria);
+            CheckSession();
+            var wynikKategoria = client.GetCennikByKategoria(kategoria);
 
-                return PartialView(wynikKategoria);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            return PartialView(wynikKategoria);
         }
 
         public ActionResult Kontakt()
         {
-            if (Session["Sesja"] != null)
-            {
-                ViewBag.Strona = "Dental - Kontakt";
-                TempData.Keep();
+            CheckSession();
+            ViewBag.Strona = "Dental - Kontakt";
+            TempData.Keep();
 
-                KontaktModel model = new KontaktModel();
-                return View(model);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            KontaktModel model = new KontaktModel();
+            return View(model);
         }
 
 
         public ActionResult ListaGabinetowDefault()
         {
-            if (Session["Sesja"] != null)
-            {
-                var wynikAdres = client.GetAdresPlacowkaList();
-                var wynikMiasto = client.GetPlacowkaList();
+            CheckSession();
+            var wynikAdres = client.GetAdresPlacowkaList();
+            var wynikMiasto = client.GetPlacowkaList();
 
-                var model = from c in wynikAdres
-                            join a in wynikMiasto on c.AdresID equals a.PlacowkaID
-                            select new ListaPlacowkiModel()
-                            {
-                                Nazwa = a.Nazwa,
-                                Miasto = c.Miasto,
-                                Ulica = c.Ulica,
-                                Wojewodztwo = c.Wojewodztwo,
-                                Numer = c.Numer,
-                                GodzOd = a.GodzOd,
-                                GodzDo = a.GodzDo,
-                                Telefon = a.Telefon,
-                                Email = a.Email
-                            };
+            var model = from c in wynikAdres
+                        join a in wynikMiasto on c.AdresID equals a.PlacowkaID
+                        select new ListaPlacowkiModel()
+                        {
+                            Nazwa = a.Nazwa,
+                            Miasto = c.Miasto,
+                            Ulica = c.Ulica,
+                            Wojewodztwo = c.Wojewodztwo,
+                            Numer = c.Numer,
+                            GodzOd = a.GodzOd,
+                            GodzDo = a.GodzDo,
+                            Telefon = a.Telefon,
+                            Email = a.Email
+                        };
 
-                return PartialView(model);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            return PartialView(model);
         }
         [HttpPost]
         public ActionResult ListaGabinetow(string miasto)
         {
-            if (Session["Sesja"] != null)
-            {
-                var wynikAdres = client.GetAdresPlacowkaByCity(miasto);
-                var wynikMiasto = client.GetPlacowkaList();
+            CheckSession();
+            var wynikAdres = client.GetAdresPlacowkaByCity(miasto);
+            var wynikMiasto = client.GetPlacowkaList();
 
-                var model = from c in wynikAdres
-                            join a in wynikMiasto on c.AdresID equals a.PlacowkaID
-                            select new ListaPlacowkiModel()
-                            {
-                                Nazwa = a.Nazwa,
-                                Miasto = c.Miasto,
-                                Ulica = c.Ulica,
-                                Wojewodztwo = c.Wojewodztwo,
-                                Numer = c.Numer,
-                                GodzOd = a.GodzOd,
-                                GodzDo = a.GodzDo,
-                                Telefon = a.Telefon,
-                                Email = a.Email
-                            };
+            var model = from c in wynikAdres
+                        join a in wynikMiasto on c.AdresID equals a.PlacowkaID
+                        select new ListaPlacowkiModel()
+                        {
+                            Nazwa = a.Nazwa,
+                            Miasto = c.Miasto,
+                            Ulica = c.Ulica,
+                            Wojewodztwo = c.Wojewodztwo,
+                            Numer = c.Numer,
+                            GodzOd = a.GodzOd,
+                            GodzDo = a.GodzDo,
+                            Telefon = a.Telefon,
+                            Email = a.Email
+                        };
 
-                return PartialView(model);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            return PartialView(model);
         }
 
         public ActionResult Profil()
         {
-            if (Session["Sesja"] != null)
+            CheckSession();
+            var id = Session["ID"];
+            var wynikPacjentID = client.GetPacjentByID(Convert.ToInt32(id));
+            var wynikAdresID = client.GetAdresByID(Convert.ToInt32(id));
+            ViewBag.Strona = "Dental - Profil";
+            TempData.Keep();
+
+
+            EditPacjentModel editPacjentModel = new EditPacjentModel(wynikAdresID.Wojewodztwo)
             {
-                var id = Session["ID"];
-                var wynikPacjentID = client.GetPacjentByID(Convert.ToInt32(id));
-                var wynikAdresID = client.GetAdresByID(Convert.ToInt32(id));
-                ViewBag.Strona = "Dental - Profil";
-                TempData.Keep();
+                PacjentID = wynikPacjentID.PacjentID,
+                Imie = wynikPacjentID.Imie,
+                Nazwisko = wynikPacjentID.Nazwisko,
+                PESEL = wynikPacjentID.PESEL,
+                Telefon = wynikPacjentID.Telefon,
+                Email = wynikPacjentID.Email,
+                Haslo = wynikPacjentID.Haslo,
+                PowtorzHaslo = wynikPacjentID.PowtorzHaslo,
+                Miasto = wynikAdresID.Miasto,
+                Ulica = wynikAdresID.Ulica,
+                Numer = wynikAdresID.Numer,
+                Kod = wynikAdresID.Kod,
+                Wojewodztwo = wynikAdresID.Wojewodztwo,
+                DataUrodzenia = wynikPacjentID.DataUrodzin,
+            };
 
-
-                EditPacjentModel editPacjentModel = new EditPacjentModel(wynikAdresID.Wojewodztwo)
-                {
-                    PacjentID = wynikPacjentID.PacjentID,
-                    Imie = wynikPacjentID.Imie,
-                    Nazwisko = wynikPacjentID.Nazwisko,
-                    PESEL = wynikPacjentID.PESEL,
-                    Telefon = wynikPacjentID.Telefon,
-                    Email = wynikPacjentID.Email,
-                    Haslo = wynikPacjentID.Haslo,
-                    PowtorzHaslo = wynikPacjentID.PowtorzHaslo,
-                    Miasto = wynikAdresID.Miasto,
-                    Ulica = wynikAdresID.Ulica,
-                    Numer = wynikAdresID.Numer,
-                    Kod = wynikAdresID.Kod,
-                    Wojewodztwo = wynikAdresID.Wojewodztwo,
-                    DataUrodzenia = wynikPacjentID.DataUrodzin,
-                };
-
-                return View(editPacjentModel);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            return View(editPacjentModel);
         }
 
 
         public ActionResult DeleteKonto(int dane)
         {
-            if (Session["Sesja"] != null)
-            {
-                bool isOk = client.PacjentDelete(dane);
+            CheckSession();
+            bool isOk = client.PacjentDelete(dane);
 
-                return Json(isOk, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return RedirectToAction("Login", "Logowanie");
-            }
+            return Json(isOk, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult SaveEdit(EditPacjentModel model)
         {
+            CheckSession();
             if (ModelState.IsValid)
             {
                 if (Session["Sesja"] != null)

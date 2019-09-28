@@ -2669,4 +2669,26 @@ namespace Dental.Models
         public int Telefon { get; set; }
     }
     #endregion
+
+    #region WizytaHistoriaPacjent
+    public class WizytaHistoriaPacjenta
+    {
+        public int PacjentID { get; set; }
+
+        public string Data { get; set; }
+
+        public string Gabinet { get; set; }
+
+        public string Godzina { get; set; }
+
+        public string ImieLekarz { get; set; }
+
+        public string NazwiskoLekarz { get; set; }
+
+        public string FormaPlatnosci { get; set; }
+
+        public decimal Kwota { get; set; }
+
+    }
+    #endregion
 }

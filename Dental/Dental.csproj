@@ -131,6 +131,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\LekarzController.cs" />
     <Compile Include="Controllers\LogowanieController.cs" />
     <Compile Include="Controllers\PacjentController.cs" />
@@ -345,7 +346,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Logowanie\Rejestracja.cshtml" />
     <Content Include="Views\Shared\MenuPacjent.cshtml" />
-    <Content Include="Views\Pacjent\MenuPacjent.cshtml" />
     <Content Include="Views\Logowanie\ResetHaslaView.cshtml" />
     <Content Include="Views\Pacjent\Wizyta.cshtml" />
     <Content Include="Views\Pacjent\Historia.cshtml" />
@@ -359,7 +359,6 @@
     <Content Include="Views\Admin\Personel.cshtml" />
     <Content Include="Views\Admin\Cennik.cshtml" />
     <Content Include="Views\Admin\Administracja.cshtml" />
-    <Content Include="Views\Admin\Zabiegi.cshtml" />
     <Content Include="Views\Admin\ListaPlacowki.cshtml" />
     <Content Include="Views\Admin\DodajPlacowke.cshtml" />
     <Content Include="Views\Admin\EditPlacowka.cshtml" />
@@ -412,9 +411,12 @@
     <Content Include="Views\Admin\Rabat.cshtml" />
     <Content Include="Views\Lekarz\Historia.cshtml" />
     <Content Include="Views\Lekarz\Pacjenci.cshtml" />
+    <Content Include="Views\Lekarz\InfoLeczenie.cshtml" />
+    <Content Include="Views\Pacjent\InfoHistoriaPacjenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

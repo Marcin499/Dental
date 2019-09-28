@@ -14,9 +14,7 @@
 
 <h4>Rozlicz wizytę</h4>
 
-@using (Html.BeginForm("SaveRachunek", "Admin",new { wizyta }, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+
 
     <div class="modal-body row" style="padding-left: 450px; margin-right:100px; padding-bottom: 100px; padding-top:50px;">
         
@@ -34,7 +32,7 @@
                 
         
             @Html.Label("Forma zapłaty:")<br />             
-                @Html.DropDownList("forma", new SelectList(listItem, "Value", "Text"), new { @class = "form-control" })
+                @Html.DropDownList("Forma", new SelectList(listItem, "Value", "Text"), new { @class = "form-control" })
                                      
                                                 
                  @*@Html.Label("Faktura:")<br />             
@@ -43,11 +41,11 @@
 
                 @Html.Action("KwotaDoZapłaty", new { Model.Cena})
                 <br />
-                <input type="submit" class="button" value="Zapisz" /><br />
+                <input type="submit" class="button" value="Zapisz" onclick="ZapiszRachunek()" /><br />
         </div>
       </div>
     </div>
-}
+
 <script>
     $(document).ready(function () {
         $("#Rabat").change(function () {
@@ -64,4 +62,29 @@
             })
         })
     })
+
+    function ZapiszRachunek() {
+        debugger;
+        var cena = $('#Cena').val();
+        var rabat = $('#Rabat').val();
+        var forma = $('#Forma').val();
+        var kwota = $('#kwota').text();
+        var id = $('#RachunekID').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/SaveRachunek',
+            data: { id: id, cena: cena, rabat: rabat, forma: forma, kwota: kwota, wizyta: @wizyta },
+            success: function () {
+                alert('Wizyta została prawidłowo rozliczona.');
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/Wizyta',
+                    data: '',
+                    success: function () {
+
+                    }
+                })
+            })
+    }
 </script>

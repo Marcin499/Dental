@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Dental.Models.HistoriaPacjentaModel>
+@using GridMvc.Html
+
+@{ 
+    Layout = "~/Views/Shared/MenuLekarz.cshtml";
+}
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(a => a.Data).Titled("Data");
+    columns.Add(a => a.ImieL).Titled("Imię lekarza");
+    columns.Add(a => a.NazwiskoL).Titled("Nazwisko lekarza");    
+    columns.Add(a => a.RodzajZebow).Titled("Rodzaj zębów");
+    columns.Add(a => a.GD).Titled("Szczęka/Żuchwa");
+    columns.Add(a => a.LP).Titled("Lewa/Prawa strona");
+    columns.Add(a => a.Zab).Titled("Ząb");
+    columns.Add(a => a.Rozpoznanie).Titled("Rozpoznanie");
+    columns.Add(a => a.Procedura).Titled("Procedura");     
+    
+    
+}).WithPaging(20).Sortable(true).Filterable(true)

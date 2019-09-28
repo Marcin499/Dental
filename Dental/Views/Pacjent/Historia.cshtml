@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Dental.Models.WizytaHistoria>
+﻿@model IEnumerable<Dental.Models.WizytaHistoriaPacjenta>
 @{
     ViewBag.Title = "Historia";
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
@@ -14,7 +14,10 @@
     columns.Add(a => a.Gabinet).Titled("Gabinet");
     columns.Add(a => a.ImieLekarz).Titled("Imię lekarza");
     columns.Add(a => a.NazwiskoLekarz).Titled("Nazwisko lekarza");
-    columns.Add(a => a.Stan).Titled("Stan");
+    columns.Add(a => a.FormaPlatnosci).Titled("Forma płatności");
+    columns.Add(a => a.Kwota).Titled("Kwota");
+
+    columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("więcej info.", "InfoHistoriaPacjenta", new { a.PacjentID, a.Data }, new { @style = "color:green" })).Titled("Informacje o leczeniu");
 
 }).WithPaging(20).Sortable(true).Filterable(true)
 
