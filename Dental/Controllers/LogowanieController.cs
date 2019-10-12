@@ -43,6 +43,7 @@ namespace Dental.Controllers
                             var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
                             Session["ID"] = wynikID;
                             Session["Sesja"] = true;
+                            
                             return RedirectToAction("Wizyta", "Admin", new { imie });
 
                         }
@@ -181,7 +182,7 @@ namespace Dental.Controllers
                     }
                     else
                     {
-                        return View("Error");
+                        return PartialView("Error");
                     }
                 }
                 else

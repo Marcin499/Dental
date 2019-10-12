@@ -24,7 +24,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -39,7 +39,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -55,7 +55,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -70,7 +70,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -86,7 +86,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -277,7 +277,7 @@ namespace Dental.Controllers
             catch (Exception)
             {
 
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -326,7 +326,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
         [HttpPost]
@@ -357,7 +357,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -395,7 +395,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -411,7 +411,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -474,7 +474,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
     }

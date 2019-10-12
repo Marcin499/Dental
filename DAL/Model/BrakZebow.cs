@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Model
 {
+    [Table("BrakZebow")]
     public class BrakZebow
     {
         [Key]

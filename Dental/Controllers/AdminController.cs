@@ -28,7 +28,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -43,7 +43,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -83,7 +83,7 @@ namespace Dental.Controllers
                     }
                     else
                     {
-                        return View("Error");
+                        return PartialView("Error");
                     }
                 }
                 else
@@ -93,7 +93,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -112,12 +112,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -145,7 +145,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Dental.Controllers
                     }
                     else
                     {
-                        return View("Error");
+                        return PartialView("Error");
                     }
                 }
                 else
@@ -195,7 +195,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -210,7 +210,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -238,7 +238,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
 
         }
@@ -274,12 +274,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -313,12 +313,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -337,7 +337,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -351,7 +351,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -385,7 +385,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -401,7 +401,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -446,7 +446,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -462,7 +462,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -479,7 +479,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -495,7 +495,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -512,7 +512,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -527,7 +527,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -544,7 +544,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -588,12 +588,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -629,12 +629,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
         public ActionResult EditDetale(int pacjentID)
@@ -666,7 +666,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -698,7 +698,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
         public ActionResult ListaSzybkaWizyta(int pacjentID)
@@ -716,7 +716,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -753,7 +753,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -797,7 +797,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
         public ActionResult Personel()
@@ -812,7 +812,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -848,7 +848,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -864,7 +864,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -921,7 +921,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -939,12 +939,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -978,7 +978,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1024,7 +1024,7 @@ namespace Dental.Controllers
                     }
                     else
                     {
-                        return View("Error");
+                        return PartialView("Error");
                     }
                 }
                 else
@@ -1034,7 +1034,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
         public ActionResult Cennik()
@@ -1048,7 +1048,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1063,7 +1063,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1078,7 +1078,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1107,7 +1107,7 @@ namespace Dental.Controllers
                     }
                     else
                     {
-                        return View("Error");
+                        return PartialView("Error");
                     }
                 }
                 else
@@ -1117,7 +1117,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1167,12 +1167,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1190,12 +1190,12 @@ namespace Dental.Controllers
                 }
                 else
                 {
-                    return View("Error");
+                    return PartialView("Error");
                 }
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1218,7 +1218,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1247,7 +1247,7 @@ namespace Dental.Controllers
                     }
                     else
                     {
-                        return View("Error");
+                        return PartialView("Error");
                     }
                 }
                 else
@@ -1257,7 +1257,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
 
@@ -1272,7 +1272,7 @@ namespace Dental.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return PartialView("Error");
             }
         }
     }

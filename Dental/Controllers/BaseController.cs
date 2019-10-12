@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 
+
 namespace Dental.Controllers
 {
     public class BaseController : Controller

@@ -1,5 +1,8 @@
-﻿namespace DAL.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DAL.Model
 {
+    [Table("Personel")]
     public class Personel
     {
         public int PersonelID { get; set; }

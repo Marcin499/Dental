@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Model
 {
+    [Table("AdresPersonel")]
     public class AdresPersonel
     {
        [Key]

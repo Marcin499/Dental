@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Model
 {
+    [Table("Pacjent")]
     public class Pacjent
     {
 
