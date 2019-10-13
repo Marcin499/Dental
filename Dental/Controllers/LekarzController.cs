@@ -38,7 +38,7 @@ namespace Dental.Controllers
                 TempData["Wizyty"] = wizyty.Count();
                 TempData.Keep();
                 var metoda = new SMSController();
-                metoda.WyslijSMS();
+               // metoda.WyslijSMS();
                 return View(model);
             }
             catch (Exception)

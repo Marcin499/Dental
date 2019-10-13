@@ -908,5 +908,12 @@ namespace DAL
             }
         }
         #endregion
+
+        #region CredentialSMS
+        public List<CredentialsSMS> GetCredentialSMSList()
+        {
+            return context.CredentialsSMS.ToList();
+        }
+        #endregion
     }
 }

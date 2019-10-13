@@ -43,7 +43,7 @@ namespace Dental.Controllers
                             var wynikID = client.GetPersonelEmail(model.Email).PersonelID;
                             Session["ID"] = wynikID;
                             Session["Sesja"] = true;
-                            
+
                             return RedirectToAction("Wizyta", "Admin", new { imie });
 
                         }
@@ -70,7 +70,7 @@ namespace Dental.Controllers
                                 var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
                                 Session["ID"] = wynikID;
                                 Session["Sesja"] = true;
-                                return RedirectToAction("Wizyta", "Pacjent", new { imie });
+                                return RedirectToAction("WizytaNew", "Pacjent", new { imie });
                             }
                         }
                     }

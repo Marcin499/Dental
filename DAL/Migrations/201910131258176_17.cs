@@ -19,10 +19,21 @@ namespace DAL.Migrations
             RenameTable(name: "dbo.Rozpoznanies", newName: "Rozpoznanie");
             RenameTable(name: "dbo.Wizytas", newName: "Wizyta");
             RenameTable(name: "dbo.Zebies", newName: "Zeby");
+            CreateTable(
+                "dbo.CredentialsSMS",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        AccountSid = c.String(),
+                        AuthToken = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
         }
         
         public override void Down()
         {
+            DropTable("dbo.CredentialsSMS");
             RenameTable(name: "dbo.Zeby", newName: "Zebies");
             RenameTable(name: "dbo.Wizyta", newName: "Wizytas");
             RenameTable(name: "dbo.Rozpoznanie", newName: "Rozpoznanies");

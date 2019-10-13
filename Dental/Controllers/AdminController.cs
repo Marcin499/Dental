@@ -205,6 +205,32 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyty";
+                var dane = client.GetWizytaList().Where(a => a.Data == DateTime.Now.AddDays(1).ToShortDateString());
+                var init = new SMSController();
+                foreach (var item in dane)
+                {
+                    if (item.Stan != "Wysłano przypomnienie")
+                    {
+                        init.WyslijSMSPrzypomnienie(item);
+                        Wizyta model = new Wizyta()
+                        {
+                            Data = item.Data,
+                            DataUrodzenia = item.DataUrodzenia,
+                            GabinetID = item.GabinetID,
+                            Godzina = item.Godzina,
+                            LekarzID = item.LekarzID,
+                            PacjentID = item.PacjentID,
+                            RachunekID = item.RachunekID,
+                            Rodzaj = item.Rodzaj,
+                            Typ = item.Typ,
+                            Uwagi = item.Uwagi,
+                            WizytaID = item.WizytaID,
+                            Stan = "Wysłano przypomnienie"
+                        };
+
+                        bool isOk = client.WizytaUpdate(model);
+                    }
+                }
 
                 return View();
             }

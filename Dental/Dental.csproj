@@ -433,6 +433,7 @@
     <Content Include="Views\Lekarz\Pacjenci.cshtml" />
     <Content Include="Views\Lekarz\InfoLeczenie.cshtml" />
     <Content Include="Views\Pacjent\InfoHistoriaPacjenta.cshtml" />
+    <Content Include="Views\Pacjent\WizytaNew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

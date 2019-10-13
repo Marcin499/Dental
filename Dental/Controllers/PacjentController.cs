@@ -11,12 +11,28 @@ namespace Dental.Controllers
     {
         Metody client = new Metody();
 
-        public ActionResult Wizyta(string imie)
+        public ActionResult WizytaNew(string imie)
         {
             try
             {
                 CheckSession();
                 TempData["imie"] = imie;
+                ViewBag.Strona = "Dental - Wizyta";
+                TempData.Keep();
+                DodajWizyteModel model = new DodajWizyteModel();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return PartialView("Error");
+            }
+        }
+
+        public ActionResult Wizyta(string imie)
+        {
+            try
+            {
+                CheckSession();
                 ViewBag.Strona = "Dental - Wizyta";
                 TempData.Keep();
                 DodajWizyteModel model = new DodajWizyteModel();
@@ -127,7 +143,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var dataUrodzenia = client.GetPacjentByID(Convert.ToInt32(Session["ID"]));
+                var dane = client.GetPacjentByID(Convert.ToInt32(Session["ID"]));
                 Wizyta model = new Wizyta()
                 {
                     PacjentID = Convert.ToInt32(Session["ID"]),
@@ -139,10 +155,13 @@ namespace Dental.Controllers
                     Typ = typWizyty,
                     Stan = stan,
                     Uwagi = uwagi,
-                    DataUrodzenia = dataUrodzenia.DataUrodzin
+                    DataUrodzenia = dane.DataUrodzin
                 };
 
                 bool isOk = client.WizytaInsert(model);
+                var sms = new SMSController();
+                sms.WyslijSMSPotwierdzenie(data, godzina, dane.Telefon);
+
                 if (isOk == true)
                 {
                     TempData["Zapisano"] = "Utworzono nową wizyte!";
