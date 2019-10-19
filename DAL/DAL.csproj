@@ -114,9 +114,9 @@
     <Compile Include="Migrations\201909151820528_16.Designer.cs">
       <DependentUpon>201909151820528_16.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910131258176_17.cs" />
-    <Compile Include="Migrations\201910131258176_17.Designer.cs">
-      <DependentUpon>201910131258176_17.cs</DependentUpon>
+    <Compile Include="Migrations\201910191905385_17.cs" />
+    <Compile Include="Migrations\201910191905385_17.Designer.cs">
+      <DependentUpon>201910191905385_17.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Adres.cs" />
@@ -125,6 +125,7 @@
     <Compile Include="Model\BrakZebow.cs" />
     <Compile Include="Model\Cennik.cs" />
     <Compile Include="Model\CredentialsSMS.cs" />
+    <Compile Include="Model\Implant.cs" />
     <Compile Include="Model\Leczenie.cs" />
     <Compile Include="Model\Pacjent.cs" />
     <Compile Include="Model\Personel.cs" />
@@ -137,7 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908031959250_1.resx">
@@ -188,8 +191,8 @@
     <EmbeddedResource Include="Migrations\201909151820528_16.resx">
       <DependentUpon>201909151820528_16.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910131258176_17.resx">
-      <DependentUpon>201910131258176_17.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910191905385_17.resx">
+      <DependentUpon>201910191905385_17.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

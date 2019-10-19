@@ -831,7 +831,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                ViewBag.Strona = "Dental - Pesonel";
+                ViewBag.Strona = "Dental - Personel";
 
 
                 return View();

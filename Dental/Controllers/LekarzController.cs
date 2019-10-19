@@ -19,7 +19,7 @@ namespace Dental.Controllers
                 ViewBag.Strona = "Dental - Kalendarz";
                 var id = Session["ID"];
                 var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToShortDateString(), Convert.ToInt32(id));
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona");
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona" && a.Stan != "Wysłano przypomnienie");
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -38,7 +38,7 @@ namespace Dental.Controllers
                 TempData["Wizyty"] = wizyty.Count();
                 TempData.Keep();
                 var metoda = new SMSController();
-               // metoda.WyslijSMS();
+                // metoda.WyslijSMS();
                 return View(model);
             }
             catch (Exception)
@@ -479,12 +479,128 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 TempData["ID"] = id;
-                ZebyModel model = new ZebyModel(kategoria, id);
 
-                return PartialView(model);
+                if (kategoria == "Implanty")
+                {
+                    ZebyModel model = new ZebyModel(kategoria, id);
+                    TempData["Display"] = 1;
+                    return PartialView(model);
+                }
+                else
+                {
+                    ZebyModel model2 = new ZebyModel(kategoria, id);
+                    return PartialView(model2);
+                }
             }
             catch (Exception)
             {
+                return PartialView("Error");
+            }
+        }
+
+        public ActionResult ZapiszImplant(string zab1, string zab2, string zab3, string zab4, string dg, string lp, int pacjent)
+        {
+            try
+            {
+                CheckSession();
+                if (zab1 != "")
+                {
+                    string zab = zab1;
+
+                    Implant model = new Implant()
+                    {
+                        IDPacjenta = pacjent,
+                        Zab = Convert.ToInt32(zab),
+                        GD = dg,
+                        LP = lp
+
+                    };
+
+                    bool isOk = client.ImplantInsert(model);
+
+
+                    if (isOk == true)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return PartialView("Error");
+                    }
+                }
+                else if (zab2 != "")
+                {
+                    string zab = zab2;
+                    Implant model = new Implant()
+                    {
+                        IDPacjenta = pacjent,
+                        Zab = Convert.ToInt32(zab),
+                        GD = dg,
+                        LP = lp
+                    };
+
+                    bool isOk = client.ImplantInsert(model);
+
+                    if (isOk == true)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return PartialView("Error");
+                    }
+
+                }
+                else if (zab3 != "")
+                {
+                    string zab = zab3;
+                    Implant model = new Implant()
+                    {
+                        IDPacjenta = pacjent,
+                        Zab = Convert.ToInt32(zab),
+                        GD = dg,
+                        LP = lp
+                    };
+
+                    bool isOk = client.ImplantInsert(model);
+
+                    if (isOk == true)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return PartialView("Error");
+                    }
+                }
+                else if (zab4 != "")
+                {
+                    string zab = zab4;
+                    Implant model = new Implant()
+                    {
+                        IDPacjenta = pacjent,
+                        Zab = Convert.ToInt32(zab),
+                        GD = dg,
+                        LP = lp
+                    };
+
+                    bool isOk = client.ImplantInsert(model);
+
+                    if (isOk == true)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return PartialView("Error");
+                    }
+                }
+
+                return PartialView("Error");
+            }
+            catch (Exception)
+            {
+
                 return PartialView("Error");
             }
         }
@@ -675,6 +791,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
+                ViewBag.Strona = "Dental - Historia";
                 var wizyta = client.GetWizytaByPacjentID(pacjentID);
                 var leczenie = client.GetLeczenieList();
                 var lekarz = client.GetPesonelList();
@@ -709,6 +826,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
+                ViewBag.Strona = "Dental - Pacjenci";
                 var leczenie = client.GetWizytaByIDLekarz(lekarzID);
 
                 var pacjenci = client.GetPacjentList();
@@ -740,6 +858,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
+                ViewBag.Strona = "Dental - Pacjenci";
                 var wizyta = client.GetWizytaByPacjentID(pacjentID);
                 var leczenie = client.GetLeczenieList();
                 var lekarz = client.GetPesonelList();

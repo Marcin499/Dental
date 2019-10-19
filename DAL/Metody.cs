@@ -667,7 +667,35 @@ namespace DAL
         {
             return context.Zeby.ToList();
         }
+        #endregion
 
+        #region Implant
+
+        public List<Implant> GetImplantByID(int id)
+        {
+            return context.Implant.Where(a => a.IDPacjenta == id).ToList();
+        }
+
+        public bool ImplantInsert(Implant imp)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Implant.Add(imp);
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
         #endregion
 
         #region BrakZebow

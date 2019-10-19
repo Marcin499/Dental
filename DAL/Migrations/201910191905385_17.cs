@@ -29,10 +29,23 @@ namespace DAL.Migrations
                     })
                 .PrimaryKey(t => t.ID);
             
+            CreateTable(
+                "dbo.Implant",
+                c => new
+                    {
+                        IDImplantu = c.Int(nullable: false, identity: true),
+                        IDPacjenta = c.Int(nullable: false),
+                        GD = c.String(),
+                        LP = c.String(),
+                        Zab = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.IDImplantu);
+            
         }
         
         public override void Down()
         {
+            DropTable("dbo.Implant");
             DropTable("dbo.CredentialsSMS");
             RenameTable(name: "dbo.Zeby", newName: "Zebies");
             RenameTable(name: "dbo.Wizyta", newName: "Wizytas");

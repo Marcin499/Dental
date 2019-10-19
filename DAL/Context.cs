@@ -43,5 +43,6 @@ namespace DAL
         public DbSet<Rozpoznanie> Rozpoznanie { get; set; }
         public DbSet<Leczenie> Leczenie { get; set; }
         public DbSet<CredentialsSMS> CredentialsSMS { get; set; }
+        public DbSet<Implant> Implant { get; set; }
     }
 }

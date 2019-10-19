@@ -69,7 +69,8 @@
         var kat = $('#Kategoria').val();
         var zabieg = $('#Zabieg').val();
 
-        if ((zab1 != 0 && zab2 != 0) || (zab1 != 0 && zab3 != 0) || (zab1 != 0 && zab4 != 0) || (zab2 != 0 && zab3 != 0) || (zab2 != 0 && zab4 != 0) || (zab3 != 0 && zab4 != 0) ) {
+        if (rozp != "") {
+            if ((zab1 != 0 && zab2 != 0) || (zab1 != 0 && zab3 != 0) || (zab1 != 0 && zab4 != 0) || (zab2 != 0 && zab3 != 0) || (zab2 != 0 && zab4 != 0) || (zab3 != 0 && zab4 != 0) ) {
             alert("Tylko jeden ząb naraz może byc dodany!");
         }
         else {
@@ -88,7 +89,9 @@
         else if (zab4 != 0 || null) {
             var dg = "Żuchwa";
             var lp = "Prawa";
-        }
+            }           
+            }        
+        
 
         $.ajax({
             type: 'POST',

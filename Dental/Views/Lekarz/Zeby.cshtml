@@ -1,5 +1,9 @@
 ﻿@model Dental.Models.ZebyModel
 
+@{ 
+    var display = TempData["Display"];
+    var pacjent = TempData["ID"];
+}
 <br />
 <b>Szczęka</b>
 <div id="container" class="row" style="margin-left:20px;">
@@ -23,10 +27,60 @@
         <span>Lewa strona</span>
         @Html.DropDownListFor(a =>a.DL, Model.ListDL, "Wybierz", new { @class = "form-control" })<br />
     </div>
-
+   
     <div id="DolP" class="col-md-4" style="margin-left:80px;">
         <br />
         <span>Prawa strona</span>
         @Html.DropDownListFor(a =>a.DP, Model.ListDP, "Wybierz", new { @class = "form-control" })<br />
     </div>
+     <div id="button" style="display:none; padding-left:120px">
+        <input type="button" class="button" value="Zapisz" onclick="ZapiszImplant()" />
+    </div>
 </div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        if (@display == 1) {
+            $("#button").show();
+        }
+    })
+
+    function ZapiszImplant() {
+        var zab1 = $('#GL').val();
+        var zab2 = $('#GP').val();
+        var zab3 = $('#DL').val();
+        var zab4 = $('#DP').val();
+
+        
+            if ((zab1 != 0 && zab2 != 0) || (zab1 != 0 && zab3 != 0) || (zab1 != 0 && zab4 != 0) || (zab2 != 0 && zab3 != 0) || (zab2 != 0 && zab4 != 0) || (zab3 != 0 && zab4 != 0)) {
+                alert("Tylko jeden ząb naraz może byc dodany!");
+            }
+            else {
+                if (zab1 != 0 || null) {
+                    var dg = "Szczęka";
+                    var lp = "Lewa";
+                }
+                else if (zab2 != 0 || null) {
+                    var dg = "Szczęka";
+                    var lp = "Prawa";
+                }
+                else if (zab3 != 0 || null) {
+                    var dg = "Żuchwa";
+                    var lp = "Lewa";
+                }
+                else if (zab4 != 0 || null) {
+                    var dg = "Żuchwa";
+                    var lp = "Prawa";
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Lekarz/ZapiszImplant',
+                    data: { zab1: zab1, zab2: zab2, zab3: zab3, zab4: zab4, dg: dg, lp: lp, pacjent: @pacjent },
+                    success: function () {
+                        alert("Implant został dodany.");
+                    }
+                })
+            }        
+    }
+</script>

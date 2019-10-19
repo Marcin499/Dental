@@ -2432,129 +2432,269 @@ namespace Dental.Models
         private List<SelectListItem> InitDP(int id, string kategoria)
         {
             Metody client = new Metody();
-            var zeby = client.GetBrakZebowByID(id);
-            List<int> lista = new List<int>();
-            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Prawa");
-
-            foreach (var item in model)
+            if (kategoria == "Stałe")
             {
-                lista.Add(item.Zab);
-            }
+                var zeby = client.GetBrakZebowByID(id);
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Prawa");
+                var implant = client.GetImplantByID(id).Where(a => a.GD == "Żuchwa" && a.LP == "Prawa");
 
-            foreach (var item in model)
-            {
-                foreach (var item2 in zeby)
+                foreach (var item in model)
                 {
-                    if (item.Zab == item2.Zab)
+                    lista.Add(item.Zab);
+                }
+
+                if (implant.Any() == true)
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
                     {
-                        lista.Remove(item2.Zab);
+                        foreach (var item2 in implant)
+                        {
+                            if (item == item2.Zab)
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item2.Zab.ToString(), Text = item2.Zab.ToString() + "Implant" });
+                            }
+                            else
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                            }
+                        }
                     }
+
+                    return listaModel;
+                }
+                else
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                    }
+                    return listaModel;
                 }
             }
-            List<SelectListItem> listaModel = new List<SelectListItem>();
-            foreach (var item in lista)
+            else
             {
-                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Górne" && a.LP == "Lewa");
+
+                foreach (var item in model)
+                {
+                    lista.Add(item.Zab);
+                }
+
+                List<SelectListItem> listaModel = new List<SelectListItem>();
+                foreach (var item in lista)
+                {
+                    listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                }
+
+
+                return listaModel;
             }
-
-
-            return listaModel;
         }
 
         private List<SelectListItem> InitDL(int id, string kategoria)
         {
             Metody client = new Metody();
-            var zeby = client.GetBrakZebowByID(id);
-            List<int> lista = new List<int>();
-            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Lewa");
-
-            foreach (var item in model)
+            if (kategoria == "Stałe")
             {
-                lista.Add(item.Zab);
-            }
+                var zeby = client.GetBrakZebowByID(id);
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Dolne" && a.LP == "Lewa");
+                var implant = client.GetImplantByID(id).Where(a => a.GD == "Żuchwa" && a.LP == "Lewa");
 
-            foreach (var item in model)
-            {
-                foreach (var item2 in zeby)
+                foreach (var item in model)
                 {
-                    if (item.Zab == item2.Zab)
-                    {
-                        lista.Remove(item2.Zab);
-                    }
+                    lista.Add(item.Zab);
                 }
+
+                if (implant.Any() == true)
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        foreach (var item2 in implant)
+                        {
+                            if (item == item2.Zab)
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item2.Zab.ToString(), Text = item2.Zab.ToString() + "Implant" });
+                            }
+                            else
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                            }
+                        }
+                    }
+
+                    return listaModel;
+                }
+                else
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                    }
+                    return listaModel;
+                }
+
             }
-            List<SelectListItem> listaModel = new List<SelectListItem>();
-            foreach (var item in lista)
+            else
             {
-                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Górne" && a.LP == "Lewa");
+
+                foreach (var item in model)
+                {
+                    lista.Add(item.Zab);
+                }
+
+                List<SelectListItem> listaModel = new List<SelectListItem>();
+                foreach (var item in lista)
+                {
+                    listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                }
+
+
+                return listaModel;
             }
-
-
-            return listaModel;
         }
 
         private List<SelectListItem> InitGP(int id, string kategoria)
         {
             Metody client = new Metody();
-            var zeby = client.GetBrakZebowByID(id);
-            List<int> lista = new List<int>();
-            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Prawa");
-
-            foreach (var item in model)
+            if (kategoria == "Stałe")
             {
-                lista.Add(item.Zab);
-            }
+                var zeby = client.GetBrakZebowByID(id);
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Prawa");
+                var implant = client.GetImplantByID(id).Where(a => a.GD == "Szczęka" && a.LP == "Prawa");
 
-            foreach (var item in model)
-            {
-                foreach (var item2 in zeby)
+                foreach (var item in model)
                 {
-                    if (item.Zab == item2.Zab)
-                    {
-                        lista.Remove(item2.Zab);
-                    }
+                    lista.Add(item.Zab);
                 }
+
+                if (implant.Any() == true)
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        foreach (var item2 in implant)
+                        {
+                            if (item == item2.Zab)
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item2.Zab.ToString(), Text = item2.Zab.ToString() + "Implant" });
+                            }
+                            else
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                            }
+                        }
+                    }
+                    return listaModel;
+                }
+                else
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                    }
+                    return listaModel;
+                }
+
             }
-            List<SelectListItem> listaModel = new List<SelectListItem>();
-            foreach (var item in lista)
+            else
             {
-                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Górne" && a.LP == "Lewa");
+
+                foreach (var item in model)
+                {
+                    lista.Add(item.Zab);
+                }
+
+                List<SelectListItem> listaModel = new List<SelectListItem>();
+                foreach (var item in lista)
+                {
+                    listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                }
+
+
+                return listaModel;
             }
-
-
-            return listaModel;
         }
 
         private List<SelectListItem> InitGL(int id, string kategoria)
         {
             Metody client = new Metody();
-            var zeby = client.GetBrakZebowByID(id);
-            List<int> lista = new List<int>();
-            var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Lewa");
-
-            foreach (var item in model)
+            if (kategoria == "Stałe")
             {
-                lista.Add(item.Zab);
-            }
+                var zeby = client.GetBrakZebowByID(id);
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == kategoria && a.GD == "Górne" && a.LP == "Lewa");
+                var implant = client.GetImplantByID(id).Where(a => a.GD == "Szczęka" && a.LP == "Lewa");
 
-            foreach (var item in model)
-            {
-                foreach (var item2 in zeby)
+                foreach (var item in model)
                 {
-                    if (item.Zab == item2.Zab)
-                    {
-                        lista.Remove(item2.Zab);
-                    }
+                    lista.Add(item.Zab);
                 }
+
+                if (implant.Any() == true)
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        foreach (var item2 in implant)
+                        {
+                            if (item == item2.Zab)
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item2.Zab.ToString(), Text = item2.Zab.ToString() + " Implant" });
+                            }
+                            else
+                            {
+                                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                            }
+                        }
+
+                    }
+
+                    return listaModel;
+                }
+                else
+                {
+                    List<SelectListItem> listaModel = new List<SelectListItem>();
+                    foreach (var item in lista)
+                    {
+                        listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                    }
+                    return listaModel;
+                }
+
             }
-            List<SelectListItem> listaModel = new List<SelectListItem>();
-            foreach (var item in lista)
+            else
             {
-                listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                List<int> lista = new List<int>();
+                var model = client.GetZebyList().Where(a => a.Kategoria == "Stałe" && a.GD == "Górne" && a.LP == "Lewa");
+
+                foreach (var item in model)
+                {
+                    lista.Add(item.Zab);
+                }
+
+                List<SelectListItem> listaModel = new List<SelectListItem>();
+                foreach (var item in lista)
+                {
+                    listaModel.Add(new SelectListItem() { Value = item.ToString(), Text = item.ToString() });
+                }
+
+
+                return listaModel;
             }
 
-
-            return listaModel;
         }
     }
     #endregion
@@ -2591,6 +2731,7 @@ namespace Dental.Models
            {
                new SelectListItem(){Value="Stałe", Text="Zęby stałe"},
                new SelectListItem(){Value="Mleczne", Text="Zęby mleczne"},
+               new SelectListItem(){Value="Implanty", Text="Dodaj Implant"}
            };
 
             return lista;
