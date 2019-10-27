@@ -2,14 +2,15 @@
 @{
 
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
+    
 }
 
 <h4>Umów sie na wizytę</h4>
 <div style="color:red">
-    @TempData["Zapisano"]
+    @ViewBag.Message
 </div>
 
-    <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px; padding-top:100px">
+    <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 50px; padding-top:50px">
 
         <div class="col-md-4">
             <div id="part1">
@@ -90,13 +91,14 @@
         var typWizyty = $('#Typ').val();
         var stan = $('#Stan').val();
         var uwagi = $('#Uwagi').val();
+        
 
         $.ajax({
             type: 'POST',
             url: '/Pacjent/SaveWizyta',
             data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
-            success: function () {
-                
+            success: function (data) {
+                alert("Wizyta został utworzona!");
             }
         })
     }

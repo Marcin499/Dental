@@ -35,6 +35,7 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyta";
                 TempData.Keep();
+                TempData["imie"] = imie;
                 DodajWizyteModel model = new DodajWizyteModel();
                 return View(model);
             }
@@ -155,23 +156,24 @@ namespace Dental.Controllers
                     Typ = typWizyty,
                     Stan = stan,
                     Uwagi = uwagi,
-                    DataUrodzenia = dane.DataUrodzin
+                    DataUrodzenia = dane.DataUrodzin,
                 };
 
                 bool isOk = client.WizytaInsert(model);
                 var sms = new SMSController();
-                sms.WyslijSMSPotwierdzenie(data, godzina, dane.Telefon);
 
+                sms.WyslijSMSPotwierdzenie(data, godzina, dane.Telefon);
                 if (isOk == true)
                 {
-                    TempData["Zapisano"] = "Utworzono nową wizyte!";
-                    return RedirectToAction("Wizyta");
+                    return RedirectToAction("WizytaNew", "Pacjent");
+
                 }
                 else
                 {
                     TempData["Zapisano"] = "Bląd! Spróbuj jeszcze raz.";
                     return RedirectToAction("Wizyta");
                 }
+
             }
             catch (Exception)
             {

@@ -3,6 +3,7 @@ using DAL.Model;
 using Dental.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -205,7 +206,7 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyty";
-                var dane = client.GetWizytaList().Where(a => a.Data == DateTime.Now.AddDays(1).ToShortDateString());
+                var dane = client.GetWizytaList().Where(a => a.Data == DateTime.Now.AddDays(1).ToString("dd.MM.yyyy"));
                 var init = new SMSController();
                 foreach (var item in dane)
                 {
@@ -245,7 +246,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString());
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture));
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -1148,17 +1149,21 @@ namespace Dental.Controllers
         }
 
 
-        public ActionResult SaveRachunek(int id, decimal cena, string forma, int rabat, string kwota, int wizyta)
+        public ActionResult SaveRachunek(int id, decimal cena, string forma, string rabat, string kwota, int wizyta)
         {
             try
             {
                 CheckSession();
                 string[] kwot = kwota.Split(' ');
+                if (rabat == "")
+                {
+                    rabat = "0";
+                }
                 Rachunek model = new Rachunek()
                 {
                     RachunekID = id,
                     Cena = cena,
-                    Rabat = rabat,
+                    Rabat = Convert.ToInt32(rabat),
                     Faktura = false,
                     FormaPlatnosci = forma,
                     KwotaDoZaplaty = Convert.ToDecimal(kwot[5])

@@ -2,11 +2,12 @@
 @{
 
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
+    
 }
 
 <h4>Umów sie na wizytę</h4>
 <div style="color:red">
-    @TempData["Zapisano"]
+    @ViewBag.Message
 </div>
 
     <div class="modal-body row" style="padding-left: 250px; margin-right:100px; padding-bottom: 100px; padding-top:100px">
@@ -96,7 +97,7 @@
             url: '/Pacjent/SaveWizyta',
             data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
             success: function () {
-                
+                alert("Wizyta została utworzona!");
             }
         })
     }

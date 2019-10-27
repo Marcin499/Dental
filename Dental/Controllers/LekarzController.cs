@@ -18,8 +18,8 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Kalendarz";
                 var id = Session["ID"];
-                var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToShortDateString(), Convert.ToInt32(id));
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona" && a.Stan != "Wysłano przypomnienie");
+                var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToString("dd.MM.yyyy"), Convert.ToInt32(id));
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy") && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona" && a.Stan != "Wysłano przypomnienie");
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -34,7 +34,7 @@ namespace Dental.Controllers
                                 Uwagi = c.Uwagi
                             };
 
-                TempData["Data"] = DateTime.Today.ToShortDateString();
+                TempData["Data"] = DateTime.Now.Date.ToString("dd.MM.yyyy");
                 TempData["Wizyty"] = wizyty.Count();
                 TempData.Keep();
                 var metoda = new SMSController();
@@ -88,8 +88,8 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyta";
                 var id = Session["ID"];
-                var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToShortDateString(), Convert.ToInt32(id));
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToShortDateString() && a.LekarzID == (int)id && a.Stan == "Oczekuje w kolejce" || a.Stan == "W trakcie");
+                var listaWizyt = client.GetWizytaByDateAndDoctor(DateTime.Now.ToString("dd.MM.yyyy"), Convert.ToInt32(id));
+                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy") && a.LekarzID == (int)id && a.Stan == "Oczekuje w kolejce" || a.Stan == "W trakcie");
                 var pacjenci = client.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
@@ -839,7 +839,7 @@ namespace Dental.Controllers
                                 PacjentID = b.PacjentID,
                                 Imie = b.Imie,
                                 Nazwisko = b.Nazwisko,
-                                DataUrodzenia = b.DataUrodzin.ToShortDateString(),
+                                DataUrodzenia = b.DataUrodzin.ToString("dd-MM-yyyy"),
                                 Telefon = b.Telefon
                             };
 

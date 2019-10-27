@@ -178,7 +178,7 @@ namespace Dental.Controllers
                         Session["Sesja"] = true;
                         var wynikID = client.GetPacjentEmail(model.Email).PacjentID;
                         Session["ID"] = wynikID;
-                        return RedirectToAction("MenuPacjent", "Pacjent", new { imie = model.Imie });
+                        return RedirectToAction("WizytaNew", "Pacjent", new { imie = model.Imie });
                     }
                     else
                     {

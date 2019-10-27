@@ -233,6 +233,7 @@
     <Content Include="Content\bootstrap-datepicker3.css.map" />
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker.css.map" />
+    <None Include="Properties\PublishProfiles\DentalApp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />

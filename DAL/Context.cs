@@ -5,9 +5,10 @@ namespace DAL
 {
     public class Context : DbContext
     {
-        public Context() : base(@"Data Source=MARCIN\MARCIN;Initial Catalog=Dental;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
+        public Context() : base(@"Server=tcp:dentalappdbserver.database.windows.net,1433;Initial Catalog=Dental;Persist Security Info=False;User ID=adm;Password=TornadO1123445;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
         {
-
+            //Data Source=MARCIN\MARCIN;Initial Catalog=Dental;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+            //Server=tcp:dentalappdbserver.database.windows.net,1433;Initial Catalog=Dental;Persist Security Info=False;User ID=adm;Password=TornadO1123445;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

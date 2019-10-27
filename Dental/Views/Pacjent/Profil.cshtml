@@ -81,6 +81,7 @@
             @Html.Label("Kod:")<br />             
                 @Html.TextBoxFor(model => model.Kod, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Kod)<br />
+                <br />
                 <input type="button" class="button-danger" value="Usuń konto" onclick="Delete()"/><br />
             </div>
         </div>        

@@ -40,14 +40,14 @@
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Email)<br />
                 
-                 @Html.Label("Hasło:")<br />             
-                @Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type="password" })
-                @Html.ValidationMessageFor(model => model.Haslo)<br />
-
                 
                  @Html.Label("Data urodzenia:")<br />             
                 @Html.TextBoxFor(model => model.DataUrodzin, new { @class = "form-control" })
                 <br />
+
+                 @Html.Label("Hasło:")<br />             
+                @Html.TextBoxFor(model => model.Haslo, new { @class = "form-control", @type="password" })
+                @Html.ValidationMessageFor(model => model.Haslo)<br />                
                 
                   <input type="submit" class="button" value="Zapisz"/><br />
                 <div class="text-danger">

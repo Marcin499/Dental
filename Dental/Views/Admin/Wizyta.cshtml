@@ -5,7 +5,7 @@
 }
 <div id="container">
 
-    <h4>Lista pacjentów w dniu: @DateTime.Now.Date.ToShortDateString()</h4>
+    <h4>Lista pacjentów w dniu: @DateTime.Now.Date.ToString("dd.MM.yyyy").</h4>
 <div style="color:red">
     @TempData["Zapisano"]
 </div>

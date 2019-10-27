@@ -775,7 +775,7 @@ namespace Dental.Models
 
             foreach (var item in model)
             {
-                lista.Add(new SelectListItem() { Value = item.Zabieg + " " + item.Cena.ToString(), Text = item.Zabieg, });
+                lista.Add(new SelectListItem() { Value = item.Zabieg + " " + item.Cena.ToString(), Text = item.Zabieg + " " + item.Kategoria, });
             }
 
             return lista;
