@@ -3,7 +3,7 @@
 
 namespace Dental.Controllers
 {
-    public class BaseController : Controller
+    public class BazowyController : Controller
     {
         // GET: Base
         public ActionResult CheckSession()

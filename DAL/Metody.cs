@@ -152,7 +152,7 @@ namespace DAL
             }
         }
 
-        public bool PacjentUpdate(Pacjent pacjent)
+        public bool PacjentUpdate(Pacjent pacjent, Adres adresPacjent)
         {
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
             {
@@ -167,7 +167,84 @@ namespace DAL
                     wynik.Typ = pacjent.Typ;
                     wynik.Email = pacjent.Email;
                     wynik.Haslo = pacjent.Haslo;
+                    wynik.PowtorzHaslo = pacjent.PowtorzHaslo;
+                    wynik.DataUrodzin = pacjent.DataUrodzin;
 
+                    var wynik2 = context.Adres.Where(a => a.AdresID == pacjent.PacjentID).FirstOrDefault();
+                    wynik2.Miasto = adresPacjent.Miasto;
+                    wynik2.Wojewodztwo = adresPacjent.Wojewodztwo;
+                    wynik2.Ulica = adresPacjent.Ulica;
+                    wynik2.Numer = adresPacjent.Numer;
+                    wynik2.Kod = adresPacjent.Kod;
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool PacjentUpdateResetHasla(Pacjent pacjent)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Pacjent.Where(a => a.PacjentID == pacjent.PacjentID).FirstOrDefault();
+                    wynik.PacjentID = pacjent.PacjentID;
+                    wynik.Imie = pacjent.Imie;
+                    wynik.Nazwisko = pacjent.Nazwisko;
+                    wynik.PESEL = pacjent.PESEL;
+                    wynik.Telefon = pacjent.Telefon;
+                    wynik.Typ = pacjent.Typ;
+                    wynik.Email = pacjent.Email;
+                    wynik.Haslo = pacjent.Haslo;
+                    wynik.PowtorzHaslo = pacjent.PowtorzHaslo;
+
+
+                    context.SaveChanges();
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        public bool PacjentUpdateAdmin(Pacjent pacjent, Adres adresPacjent)
+        {
+            using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var wynik = context.Pacjent.Where(a => a.PacjentID == pacjent.PacjentID).FirstOrDefault();
+                    wynik.PacjentID = pacjent.PacjentID;
+                    wynik.Imie = pacjent.Imie;
+                    wynik.Nazwisko = pacjent.Nazwisko;
+                    wynik.PESEL = pacjent.PESEL;
+                    wynik.Telefon = pacjent.Telefon;
+                    wynik.Typ = pacjent.Typ;
+                    wynik.Email = pacjent.Email;
+                    wynik.Haslo = pacjent.Haslo;
+                    wynik.PowtorzHaslo = pacjent.PowtorzHaslo;
+
+
+                    var wynik2 = context.Adres.Where(a => a.AdresID == pacjent.PacjentID).FirstOrDefault();
+                    wynik2.Miasto = adresPacjent.Miasto;
+                    wynik2.Wojewodztwo = adresPacjent.Wojewodztwo;
+                    wynik2.Ulica = adresPacjent.Ulica;
+                    wynik2.Numer = adresPacjent.Numer;
+                    wynik2.Kod = adresPacjent.Kod;
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();
@@ -404,6 +481,11 @@ namespace DAL
             return context.Cennik.Where(a => a.ZabiegID == id).FirstOrDefault();
         }
 
+        public List<Cennik> GetCennikByIDPlacowki(int id)
+        {
+            return context.Cennik.Where(a => a.PlacowkaID == id).ToList();
+        }
+
         public List<Cennik> GetCennikByKategoria(string kategoria)
         {
             return context.Cennik.Where(a => a.Kategoria == kategoria).ToList();
@@ -467,6 +549,7 @@ namespace DAL
                     wynik.Zabieg = cennik.Zabieg;
                     wynik.Kategoria = cennik.Kategoria;
                     wynik.Cena = cennik.Cena;
+                    wynik.PlacowkaID = cennik.PlacowkaID;
 
                     context.SaveChanges();
                     dbContextTransaction.Commit();

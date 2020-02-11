@@ -1,7 +1,7 @@
 ﻿@model Dental.Models.DodajWizyteModel
 @{
 
-    Layout = "~/Views/Shared/MenuPacjent.cshtml";
+    Layout = "~/Views/Shared/MenuPacjent.cshtml";   
     
 }
 
@@ -54,33 +54,33 @@
                     @Html.TextAreaFor(model => model.Uwagi, new { @class = "form-control" })<br />
                 </div>
                 <input type="button" class="button" value="Zapisz" onclick="SaveWizyta()"/><br />                
-            </div>
-        </div>  
+            </div>        
+    </div>
+  
 <script>
     $(document).ready(function () {
         $('#Data').datepicker({
             format: 'dd.mm.yyyy',
-            daysOfWeekDisabled: [0,6],
-            
+            daysOfWeekDisabled: [0, 6],
+
         });
 
-         $('#Data').change(function () {
-                debugger;
-             var lekarz = $('#LekarzID').val();
-             var gabinet = $('#GabinetID').val();
-             var data = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: '/Pacjent/WizytaGodzina2',
-                    data: { placowkaID: gabinet, lekarz: lekarz, data: data },
-                    success: function (data) {
-                        $('#part5').html(data);
-                    }
+        $('#Data').change(function () {
+            debugger;
+            var lekarz = $('#LekarzID').val();
+            var gabinet = $('#GabinetID').val();
+            var data = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Pacjent/WizytaGodzina2',
+                data: { placowkaID: gabinet, lekarz: lekarz, data: data },
+                success: function (data) {
+                    $('#part5').html(data);
+                }
 
-                });
-
-            })
-    })
+            });
+        })
+    });
 
     function SaveWizyta() {        
         var gabinet = $('#GabinetID').val();
@@ -91,16 +91,22 @@
         var typWizyty = $('#Typ').val();
         var stan = $('#Stan').val();
         var uwagi = $('#Uwagi').val();
-        
+        debugger;
 
-        $.ajax({
-            type: 'POST',
-            url: '/Pacjent/SaveWizyta',
-            data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
-            success: function (data) {
-                alert("Wizyta został utworzona!");
-            }
-        })
+        if (gabinet == "" && lekarz == "" && data == "" && godzina == "" && rodzajWizyty == "" && typWizyty == "") {
+            alert("Uzupełnij dane!");
+        }
+        else 
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/Pacjent/SaveWizyta',
+                data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
+                success: function (data) {
+                    alert("Wizyta został utworzona!");
+                }
+            });
+        }
     }
 </script>
 

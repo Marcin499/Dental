@@ -19,6 +19,10 @@
                 @Html.TextBoxFor(model => model.Zabieg, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Zabieg)<br />
 
+            @Html.Label("Gabinet:")<br />            
+                @Html.DropDownListFor(model => model.Placowki, Model.ListPlacowki, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Placowki)<br />
+
         
             @Html.Label("Kategoria:")<br />             
                 @Html.DropDownListFor(model => model.Kategoria, Model.ListKategorie, new { @class = "form-control" })

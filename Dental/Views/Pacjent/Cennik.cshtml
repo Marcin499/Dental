@@ -1,12 +1,12 @@
-﻿@model Dental.Models.CennikModel
+﻿@model Dental.Models.PlacowkiModel
 @{
    
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
 }
 
 <div>
-     @Html.Label("Kategorie zabiegów:")<br />             
-                @Html.DropDownListFor(model => model.Kategoria, Model.ListaKategorie, "Wybierz", new { @class = "form-control" })
+    @Html.Label("Gabinety:")<br />             
+                @Html.DropDownListFor(model => model.Placowki, Model.ListaPlacowki, "Wybierz", new { @class = "form-control" })
                <br />
 </div>
 <div id="listaCennik">
@@ -14,12 +14,12 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#Kategoria').change(function () {
-            var kategoria = $(this).val();
+        $('#Placowki').change(function () {
+            var gabinet = $(this).val();
             $.ajax({
                 type: 'POST',
                 url: '/Pacjent/ListaCennik',
-                data: { kategoria: kategoria },
+                data: { gabinet: gabinet },
                 success: function (data) {
                     $('#listaCennik').html(data);
                 }

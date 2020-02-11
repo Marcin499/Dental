@@ -75,11 +75,12 @@ namespace Dental.DentalReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDentalService/AdresDelete", ReplyAction="http://tempuri.org/IDentalService/AdresDeleteResponse")]
         System.Threading.Tasks.Task<bool> AdresDeleteAsync(int id);
     }
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IDentalServiceChannel : Dental.DentalReference.IDentalService, System.ServiceModel.IClientChannel {
+    public interface IDentalServiceChannel : System.ServiceModel.IClientChannel
+    {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DentalServiceClient : System.ServiceModel.ClientBase<Dental.DentalReference.IDentalService>, Dental.DentalReference.IDentalService {

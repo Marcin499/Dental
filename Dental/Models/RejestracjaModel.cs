@@ -137,7 +137,7 @@ namespace Dental.Models
         [Required(ErrorMessage = "Proszę podać miasto!")]
         public string Miasto { get; set; }
         [Required(ErrorMessage = "Proszę podać date urodzenia!")]
-        public DateTime DataUrodzenia { get; set; }
+        public string DataUrodzenia { get; set; }
         [Display(Name = "Województwo")]
         [Required(ErrorMessage = "Proszę wybrac województwo!")]
         public string Wojewodztwo { get; set; }
@@ -243,6 +243,34 @@ namespace Dental.Models
     }
     #endregion
 
+    #region PlacowkiModel
+    public class PlacowkiModel
+    {
+        public int Placowki { get; set; }
+        public List<SelectListItem> ListaPlacowki { get; set; }
+
+        public PlacowkiModel()
+        {
+            this.ListaPlacowki = InitPlacowki();
+        }
+
+        private List<SelectListItem> InitPlacowki()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var placowka = client.GetPlacowkaList();
+
+            foreach (var pl in placowka)
+            {
+                lista.Add(new SelectListItem() { Value = pl.PlacowkaID.ToString(), Text = pl.Nazwa });
+
+            }
+            return lista;
+        }
+    }
+
+    #endregion
+
     #region DodajPlacowkeModel
     public class DodajPlacowkeModel
     {
@@ -279,10 +307,10 @@ namespace Dental.Models
         {
             List<SelectListItem> lista = new List<SelectListItem>()
            {
-               new SelectListItem(){Value = "6.00", Text = "6.00"},
-               new SelectListItem(){Value = "7.00", Text = "7.00"},
-               new SelectListItem(){Value = "8.00", Text = "8.00"},
-               new SelectListItem(){Value = "9.00", Text = "9.00"},
+               new SelectListItem(){Value = "06.00", Text = "06.00"},
+               new SelectListItem(){Value = "07.00", Text = "07.00"},
+               new SelectListItem(){Value = "08.00", Text = "08.00"},
+               new SelectListItem(){Value = "09.00", Text = "09.00"},
                new SelectListItem(){Value = "10.00", Text = "10.00"},
                new SelectListItem(){Value = "11.00", Text = "11.00"},
                new SelectListItem(){Value = "12.00", Text = "12.00"},
@@ -333,7 +361,7 @@ namespace Dental.Models
     {
         public int PersonelID { get; set; }
 
-        public int Placowka { get; set; }
+        public string Placowka { get; set; }
 
         public string Imie { get; set; }
 
@@ -569,7 +597,7 @@ namespace Dental.Models
 
             foreach (var item in model)
             {
-                lista.Add(new SelectListItem() { Value = item.Nazwa, Text = item.Nazwa, Selected = item.Nazwa == placowka });
+                lista.Add(new SelectListItem() { Value = item.PlacowkaID.ToString(), Text = item.Nazwa, Selected = item.Nazwa == placowka });
             }
             return lista;
         }
@@ -793,11 +821,28 @@ namespace Dental.Models
         public string Kategoria { get; set; }
         public List<SelectListItem> ListKategorie { get; set; }
 
+        public string Placowki { get; set; }
+        public List<SelectListItem> ListPlacowki { get; set; }
+
         public int Cena { get; set; }
 
         public DodajZabiegModel()
         {
             this.ListKategorie = InitKategorie();
+            this.ListPlacowki = InitPlacowki();
+        }
+
+        private List<SelectListItem> InitPlacowki()
+        {
+            Metody client = new Metody();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            var model = client.GetPlacowkaList();
+
+            foreach (var item in model)
+            {
+                lista.Add(new SelectListItem() { Value = item.PlacowkaID.ToString(), Text = item.Nazwa });
+            }
+            return lista;
         }
 
         private List<SelectListItem> InitKategorie()
@@ -1074,7 +1119,15 @@ namespace Dental.Models
 
                         foreach (var id in lista2)
                         {
-                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            if (id.Length == 2)
+                            {
+                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            }
+                            else
+                            {
+                                lista.Add(new SelectListItem() { Value = "0" + id + ":00", Text = id + ":00" });
+                            }
+
                         }
                     }
                     else
@@ -1083,7 +1136,14 @@ namespace Dental.Models
                         {
                             if (item2 >= godzinaOD && item2 <= godzinaDo)
                             {
-                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                                if (item2.ToString().Length == 2)
+                                {
+                                    lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                                }
+                                else
+                                {
+                                    lista.Add(new SelectListItem() { Value = "0" + item2.ToString() + ":00", Text = "0" + item2.ToString() + ":00" });
+                                }
                             }
 
                         }
@@ -1146,18 +1206,28 @@ namespace Dental.Models
 
                         foreach (var id in lista2)
                         {
-                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            if (id.Length == 2)
+                            {
+                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            }
+                            else
+                            {
+                                lista.Add(new SelectListItem() { Value = "0" + id + ":00", Text = id + ":00" });
+                            }
                         }
                     }
                     else
                     {
                         foreach (var item2 in godziny)
                         {
-                            if (item2 >= godzinaOD && item2 <= godzinaDo)
+                            if (item2.ToString().Length == 2)
                             {
                                 lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
                             }
-
+                            else
+                            {
+                                lista.Add(new SelectListItem() { Value = "0" + item2.ToString() + ":00", Text = "0" + item2.ToString() + ":00" });
+                            }
                         }
                     }
 
@@ -1226,7 +1296,14 @@ namespace Dental.Models
 
                         foreach (var id in lista2)
                         {
-                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            if (id.Length == 2)
+                            {
+                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            }
+                            else
+                            {
+                                lista.Add(new SelectListItem() { Value = "0" + id + ":00", Text = id + ":00" });
+                            }
                         }
 
                     }
@@ -1236,7 +1313,14 @@ namespace Dental.Models
                         {
                             if (item2 >= godzinaOD && item2 <= godzinaDo)
                             {
-                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                                if (item2.ToString().Length == 2)
+                                {
+                                    lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                                }
+                                else
+                                {
+                                    lista.Add(new SelectListItem() { Value = "0" + item2.ToString() + ":00", Text = "0" + item2.ToString() + ":00" });
+                                };
                             }
 
                         }
@@ -1297,18 +1381,28 @@ namespace Dental.Models
 
                         foreach (var id in lista2)
                         {
-                            lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            if (id.Length == 2)
+                            {
+                                lista.Add(new SelectListItem() { Value = id + ":00", Text = id + ":00" });
+                            }
+                            else
+                            {
+                                lista.Add(new SelectListItem() { Value = "0" + id + ":00", Text = id + ":00" });
+                            }
                         }
                     }
                     else
                     {
                         foreach (var item2 in godziny)
                         {
-                            if (item2 >= godzinaOD && item2 <= godzinaDo)
+                            if (item2.ToString().Length == 2)
                             {
-                                lista.Add(new SelectListItem() { Value = item2.ToString() + ":00", Text = item2.ToString() + ":00" });
+                                lista.Add(new SelectListItem() { Value = "0" + item2.ToString() + ":00", Text = item2.ToString() + ":00" });
                             }
-
+                            else
+                            {
+                                lista.Add(new SelectListItem() { Value = "0" + item2.ToString() + ":00", Text = "0" + item2.ToString() + ":00" });
+                            }
                         }
                     }
                 }
@@ -2829,6 +2923,26 @@ namespace Dental.Models
         public string FormaPlatnosci { get; set; }
 
         public decimal Kwota { get; set; }
+
+    }
+    #endregion
+
+    #region AnulowanieWizytyModel
+    public class AnulowanieWizytyModel
+    {
+        public int WizytaID { get; set; }
+
+        public string Gabinet { get; set; }
+
+        public string ImieLekarza { get; set; }
+
+        public string NazwiskoLekarza { get; set; }
+
+        public string Data { get; set; }
+
+        public string Godzina { get; set; }
+
+        public string Stan { get; set; }
 
     }
     #endregion

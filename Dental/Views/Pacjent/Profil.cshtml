@@ -3,10 +3,14 @@
 @{
         
     Layout = "~/Views/Shared/MenuPacjent.cshtml";
+    var data = Model.DataUrodzenia;
 }
 
 
 <h4>Edycja Danych</h4>
+ <div class="text-danger">
+  @TempData["Success"]
+ </div>
 
 @using (Html.BeginForm("SaveEdit", "Pacjent", FormMethod.Post))
 {
@@ -46,10 +50,7 @@
                  @Html.Label("Data urodzenia:")<br />             
                 @Html.TextBoxFor(model => model.DataUrodzenia, new { @class = "form-control"})                
                 <br />
-                  <input type="submit" class="button" value="Zapisz"/><br />
-                <div class="text-danger">
-                    @TempData["Success"]
-                </div>
+                  <input type="submit" class="button" value="Zapisz"/><br />              
                 
                 </div>
         </div>
@@ -93,7 +94,7 @@
             format: 'dd.mm.yyyy',
             daysOfWeekDisabled: [0, 6],
         });
-        $('#DataUrodzenia').val("");
+        $('#DataUrodzenia').val();
     })
 </script>
 

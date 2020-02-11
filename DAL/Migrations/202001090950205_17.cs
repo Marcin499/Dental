@@ -41,10 +41,12 @@ namespace DAL.Migrations
                     })
                 .PrimaryKey(t => t.IDImplantu);
             
+            AddColumn("dbo.Cennik", "PlacowkaID", c => c.Int(nullable: false));
         }
         
         public override void Down()
         {
+            DropColumn("dbo.Cennik", "PlacowkaID");
             DropTable("dbo.Implant");
             DropTable("dbo.CredentialsSMS");
             RenameTable(name: "dbo.Zeby", newName: "Zebies");

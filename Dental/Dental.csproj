@@ -389,7 +389,6 @@
     <Content Include="Views\Admin\EditPersonel.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
-    <Content Include="Views\Admin\ListaZabiegów.cshtml" />
     <Content Include="Views\Admin\DodajZabieg.cshtml" />
     <Content Include="Views\Admin\EditZabieg.cshtml" />
     <Content Include="Views\Pacjent\WizytaGabinet.cshtml" />
@@ -436,6 +435,9 @@
     <Content Include="Views\Lekarz\InfoLeczenie.cshtml" />
     <Content Include="Views\Pacjent\InfoHistoriaPacjenta.cshtml" />
     <Content Include="Views\Pacjent\WizytaNew.cshtml" />
+    <Content Include="Views\Pacjent\ListaWizyt.cshtml" />
+    <Content Include="Views\Admin\ListaZabiegow.cshtml" />
+    <Content Include="Views\Admin\ListaZabiegowDefault.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

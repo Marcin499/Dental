@@ -12,3 +12,4 @@
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Edytuj", "EditZabieg", new { a.ZabiegID }, new { @style = "color:blue" })).Titled("Edycja");
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Usuń", "DeleteZabieg", new { a.ZabiegID }, new { @style = "color:red" })).Titled("Usuń");
 }).WithPaging(20).Sortable(true).Filterable(true)
+

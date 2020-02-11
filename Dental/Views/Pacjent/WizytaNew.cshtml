@@ -91,15 +91,22 @@
         var typWizyty = $('#Typ').val();
         var stan = $('#Stan').val();
         var uwagi = $('#Uwagi').val();
+        debugger;
 
-        $.ajax({
-            type: 'POST',
-            url: '/Pacjent/SaveWizyta',
-            data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
-            success: function () {
-                alert("Wizyta została utworzona!");
-            }
-        })
+        if (gabinet == "" || lekarz == "" || data == "" || godzina == "" || rodzajWizyty == "" || typWizyty == "") {
+            alert("Uzupełnij dane!");
+        }
+        else 
+        {
+            $.ajax({
+                type: 'POST',
+                url: '/Pacjent/SaveWizyta',
+                data: { gabinet: gabinet, lekarz: lekarz, data: data, godzina: godzina, rodzajWizyty: rodzajWizyty, typWizyty: typWizyty, stan: stan, uwagi: uwagi },
+                success: function (data) {
+                    alert("Wizyta został utworzona!");
+                }
+            });
+        }
     }
 </script>
 

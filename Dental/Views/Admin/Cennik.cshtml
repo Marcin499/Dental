@@ -1,4 +1,4 @@
-﻿
+﻿@model Dental.Models.PlacowkiModel
 @{
     ViewBag.Title = "Cennik";
     Layout = "~/Views/Shared/MenuAdmin.cshtml";
@@ -11,8 +11,29 @@
     <div id="header" >
         <input type="button" class="button-add" value="Dodaj nowy zabieg" onclick="location.href='@Url.Action("DodajZabieg", "Admin")'"/><br />
     </div>
+    <div>
+     @Html.Label("Gabinety:")<br />             
+                @Html.DropDownListFor(model => model.Placowki, Model.ListaPlacowki, "Wybierz", new { @class = "form-control" })
+               <br />
+</div>
 
     <div id="list">        
-        @Html.Action("ListaZabiegów")
+        @Html.Action("ListaZabiegowDefault")
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        $('#Placowki').change(function () {
+            var gabinet = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/ListaZabiegow',
+                data: { gabinet: gabinet },
+                success: function (data) {
+                    $('#list').html(data);
+                }
+            })
+        })
+    })
+</script>

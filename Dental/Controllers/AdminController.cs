@@ -9,17 +9,17 @@ using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
-    public class AdminController : BaseController
+    public class AdminController : BazowyController
     {
-        Metody client = new Metody();
+        Metody Miasto = new Metody();
 
         public ActionResult ListaPlacowki()
         {
             try
             {
                 CheckSession();
-                List<Placowka> getPlacowki = client.GetPlacowkaList();
-                var getAdres = client.GetAdresPlacowkaList();
+                List<Placowka> getPlacowki = Miasto.GetPlacowkaList();
+                var getAdres = Miasto.GetAdresPlacowkaList();
 
                 var model = from p in getPlacowki
                             join ad in getAdres on p.PlacowkaID equals ad.AdresID
@@ -49,7 +49,7 @@ namespace Dental.Controllers
         }
 
         [HttpPost]
-        public ActionResult SavePlacowka(DodajPlacowkeModel model)
+        public ActionResult ZapiszPlacowka(DodajPlacowkeModel model)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Dental.Controllers
 
                     };
 
-                    bool isOk = client.PlacowkaInsert(placowkaModel);
+                    bool isOk = Miasto.PlacowkaInsert(placowkaModel);
                     if (isOk == true)
                     {
                         TempData["Zapisano"] = "Gabinet został dodany!";
@@ -104,7 +104,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                bool isOk = client.PlacowkaDelete(PlacowkaID);
+                bool isOk = Miasto.PlacowkaDelete(PlacowkaID);
 
                 if (isOk == true)
                 {
@@ -128,8 +128,8 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Administracja";
-                var modelPlacowki = client.GetPlacowkaByID(PlacowkaID);
-                var modelAdres = client.GetAdresPlacowkaByID(PlacowkaID);
+                var modelPlacowki = Miasto.GetPlacowkaByID(PlacowkaID);
+                var modelAdres = Miasto.GetAdresPlacowkaByID(PlacowkaID);
 
                 EditPlacowkiModel model = new EditPlacowkiModel(modelAdres.Wojewodztwo, modelPlacowki.GodzOd, modelPlacowki.GodzDo)
                 {
@@ -177,7 +177,7 @@ namespace Dental.Controllers
 
                     };
 
-                    bool isOk = client.PlacowkaUpdate(modelPlacowka, modelAdrePlacowka);
+                    bool isOk = Miasto.PlacowkaUpdate(modelPlacowka, modelAdrePlacowka);
 
                     if (isOk == true)
                     {
@@ -206,13 +206,13 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyty";
-                var dane = client.GetWizytaList().Where(a => a.Data == DateTime.Now.AddDays(1).ToString("dd.MM.yyyy"));
+                var dane = Miasto.GetWizytaList().Where(a => a.Data == DateTime.Now.AddDays(1).ToString("dd.MM.yyyy"));
                 var init = new SMSController();
                 foreach (var item in dane)
                 {
                     if (item.Stan != "Wysłano przypomnienie")
                     {
-                        init.WyslijSMSPrzypomnienie(item);
+                        //init.WyslijSMSPrzypomnienie(item);
                         Wizyta model = new Wizyta()
                         {
                             Data = item.Data,
@@ -229,7 +229,7 @@ namespace Dental.Controllers
                             Stan = "Wysłano przypomnienie"
                         };
 
-                        bool isOk = client.WizytaUpdate(model);
+                        bool isOk = Miasto.WizytaUpdate(model);
                     }
                 }
 
@@ -246,8 +246,8 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wizyty = client.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture));
-                var pacjenci = client.GetPacjentList();
+                var wizyty = Miasto.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture));
+                var pacjenci = Miasto.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
                             select new ListaWizytModel()
@@ -276,7 +276,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                Wizyta wizyta = client.GetWizytaByID(wizytaID);
+                Wizyta wizyta = Miasto.GetWizytaByID(wizytaID);
                 string stan = "Anulowana";
                 Wizyta model = new Wizyta()
                 {
@@ -292,7 +292,7 @@ namespace Dental.Controllers
                     Uwagi = wizyta.Uwagi,
                     DataUrodzenia = wizyta.DataUrodzenia
                 };
-                bool isOk = client.WizytaUpdate(model);
+                bool isOk = Miasto.WizytaUpdate(model);
 
                 if (isOk == true)
                 {
@@ -315,7 +315,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                Wizyta wizyta = client.GetWizytaByID(wizytaID);
+                Wizyta wizyta = Miasto.GetWizytaByID(wizytaID);
                 string stan = "Oczekuje w kolejce";
                 Wizyta model = new Wizyta()
                 {
@@ -331,7 +331,7 @@ namespace Dental.Controllers
                     Uwagi = wizyta.Uwagi,
                     DataUrodzenia = wizyta.DataUrodzenia
                 };
-                bool isOk = client.WizytaUpdate(model);
+                bool isOk = Miasto.WizytaUpdate(model);
 
                 if (isOk == true)
                 {
@@ -354,9 +354,10 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wizyta = client.GetWizytaByID(wizytaID);
+                ViewBag.Strona = "Dental - Rozliczenie wizyty";
+                var wizyta = Miasto.GetWizytaByID(wizytaID);
 
-                var rachunek = client.GetRachunekByID(wizyta.RachunekID);
+                var rachunek = Miasto.GetRachunekByID(wizyta.RachunekID);
 
                 TempData["Wizyta"] = wizytaID;
 
@@ -440,8 +441,8 @@ namespace Dental.Controllers
                 ViewBag.Strona = "Dental - Wizyta";
                 if (imie != null && nazwisko != null)
                 {
-                    var model = client.GetPacjentList().Where(a => a.Imie == imie || a.Nazwisko == nazwisko).ToList();
-                    var adres = client.GetAdresList();
+                    var model = Miasto.GetPacjentList().Where(a => a.Imie == imie || a.Nazwisko == nazwisko).ToList();
+                    var adres = Miasto.GetAdresList();
                     var mod = from c in model
                               join a in adres on c.PacjentID equals a.AdresID
                               select new EditPacjentModel()
@@ -457,7 +458,7 @@ namespace Dental.Controllers
                                   Ulica = a.Ulica,
                                   Numer = a.Numer,
                                   Kod = a.Kod,
-                                  DataUrodzenia = c.DataUrodzin
+                                  DataUrodzenia = c.DataUrodzin.ToString()
                               };
                     var wynik = mod.ToList();
 
@@ -584,13 +585,19 @@ namespace Dental.Controllers
                 Adres adresModel = new Adres();
                 Pacjent model = new Pacjent()
                 {
-                    Imie = imie,
-                    Nazwisko = nazwisko,
+                    Imie = imie.ToUpper(),
+                    Nazwisko = nazwisko.ToUpper(),
                     Telefon = Convert.ToInt32(telefon),
-                    PacjentAdres = adresModel
+                    PacjentAdres = adresModel,
+                    DataUrodzin = Convert.ToDateTime("01.01.1900"),
+                    Haslo = null,
+                    PowtorzHaslo = null,
+                    PESEL = null,
+                    Typ = null
+
                 };
-                bool isOk = client.PacjentInsert(model);
-                var wynik = client.GetPacjentList().Last();
+                bool isOk = Miasto.PacjentInsert(model);
+                var wynik = Miasto.GetPacjentList().Last();
 
                 Wizyta wizytaModel = new Wizyta()
                 {
@@ -598,6 +605,7 @@ namespace Dental.Controllers
                     GabinetID = Convert.ToInt32(gabinet),
                     LekarzID = Convert.ToInt32(lekarz),
                     Data = data,
+                    DataUrodzenia = Convert.ToDateTime("01.01.1900"),
                     Godzina = godzina,
                     Rodzaj = rodzajWizyty,
                     Stan = stan,
@@ -605,7 +613,7 @@ namespace Dental.Controllers
                     Uwagi = "Uzupełnić dane!!!"
                 };
 
-                bool isOk2 = client.WizytaInsert(wizytaModel);
+                bool isOk2 = Miasto.WizytaInsert(wizytaModel);
 
 
                 if (isOk == true)
@@ -631,7 +639,7 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyta";
-                var dataUrodzenia = client.GetPacjentByID(pacjentID);
+                var dataUrodzenia = Miasto.GetPacjentByID(pacjentID);
                 Wizyta wizytaModel = new Wizyta()
                 {
                     PacjentID = pacjentID,
@@ -646,7 +654,7 @@ namespace Dental.Controllers
 
                 };
 
-                bool isOk = client.WizytaInsert(wizytaModel);
+                bool isOk = Miasto.WizytaInsert(wizytaModel);
 
 
                 if (isOk == true)
@@ -671,8 +679,8 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Menu";
 
-                var modelPacjent = client.GetPacjentByID(pacjentID);
-                var adres = client.GetAdresByID(modelPacjent.PacjentID);
+                var modelPacjent = Miasto.GetPacjentByID(pacjentID);
+                var adres = Miasto.GetAdresByID(modelPacjent.PacjentID);
 
                 EditPacjentModel model = new EditPacjentModel()
                 {
@@ -703,10 +711,10 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyta";
-                var model = client.GetWizytaByPacjentID(historia);
-                var pacjent = client.GetPacjentList();
-                var lekarz = client.GetPesonelList();
-                var gabinet = client.GetPlacowkaList();
+                var model = Miasto.GetWizytaByPacjentID(historia);
+                var pacjent = Miasto.GetPacjentList();
+                var lekarz = Miasto.GetPesonelList();
+                var gabinet = Miasto.GetPlacowkaList();
                 var wynik = from a in model
                             join c in lekarz on a.LekarzID equals c.PersonelID
                             join d in gabinet on a.GabinetID equals d.PlacowkaID
@@ -753,10 +761,10 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Menu";
-                var wizyta = client.GetWizytaByID(wizytaID);
+                var wizyta = Miasto.GetWizytaByID(wizytaID);
                 var pacjent = wizyta.PacjentID;
-                var modelPacjent = client.GetPacjentByID(pacjent);
-                var adres = client.GetAdresByID(modelPacjent.PacjentID);
+                var modelPacjent = Miasto.GetPacjentByID(pacjent);
+                var adres = Miasto.GetAdresByID(modelPacjent.PacjentID);
 
                 EditPacjentModel model = new EditPacjentModel()
                 {
@@ -810,7 +818,7 @@ namespace Dental.Controllers
                     PacjentAdres = modelAdres
                 };
 
-                bool isOk = client.PacjentUpdate(modelPacjent);
+                bool isOk = Miasto.PacjentUpdateAdmin(modelPacjent, modelAdres);
                 if (isOk == true)
                 {
                     TempData["Zapisano"] = "Dane zostały zaktualizowane!";
@@ -849,16 +857,18 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Pesonel";
-                var getPesonel = client.GetPesonelList();
-                var getAdres = client.GetAdresPersonelList();
+                var getPesonel = Miasto.GetPesonelList();
+                var getAdres = Miasto.GetAdresPersonelList();
+                var getPlacowka = Miasto.GetPlacowkaList();
                 var model = from p in getPesonel
                             join ad in getAdres on p.PersonelID equals ad.AdresID
+                            join b in getPlacowka on p.Placowka equals b.PlacowkaID
                             select new ListaPersonelModel
                             {
                                 PersonelID = p.PersonelID,
                                 Imie = p.Imie,
                                 Nazwisko = p.Nazwisko,
-                                Placowka = p.Placowka,
+                                Placowka = b.Nazwa,
                                 Telefon = p.Telefon,
                                 Email = p.Email,
                                 Haslo = p.Haslo,
@@ -896,12 +906,12 @@ namespace Dental.Controllers
         }
 
         [HttpPost]
-        public ActionResult SavePersonel(DodajPersonelModel model)
+        public ActionResult ZapiszPersonel(DodajPersonelModel model)
         {
             try
             {
                 CheckSession();
-                var emailWynik = client.GetPesonelList().Where(a => a.Email == model.Email);
+                var emailWynik = Miasto.GetPesonelList().Where(a => a.Email == model.Email);
 
 
                 if (ModelState.IsValid && emailWynik.Count() == 0 || emailWynik == null)
@@ -929,7 +939,7 @@ namespace Dental.Controllers
                         PersonelAdres = adresModel
                     };
 
-                    bool isOk = client.PersonelInsert(personelModel);
+                    bool isOk = Miasto.PersonelInsert(personelModel);
                     if (isOk == true)
                     {
                         TempData["Zapisano"] = "Pracownik został dodany!";
@@ -957,7 +967,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                bool isOk = client.PersonelDelete(PersonelID);
+                bool isOk = Miasto.PersonelDelete(PersonelID);
 
                 if (isOk == true)
                 {
@@ -981,8 +991,8 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Personel";
-                var modelPersonel = client.GetPersonelByID(PersonelID);
-                var modelAdres = client.GetAdresPersonelByID(PersonelID);
+                var modelPersonel = Miasto.GetPersonelByID(PersonelID);
+                var modelAdres = Miasto.GetAdresPersonelByID(PersonelID);
 
                 EditPersonelModel model = new EditPersonelModel(modelPersonel.Placowka.ToString(), modelAdres.Wojewodztwo, modelPersonel.Typ, modelPersonel.Specjalizacja)
                 {
@@ -1015,49 +1025,44 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                if (ModelState.IsValid)
+
+                AdresPersonel modelAdresPersonel = new AdresPersonel()
                 {
-                    AdresPersonel modelAdresPersonel = new AdresPersonel()
-                    {
-                        AdresID = model.PersonelID,
-                        Wojewodztwo = model.Wojewodztwo.ToString(),
-                        Miasto = model.Miasto,
-                        Ulica = model.Ulica,
-                        Numer = model.Numer,
-                        Kod = model.Kod,
-                    };
+                    AdresID = model.PersonelID,
+                    Wojewodztwo = model.Wojewodztwo.ToString(),
+                    Miasto = model.Miasto,
+                    Ulica = model.Ulica,
+                    Numer = model.Numer,
+                    Kod = model.Kod,
+                };
 
-                    Personel modelPersonel = new Personel()
-                    {
-                        PersonelID = model.PersonelID,
-                        Imie = model.Imie,
-                        Nazwisko = model.Nazwisko,
-                        Placowka = model.Placowka,
-                        Telefon = model.Telefon,
-                        Email = model.Email,
-                        Typ = model.Typ,
-                        Specjalizacja = model.Specjalizacja,
-                        Haslo = model.Haslo,
-                        PowtorzHaslo = model.PowtorzHaslo,
+                Personel modelPersonel = new Personel()
+                {
+                    PersonelID = model.PersonelID,
+                    Imie = model.Imie,
+                    Nazwisko = model.Nazwisko,
+                    Placowka = model.Placowka,
+                    Telefon = model.Telefon,
+                    Email = model.Email,
+                    Typ = model.Typ,
+                    Specjalizacja = model.Specjalizacja,
+                    Haslo = model.Haslo,
+                    PowtorzHaslo = model.PowtorzHaslo,
 
-                    };
+                };
 
-                    bool isOk = client.PersonelUpdate(modelPersonel, modelAdresPersonel);
+                bool isOk = Miasto.PersonelUpdate(modelPersonel, modelAdresPersonel);
 
-                    if (isOk == true)
-                    {
-                        TempData["Zapisano"] = "Gabinet został zaktualizowany!";
-                        return RedirectToAction("Personel", "Admin");
-                    }
-                    else
-                    {
-                        return PartialView("Error");
-                    }
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Gabinet został zaktualizowany!";
+                    return RedirectToAction("Personel", "Admin");
                 }
                 else
                 {
-                    return View("EditPlacowka", model);
+                    return PartialView("Error");
                 }
+
             }
             catch (Exception)
             {
@@ -1070,8 +1075,24 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Cennik";
+                PlacowkiModel model = new PlacowkiModel();
 
-                return View();
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return PartialView("Error");
+            }
+        }
+                
+        public ActionResult ListaZabiegowDefault()
+        {
+            try
+            {
+                CheckSession();
+                ViewBag.Strona = "Dental - Cennik";
+                var cennik = Miasto.GetCennikList();
+                return PartialView(cennik);
             }
             catch (Exception)
             {
@@ -1079,14 +1100,15 @@ namespace Dental.Controllers
             }
         }
 
-        public ActionResult ListaZabiegów()
+        [HttpPost]
+        public ActionResult ListaZabiegow(string gabinet)
         {
             try
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Cennik";
-                var model = client.GetCennikList();
-                return PartialView(model);
+                var cennik = Miasto.GetCennikByIDPlacowki(Convert.ToInt32(gabinet));
+                return PartialView(cennik);
             }
             catch (Exception)
             {
@@ -1120,13 +1142,14 @@ namespace Dental.Controllers
                     Cennik cennikModel = new Cennik()
                     {
                         Zabieg = model.Zabieg,
+                        PlacowkaID = Convert.ToInt32(model.Placowki),
                         Kategoria = model.Kategoria,
                         Cena = model.Cena,
                     };
 
 
 
-                    bool isOk = client.CennikInsert(cennikModel);
+                    bool isOk = Miasto.CennikInsert(cennikModel);
                     if (isOk == true)
                     {
                         TempData["Zapisano"] = "Zabieg został dodany!";
@@ -1169,11 +1192,11 @@ namespace Dental.Controllers
                     KwotaDoZaplaty = Convert.ToDecimal(kwot[5])
                 };
 
-                bool isOk = client.RachunekUpdate(model);
+                bool isOk = Miasto.RachunekUpdate(model);
 
-                Wizyta wizyt = client.GetWizytaByID(wizyta);
+                Wizyta wizyt = Miasto.GetWizytaByID(wizyta);
                 string stan = "Zakończona";
-                var ostatni = client.GetRachunekList().Last();
+                var ostatni = Miasto.GetRachunekList().Last();
                 Wizyta model2 = new Wizyta()
                 {
                     WizytaID = wizyt.WizytaID,
@@ -1190,11 +1213,11 @@ namespace Dental.Controllers
                     RachunekID = ostatni.RachunekID,
 
                 };
-                bool isOK = client.WizytaUpdate(model2);
+                bool isOK = Miasto.WizytaUpdate(model2);
                 if (isOk == true)
                 {
                     TempData["Zapisano"] = "Wizyta z godziny: " + model2.Godzina + " została zamknięta!";
-                    return RedirectToAction("Wizyta", "Admin");
+                    return RedirectToAction("Wizyta");
                 }
                 else
                 {
@@ -1212,7 +1235,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                bool isOk = client.CennikDelete(ZabiegID);
+                bool isOk = Miasto.CennikDelete(ZabiegID);
 
                 if (isOk == true)
                 {
@@ -1236,7 +1259,7 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Cennik";
-                var modelZabieg = client.GetCennikByID(ZabiegID);
+                var modelZabieg = Miasto.GetCennikByID(ZabiegID);
 
 
                 EditZabiegModel model = new EditZabiegModel(modelZabieg.Kategoria)
@@ -1269,7 +1292,7 @@ namespace Dental.Controllers
                         Cena = model.Cena
                     };
 
-                    bool isOk = client.CennikUpdate(modelCennik);
+                    bool isOk = Miasto.CennikUpdate(modelCennik);
 
                     if (isOk == true)
                     {

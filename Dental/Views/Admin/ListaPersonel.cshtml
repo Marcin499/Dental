@@ -15,7 +15,7 @@
     columns.Add(a => a.Miasto).Titled("Miasto");
     columns.Add(a => a.Ulica).Titled("Ulica");
     columns.Add(a => a.Numer).Titled("Numer");
-    columns.Add(a => a.Kod).Titled("Numer");
+    columns.Add(a => a.Kod).Titled("Kod");
     
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Edytuj", "EditPersonel", new { a.PersonelID }, new { @style = "color:blue" })).Titled("Edytuj");;
     columns.Add().Encoded(false).Sanitized(false).RenderValueAs(a => Html.ActionLink("Usuń", "DeletePersonel", new { a.PersonelID }, new { @style = "color:red" })).Titled("Usuń");

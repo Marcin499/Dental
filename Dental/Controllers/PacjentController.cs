@@ -7,9 +7,10 @@ using System.Web.Mvc;
 
 namespace Dental.Controllers
 {
-    public class PacjentController : BaseController
+    public class PacjentController : BazowyController
     {
-        Metody client = new Metody();
+        Metody Imie = new Metody();
+
 
         public ActionResult WizytaNew(string imie)
         {
@@ -138,13 +139,88 @@ namespace Dental.Controllers
             }
         }
 
+        public ActionResult ListaWizyt()
+        {
+            try
+            {
+                CheckSession();
+                var id = Session["ID"];
+                ViewBag.Strona = "Anuluj wizyte";
+                TempData.Keep();
+                var model = Imie.GetWizytaByPacjentID(Convert.ToInt32(id));
+
+                var lekarz = Imie.GetPesonelList();
+                var gabinet = Imie.GetPlacowkaList();
+
+                var wynik = from a in model.Where(x => x.Stan == "Zaplanowana")
+                            join c in lekarz on a.LekarzID equals c.PersonelID
+                            join d in gabinet on a.GabinetID equals d.PlacowkaID
+                            select new AnulowanieWizytyModel()
+                            {
+                                WizytaID = a.WizytaID,
+                                Data = a.Data,
+                                Godzina = a.Godzina,
+                                Gabinet = d.Nazwa,
+                                ImieLekarza = c.Imie,
+                                NazwiskoLekarza = c.Nazwisko,
+                                Stan = a.Stan
+                            };
+
+                return View(wynik);
+            }
+            catch (Exception)
+            {
+
+                return PartialView("Error");
+            }
+        }
+
+        public ActionResult AnulujWizyte(int wizytaID)
+        {
+            try
+            {
+                CheckSession();
+                Wizyta wizyta = Imie.GetWizytaByID(wizytaID);
+                string stan = "Anulowana";
+                Wizyta model = new Wizyta()
+                {
+                    WizytaID = wizyta.WizytaID,
+                    PacjentID = wizyta.PacjentID,
+                    LekarzID = wizyta.LekarzID,
+                    GabinetID = wizyta.GabinetID,
+                    Godzina = wizyta.Godzina,
+                    Rodzaj = wizyta.Rodzaj,
+                    Data = wizyta.Data,
+                    Stan = stan,
+                    Typ = wizyta.Typ,
+                    Uwagi = wizyta.Uwagi,
+                    DataUrodzenia = wizyta.DataUrodzenia
+                };
+                bool isOk = Imie.WizytaUpdate(model);
+
+                if (isOk == true)
+                {
+                    TempData["Zapisano"] = "Wizyta z godziny: " + wizyta.Godzina + " została anulowana!";
+                    return RedirectToAction("Wizyta");
+                }
+                else
+                {
+                    return PartialView("Error");
+                }
+            }
+            catch (Exception)
+            {
+                return PartialView("Error");
+            }
+        }
+
         [HttpPost]
         public ActionResult SaveWizyta(string gabinet, string lekarz, string data, string godzina, string rodzajWizyty, string typWizyty, string stan, string uwagi)
         {
             try
             {
                 CheckSession();
-                var dane = client.GetPacjentByID(Convert.ToInt32(Session["ID"]));
+                var dane = Imie.GetPacjentByID(Convert.ToInt32(Session["ID"]));
                 Wizyta model = new Wizyta()
                 {
                     PacjentID = Convert.ToInt32(Session["ID"]),
@@ -159,13 +235,13 @@ namespace Dental.Controllers
                     DataUrodzenia = dane.DataUrodzin,
                 };
 
-                bool isOk = client.WizytaInsert(model);
+                bool isOk = Imie.WizytaInsert(model);
                 var sms = new SMSController();
 
-                sms.WyslijSMSPotwierdzenie(data, godzina, dane.Telefon);
+                //sms.WyslijSMSPotwierdzenie(data, godzina, dane.Telefon);
                 if (isOk == true)
                 {
-                    return RedirectToAction("WizytaNew", "Pacjent");
+                    return RedirectToAction("WizytaNew");
 
                 }
                 else
@@ -189,11 +265,11 @@ namespace Dental.Controllers
                 ViewBag.Strona = "Dental - Historia";
                 TempData.Keep();
                 int id = Convert.ToInt32(Session["ID"]);
-                var model = client.GetWizytaByPacjentID(id);
+                var model = Imie.GetWizytaByPacjentID(id);
 
-                var lekarz = client.GetPesonelList();
-                var gabinet = client.GetPlacowkaList();
-                var rachunek = client.GetRachunekList();
+                var lekarz = Imie.GetPesonelList();
+                var gabinet = Imie.GetPlacowkaList();
+                var rachunek = Imie.GetRachunekList();
                 var wynik = from a in model
                             join b in rachunek on a.RachunekID equals b.RachunekID
                             join c in lekarz on a.LekarzID equals c.PersonelID
@@ -223,9 +299,9 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wizyta = client.GetWizytaByPacjentID(PacjentID);
-                var leczenie = client.GetLeczenieList();
-                var lekarz = client.GetPesonelList();
+                var wizyta = Imie.GetWizytaByPacjentID(PacjentID);
+                var leczenie = Imie.GetLeczenieList();
+                var lekarz = Imie.GetPesonelList();
 
                 var model = from a in wizyta
                             join b in leczenie on a.WizytaID equals b.WizytaID
@@ -261,7 +337,7 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Cennik";
                 TempData.Keep();
-                CennikModel model = new CennikModel();
+                PlacowkiModel model = new PlacowkiModel();
                 return View(model);
             }
             catch (Exception)
@@ -275,9 +351,9 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wynikKategoria = client.GetCennikList();
+                var cennik = Imie.GetCennikList();
 
-                return PartialView(wynikKategoria);
+                return PartialView(cennik);
             }
             catch (Exception)
             {
@@ -286,14 +362,14 @@ namespace Dental.Controllers
         }
 
         [HttpPost]
-        public ActionResult ListaCennik(string kategoria)
+        public ActionResult ListaCennik(string gabinet)
         {
             try
             {
                 CheckSession();
-                var wynikKategoria = client.GetCennikByKategoria(kategoria);
+                var cennik = Imie.GetCennikByIDPlacowki(Convert.ToInt32(gabinet));
 
-                return PartialView(wynikKategoria);
+                return PartialView(cennik);
             }
             catch (Exception)
             {
@@ -325,8 +401,8 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wynikAdres = client.GetAdresPlacowkaList();
-                var wynikMiasto = client.GetPlacowkaList();
+                var wynikAdres = Imie.GetAdresPlacowkaList();
+                var wynikMiasto = Imie.GetPlacowkaList();
 
                 var model = from c in wynikAdres
                             join a in wynikMiasto on c.AdresID equals a.PlacowkaID
@@ -356,8 +432,8 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var wynikAdres = client.GetAdresPlacowkaByCity(miasto);
-                var wynikMiasto = client.GetPlacowkaList();
+                var wynikAdres = Imie.GetAdresPlacowkaByCity(miasto);
+                var wynikMiasto = Imie.GetPlacowkaList();
 
                 var model = from c in wynikAdres
                             join a in wynikMiasto on c.AdresID equals a.PlacowkaID
@@ -388,8 +464,8 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 var id = Session["ID"];
-                var wynikPacjentID = client.GetPacjentByID(Convert.ToInt32(id));
-                var wynikAdresID = client.GetAdresByID(Convert.ToInt32(id));
+                var wynikPacjentID = Imie.GetPacjentByID(Convert.ToInt32(id));
+                var wynikAdresID = Imie.GetAdresByID(Convert.ToInt32(id));
                 ViewBag.Strona = "Dental - Profil";
                 TempData.Keep();
 
@@ -409,7 +485,7 @@ namespace Dental.Controllers
                     Numer = wynikAdresID.Numer,
                     Kod = wynikAdresID.Kod,
                     Wojewodztwo = wynikAdresID.Wojewodztwo,
-                    DataUrodzenia = wynikPacjentID.DataUrodzin,
+                    DataUrodzenia = wynikPacjentID.DataUrodzin.ToShortDateString(),
                 };
 
                 return View(editPacjentModel);
@@ -421,12 +497,12 @@ namespace Dental.Controllers
         }
 
 
-        public ActionResult DeleteKonto(int dane)
+        public ActionResult UsunKonto(int dane)
         {
             try
             {
                 CheckSession();
-                bool isOk = client.PacjentDelete(dane);
+                bool isOk = Imie.PacjentDelete(dane);
 
                 return Json(isOk, JsonRequestBehavior.AllowGet);
             }
@@ -459,19 +535,19 @@ namespace Dental.Controllers
                         Pacjent modelPacjent = new Pacjent()
                         {
                             PacjentID = model.PacjentID,
-                            Imie = model.Imie,
-                            Nazwisko = model.Nazwisko,
+                            Imie = model.Imie.ToUpper(),
+                            Nazwisko = model.Nazwisko.ToUpper(),
                             Telefon = model.Telefon,
-                            Email = model.Email,
+                            Email = model.Email.ToLower(),
                             Haslo = model.Haslo,
                             PESEL = model.PESEL,
                             PowtorzHaslo = model.PowtorzHaslo,
                             PacjentAdres = modelAdres,
-                            DataUrodzin = model.DataUrodzenia
+                            DataUrodzin = Convert.ToDateTime(model.DataUrodzenia),
 
                         };
 
-                        bool isOk = client.PacjentUpdate(modelPacjent);
+                        bool isOk = Imie.PacjentUpdate(modelPacjent, modelAdres);
                         if (isOk == true)
                         {
                             TempData["Success"] = "Dane zostały zaktualizowane!";

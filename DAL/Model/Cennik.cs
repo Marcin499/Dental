@@ -9,6 +9,8 @@ namespace DAL.Model
         [Key]
         public int ZabiegID { get; set; }
 
+        public int PlacowkaID { get; set; }
+
         public string Zabieg { get; set; }
 
         public string Kategoria { get; set; }
