@@ -9,7 +9,7 @@ namespace Dental.Controllers
 {
     public class LekarzController : BazowyController
     {
-        Metody Imie = new Metody();
+        Metody bazaMetod = new Metody();
 
         public ActionResult MenuLekarz()
         {
@@ -18,9 +18,9 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Kalendarz";
                 var id = Session["ID"];
-                var listaWizyt = Imie.GetWizytaByDateAndDoctor(DateTime.Now.ToString("dd.MM.yyyy"), Convert.ToInt32(id));
-                var wizyty = Imie.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy") && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona" && a.Stan != "Wysłano przypomnienie");
-                var pacjenci = Imie.GetPacjentList();
+                var listaWizyt = bazaMetod.GetWizytaByDateAndDoctor(DateTime.Now.ToString("dd.MM.yyyy"), Convert.ToInt32(id));
+                var wizyty = bazaMetod.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy") && a.LekarzID == (int)id && a.Stan != "Do rozliczenia" && a.Stan != "Zakończona" && a.Stan != "Wysłano przypomnienie");
+                var pacjenci = bazaMetod.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
                             select new ListaWizytModel()
@@ -54,9 +54,9 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Kalendarz";
                 var id = Session["ID"];
-                var listaWizyt = Imie.GetWizytaByDateAndDoctor(data, Convert.ToInt32(id));
-                var wizyty = Imie.GetWizytaList().Where(a => a.Data == data && a.LekarzID == (int)id);
-                var pacjenci = Imie.GetPacjentList();
+                var listaWizyt = bazaMetod.GetWizytaByDateAndDoctor(data, Convert.ToInt32(id));
+                var wizyty = bazaMetod.GetWizytaList().Where(a => a.Data == data && a.LekarzID == (int)id);
+                var pacjenci = bazaMetod.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
                             select new ListaWizytModel()
@@ -88,9 +88,9 @@ namespace Dental.Controllers
                 CheckSession();
                 ViewBag.Strona = "Dental - Wizyta";
                 var id = Session["ID"];
-                var listaWizyt = Imie.GetWizytaByDateAndDoctor(DateTime.Now.ToString("dd.MM.yyyy"), Convert.ToInt32(id));
-                var wizyty = Imie.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy") && a.LekarzID == (int)id && a.Stan == "Oczekuje w kolejce" || a.Stan == "W trakcie");
-                var pacjenci = Imie.GetPacjentList();
+                var listaWizyt = bazaMetod.GetWizytaByDateAndDoctor(DateTime.Now.ToString("dd.MM.yyyy"), Convert.ToInt32(id));
+                var wizyty = bazaMetod.GetWizytaList().Where(a => a.Data == DateTime.Now.ToString("dd.MM.yyyy") && a.LekarzID == (int)id && a.Stan == "Oczekuje w kolejce" || a.Stan == "W trakcie");
+                var pacjenci = bazaMetod.GetPacjentList();
                 var model = from c in wizyty
                             join a in pacjenci on c.PacjentID equals a.PacjentID
                             select new ListaWizytModel()
@@ -140,7 +140,7 @@ namespace Dental.Controllers
                 TempData["ID"] = id;
                 TempData["Wizyta"] = wizyta;
 
-                Wizyta wizyt = Imie.GetWizytaByID(wizyta);
+                Wizyta wizyt = bazaMetod.GetWizytaByID(wizyta);
                 string stan = "W trakcie";
                 Wizyta model = new Wizyta()
                 {
@@ -156,7 +156,7 @@ namespace Dental.Controllers
                     Uwagi = wizyt.Uwagi,
                     DataUrodzenia = wizyt.DataUrodzenia
                 };
-                bool isOk = Imie.WizytaUpdate(model);
+                bool isOk = bazaMetod.WizytaUpdate(model);
 
                 TempData["PacjentID"] = model.PacjentID;
                 return PartialView();
@@ -217,7 +217,7 @@ namespace Dental.Controllers
                     Rozpoz = dane
                 };
 
-                bool isOk = Imie.RozpoznanieInsert(model);
+                bool isOk = bazaMetod.RozpoznanieInsert(model);
 
                 RozpoznanieModel list = new RozpoznanieModel();
 
@@ -258,9 +258,9 @@ namespace Dental.Controllers
                         Cena = Convert.ToInt32(proc.Last())
                     };
 
-                    bool isOk = Imie.LeczenieInsert(model);
+                    bool isOk = bazaMetod.LeczenieInsert(model);
                     TempData["Wizyta"] = wizyta;
-                    var lista = Imie.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+                    var lista = bazaMetod.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
                     if (isOk == true)
                     {
@@ -289,9 +289,9 @@ namespace Dental.Controllers
                             Cena = Convert.ToInt32(proc.Last())
                         };
 
-                        bool isOk = Imie.LeczenieInsert(model);
+                        bool isOk = bazaMetod.LeczenieInsert(model);
                         TempData["Wizyta"] = wizyta;
-                        var lista = Imie.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+                        var lista = bazaMetod.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
                         if (isOk == true)
                         {
@@ -317,9 +317,9 @@ namespace Dental.Controllers
                             Cena = Convert.ToInt32(proc.Last())
                         };
 
-                        bool isOk = Imie.LeczenieInsert(model);
+                        bool isOk = bazaMetod.LeczenieInsert(model);
                         TempData["Wizyta"] = wizyta;
-                        var lista = Imie.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+                        var lista = bazaMetod.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
                         if (isOk == true)
                         {
@@ -346,9 +346,9 @@ namespace Dental.Controllers
                             Cena = Convert.ToInt32(proc.Last())
                         };
 
-                        bool isOk = Imie.LeczenieInsert(model);
+                        bool isOk = bazaMetod.LeczenieInsert(model);
                         TempData["Wizyta"] = wizyta;
-                        var lista = Imie.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+                        var lista = bazaMetod.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
                         if (isOk == true)
                         {
@@ -374,9 +374,9 @@ namespace Dental.Controllers
                             Cena = Convert.ToInt32(proc.Last())
                         };
 
-                        bool isOk = Imie.LeczenieInsert(model);
+                        bool isOk = bazaMetod.LeczenieInsert(model);
                         TempData["Wizyta"] = wizyta;
-                        var lista = Imie.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
+                        var lista = bazaMetod.GetLeczenieByIDWizyta(Convert.ToInt32(wizyta));
 
                         if (isOk == true)
                         {
@@ -416,7 +416,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var model = Imie.GetLeczenieByIDWizyta(wizyta);
+                var model = bazaMetod.GetLeczenieByIDWizyta(wizyta);
                 int suma = 0;
 
                 foreach (var item in model)
@@ -439,7 +439,7 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 TempData["Wizyta"] = wizyta;
-                var model = Imie.GetLeczenieByIDWizyta(wizyta);
+                var model = bazaMetod.GetLeczenieByIDWizyta(wizyta);
 
                 return PartialView(model);
             }
@@ -454,8 +454,8 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                bool isOk = Imie.LeczenieDelete(LeczenieID);
-                var lista = Imie.GetLeczenieByIDWizyta(wizyta);
+                bool isOk = bazaMetod.LeczenieDelete(LeczenieID);
+                var lista = bazaMetod.GetLeczenieByIDWizyta(wizyta);
 
                 if (isOk == true)
                 {
@@ -516,7 +516,7 @@ namespace Dental.Controllers
 
                     };
 
-                    bool isOk = Imie.ImplantInsert(model);
+                    bool isOk = bazaMetod.ImplantInsert(model);
 
                     if (isOk == true)
                     {
@@ -538,7 +538,7 @@ namespace Dental.Controllers
                         LP = lp
                     };
 
-                    bool isOk = Imie.ImplantInsert(model);
+                    bool isOk = bazaMetod.ImplantInsert(model);
 
                     if (isOk == true)
                     {
@@ -561,7 +561,7 @@ namespace Dental.Controllers
                         LP = lp
                     };
 
-                    bool isOk = Imie.ImplantInsert(model);
+                    bool isOk = bazaMetod.ImplantInsert(model);
 
                     if (isOk == true)
                     {
@@ -583,7 +583,7 @@ namespace Dental.Controllers
                         LP = lp
                     };
 
-                    bool isOk = Imie.ImplantInsert(model);
+                    bool isOk = bazaMetod.ImplantInsert(model);
 
                     if (isOk == true)
                     {
@@ -626,7 +626,7 @@ namespace Dental.Controllers
             try
             {
                 CheckSession();
-                var pacjent = Imie.GetPersonelByID(Convert.ToInt32(id));
+                var pacjent = bazaMetod.GetPersonelByID(Convert.ToInt32(id));
                 if (szczeka == "true")
                 {
                     for (int i = 1; i <= 8; i++)
@@ -639,7 +639,7 @@ namespace Dental.Controllers
                             PacjentID = pacjent.PersonelID,
                             Zab = i,
                         };
-                        bool isOk = Imie.BrakZebowInsert(model);
+                        bool isOk = bazaMetod.BrakZebowInsert(model);
                     }
 
                     for (int i = 1; i <= 8; i++)
@@ -652,7 +652,7 @@ namespace Dental.Controllers
                             PacjentID = pacjent.PersonelID,
                             Zab = i,
                         };
-                        bool isOk = Imie.BrakZebowInsert(model);
+                        bool isOk = bazaMetod.BrakZebowInsert(model);
                     }
                 }
                 else if (zuchwa == "true")
@@ -667,7 +667,7 @@ namespace Dental.Controllers
                             PacjentID = pacjent.PersonelID,
                             Zab = i,
                         };
-                        bool isOk = Imie.BrakZebowInsert(model);
+                        bool isOk = bazaMetod.BrakZebowInsert(model);
                     }
 
                     for (int i = 1; i <= 8; i++)
@@ -680,7 +680,7 @@ namespace Dental.Controllers
                             PacjentID = pacjent.PersonelID,
                             Zab = i,
                         };
-                        bool isOk = Imie.BrakZebowInsert(model);
+                        bool isOk = bazaMetod.BrakZebowInsert(model);
                     }
                 }
                 else if (gl != "")
@@ -694,7 +694,7 @@ namespace Dental.Controllers
                         PacjentID = pacjent.PersonelID,
                         Zab = Convert.ToInt32(gl),
                     };
-                    bool isOk = Imie.BrakZebowInsert(model);
+                    bool isOk = bazaMetod.BrakZebowInsert(model);
                 }
                 else if (gp != "")
                 {
@@ -706,7 +706,7 @@ namespace Dental.Controllers
                         PacjentID = pacjent.PersonelID,
                         Zab = Convert.ToInt32(gp),
                     };
-                    bool isOk = Imie.BrakZebowInsert(model);
+                    bool isOk = bazaMetod.BrakZebowInsert(model);
                 }
                 else if (dp != "")
                 {
@@ -718,7 +718,7 @@ namespace Dental.Controllers
                         PacjentID = pacjent.PersonelID,
                         Zab = Convert.ToInt32(dp),
                     };
-                    bool isOk = Imie.BrakZebowInsert(model);
+                    bool isOk = bazaMetod.BrakZebowInsert(model);
                 }
                 else if (dl != "")
                 {
@@ -730,7 +730,7 @@ namespace Dental.Controllers
                         PacjentID = pacjent.PersonelID,
                         Zab = Convert.ToInt32(dp),
                     };
-                    bool isOk = Imie.BrakZebowInsert(model);
+                    bool isOk = bazaMetod.BrakZebowInsert(model);
                 }
 
                 return PartialView();
@@ -754,11 +754,11 @@ namespace Dental.Controllers
                     KwotaDoZaplaty = 0
                 };
 
-                bool isOk = Imie.RachunekInsert(nowy);
+                bool isOk = bazaMetod.RachunekInsert(nowy);
 
-                Wizyta wizyt = Imie.GetWizytaByID(wizyta);
+                Wizyta wizyt = bazaMetod.GetWizytaByID(wizyta);
                 string stan = "Do rozliczenia";
-                var ostatni = Imie.GetRachunekList().Last();
+                var ostatni = bazaMetod.GetRachunekList().Last();
                 Wizyta model = new Wizyta()
                 {
                     WizytaID = wizyt.WizytaID,
@@ -775,7 +775,7 @@ namespace Dental.Controllers
                     RachunekID = ostatni.RachunekID
 
                 };
-                bool isOK = Imie.WizytaUpdate(model);
+                bool isOK = bazaMetod.WizytaUpdate(model);
 
                 return RedirectToAction("Wizyta", "Lekarz");
             }
@@ -791,9 +791,9 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Historia";
-                var wizyta = Imie.GetWizytaByPacjentID(pacjentID);
-                var leczenie = Imie.GetLeczenieList();
-                var lekarz = Imie.GetPesonelList();
+                var wizyta = bazaMetod.GetWizytaByPacjentID(pacjentID);
+                var leczenie = bazaMetod.GetLeczenieList();
+                var lekarz = bazaMetod.GetPesonelList();
 
                 var model = from a in wizyta
                             join b in leczenie on a.WizytaID equals b.WizytaID
@@ -826,9 +826,9 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Pacjenci";
-                var leczenie = Imie.GetWizytaByIDLekarz(lekarzID);
+                var leczenie = bazaMetod.GetWizytaByIDLekarz(lekarzID);
 
-                var pacjenci = Imie.GetPacjentList();
+                var pacjenci = bazaMetod.GetPacjentList();
 
                 var model = from a in leczenie
                             join b in pacjenci on a.PacjentID equals b.PacjentID
@@ -858,9 +858,9 @@ namespace Dental.Controllers
             {
                 CheckSession();
                 ViewBag.Strona = "Dental - Pacjenci";
-                var wizyta = Imie.GetWizytaByPacjentID(pacjentID);
-                var leczenie = Imie.GetLeczenieList();
-                var lekarz = Imie.GetPesonelList();
+                var wizyta = bazaMetod.GetWizytaByPacjentID(pacjentID);
+                var leczenie = bazaMetod.GetLeczenieList();
+                var lekarz = bazaMetod.GetPesonelList();
 
                 var model = from a in wizyta
                             join b in leczenie on a.WizytaID equals b.WizytaID

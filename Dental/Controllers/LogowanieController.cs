@@ -9,7 +9,7 @@ namespace Dental.Controllers
 {
     public class LogowanieController : BazowyController
     {
-        Metody NazwaUzyt = new Metody();
+        Metody bazaMetod = new Metody();
 
         public ActionResult Login()
         {
@@ -23,13 +23,13 @@ namespace Dental.Controllers
         {
             if (ModelState.IsValid)
             {
-                var modelBaza = NazwaUzyt.GetPacjentList();
-                var modelBazaPersonel = NazwaUzyt.GetPesonelList();
+                var modelBaza = bazaMetod.GetPacjentList();
+                var modelBazaPersonel = bazaMetod.GetPesonelList();
 
                 var wynikEmail = modelBaza.Where(p => p.Email == model.Email).FirstOrDefault();
                 var wynikEmail2 = modelBazaPersonel.Where(p => p.Email == model.Email).FirstOrDefault();
 
-                var wynikTyp = NazwaUzyt.GetPacjentEmail(model.Email);
+                var wynikTyp = bazaMetod.GetPacjentEmail(model.Email);
 
                 if (wynikEmail == null)
                 {
@@ -39,12 +39,12 @@ namespace Dental.Controllers
                     }
                     else if (wynikEmail2.Haslo == model.Haslo)
                     {
-                        var wynikTyp2 = NazwaUzyt.GetPersonelEmail(model.Email).Typ;
+                        var wynikTyp2 = bazaMetod.GetPersonelEmail(model.Email).Typ;
 
                         if (wynikTyp2 == "Administrator")
                         {
                             var imie = wynikEmail2.Imie;
-                            var wynikID = NazwaUzyt.GetPersonelEmail(model.Email).PersonelID;
+                            var wynikID = bazaMetod.GetPersonelEmail(model.Email).PersonelID;
                             Session["ID"] = wynikID;
                             Session["Sesja"] = true;
 
@@ -54,7 +54,7 @@ namespace Dental.Controllers
                         else if (wynikTyp2 == "Personel")
                         {
                             var imie = wynikEmail2.Imie;
-                            var wynikID = NazwaUzyt.GetPersonelEmail(model.Email).PersonelID;
+                            var wynikID = bazaMetod.GetPersonelEmail(model.Email).PersonelID;
                             Session["ID"] = wynikID;
                             Session["Sesja"] = true;
                             return RedirectToAction("MenuLekarz", "Lekarz", new { imie });
@@ -71,7 +71,7 @@ namespace Dental.Controllers
                             if (wynikTyp.Typ == null)
                             {
                                 var imie = wynikEmail.Imie;
-                                var wynikID = NazwaUzyt.GetPacjentEmail(model.Email).PacjentID;
+                                var wynikID = bazaMetod.GetPacjentEmail(model.Email).PacjentID;
                                 Session["ID"] = wynikID;
                                 Session["Sesja"] = true;
                                 var pacjentID = wynikEmail.PacjentID;
@@ -98,7 +98,7 @@ namespace Dental.Controllers
         {
             if (ModelState.IsValid)
             {
-                var pobierz = NazwaUzyt.GetPacjentEmail(model.Email);
+                var pobierz = bazaMetod.GetPacjentEmail(model.Email);
 
                 if (pobierz == null)
                 {
@@ -120,7 +120,7 @@ namespace Dental.Controllers
                     };
 
 
-                    bool isOk = NazwaUzyt.PacjentUpdateResetHasla(modelToInsert);
+                    bool isOk = bazaMetod.PacjentUpdateResetHasla(modelToInsert);
                     if (isOk == true)
                     {
                         TempData["PoprawnyReset"] = "Poprawnie zresetowano hasło!";
@@ -151,7 +151,7 @@ namespace Dental.Controllers
         {
             if (ModelState.IsValid)
             {
-                var emailWynik = NazwaUzyt.GetPacjentList().Where(a => a.Email == model.Email);
+                var emailWynik = bazaMetod.GetPacjentList().Where(a => a.Email == model.Email);
 
                 if (emailWynik.Count() == 0 || emailWynik == null)
                 {
@@ -179,13 +179,13 @@ namespace Dental.Controllers
 
                     };
 
-                    bool isOkPacjent = NazwaUzyt.PacjentInsert(modelPacjent);
+                    bool isOkPacjent = bazaMetod.PacjentInsert(modelPacjent);
 
 
                     if (isOkPacjent == true)
                     {
                         Session["Sesja"] = true;
-                        var wynikID = NazwaUzyt.GetPacjentEmail(model.Email).PacjentID;
+                        var wynikID = bazaMetod.GetPacjentEmail(model.Email).PacjentID;
                         Session["ID"] = wynikID;
                         return RedirectToAction("WizytaNew", "Pacjent", new { imie = model.Imie });
                     }
